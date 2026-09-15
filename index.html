@@ -14,7 +14,7 @@
 </head>
 <body>
 
-    <!-- Top Bar / Notification / Sticky Navbar -->
+    <!-- Header / Sticky Navbar -->
     <header class="header" id="header">
         <nav class="nav container">
             <a href="#" class="nav-logo">
@@ -153,9 +153,7 @@
                     <h2 class="section-title">Featured Properties</h2>
                     <p class="section-desc">Discover our exclusive selection of premium properties with top-tier amenities.</p>
                 </div>
-                <div class="property-grid" id="featured-property-grid">
-                    <!-- Dynamic Featured Cards injected here -->
-                </div>
+                <div class="property-grid" id="featured-property-grid"></div>
             </div>
         </section>
 
@@ -250,9 +248,7 @@
                         </div>
 
                         <!-- Grid of properties -->
-                        <div class="property-grid" id="main-property-grid">
-                            <!-- Injected dynamically -->
-                        </div>
+                        <div class="property-grid" id="main-property-grid"></div>
 
                         <!-- Empty State -->
                         <div id="no-results" class="no-results hidden">
@@ -266,7 +262,7 @@
             </div>
         </section>
 
-        <!-- Favorites & Comparison Bar / Section -->
+        <!-- Favorites & Comparison Section -->
         <section class="section utility-section container">
             <div class="utility-tabs">
                 <button class="tab-btn active" data-tab="favorites"><i class="fa-solid fa-heart"></i> My Favorites (<span id="fav-count">0</span>)</button>
@@ -286,34 +282,61 @@
             </div>
         </section>
 
-        <!-- Why Choose Us -->
-        <section class="section why-us">
+        <!-- Why Choose Us (Colorful & Interactive with HTML details/summary) -->
+        <section class="section why-us" style="background: linear-gradient(135deg, rgba(37, 99, 235, 0.04) 0%, rgba(16, 185, 129, 0.04) 100%);">
             <div class="container">
                 <div class="section-header">
-                    <span class="sub-title">Our Advantages</span>
+                    <span class="sub-title" style="color: #2563eb;">Our Advantages</span>
                     <h2 class="section-title">Why Choose Apex Realty?</h2>
+                    <p class="section-desc">Click on any card below to explore our core commitments and guarantees.</p>
                 </div>
-                <div class="features-grid">
-                    <div class="feature-card">
-                        <div class="feature-icon"><i class="fa-solid fa-shield-check"></i></div>
-                        <h3>Verified Properties</h3>
-                        <p>Every single property listed on our platform undergoes rigorous legal and physical verification.</p>
-                    </div>
-                    <div class="feature-card">
-                        <div class="feature-icon"><i class="fa-solid fa-handshake-simple"></i></div>
-                        <h3>Transparent Deals</h3>
-                        <p>No hidden charges. Clear pricing, direct dealer negotiations, and complete documentation support.</p>
-                    </div>
-                    <div class="feature-card">
-                        <div class="feature-icon"><i class="fa-solid fa-headset"></i></div>
-                        <h3>Dedicated Support</h3>
-                        <p>Our expert agents guide you from the initial property tour all the way to registration.</p>
-                    </div>
-                    <div class="feature-card">
-                        <div class="feature-icon"><i class="fa-solid fa-calendar-check"></i></div>
-                        <h3>Flexible Visits</h3>
-                        <p>Schedule property visits at your utmost convenience with instant confirmation.</p>
-                    </div>
+                
+                <div class="features-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 2rem;">
+                    
+                    <!-- Feature 1: Verified Properties -->
+                    <details class="feature-card" style="background: var(--white); border-radius: 12px; padding: 2rem; box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1); border-top: 6px solid #2563eb; cursor: pointer; transition: transform 0.3s ease;">
+                        <summary style="list-style: none; outline: none; font-weight: 700;">
+                            <div class="feature-icon" style="font-size: 2.2rem; color: #2563eb; margin-bottom: 1rem;"><i class="fa-solid fa-shield-check"></i></div>
+                            <h3 style="font-size: 1.15rem; color: var(--dark); margin-bottom: 0.5rem;">Verified Properties <span style="font-size: 0.75rem; color: #2563eb; float: right; font-weight: 600; background: #eff6ff; padding: 0.2rem 0.5rem; border-radius: 4px;">Click ▼</span></h3>
+                        </summary>
+                        <p style="color: var(--gray-600); font-size: 0.9rem; margin-top: 1rem; border-top: 1px solid var(--gray-200); padding-top: 0.75rem; line-height: 1.6;">
+                            Every single property listed on our platform undergoes rigorous legal title checks, builder background verification, and physical inspection audits before publication.
+                        </p>
+                    </details>
+
+                    <!-- Feature 2: Transparent Deals -->
+                    <details class="feature-card" style="background: var(--white); border-radius: 12px; padding: 2rem; box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1); border-top: 6px solid #10b981; cursor: pointer; transition: transform 0.3s ease;">
+                        <summary style="list-style: none; outline: none; font-weight: 700;">
+                            <div class="feature-icon" style="font-size: 2.2rem; color: #10b981; margin-bottom: 1rem;"><i class="fa-solid fa-handshake-simple"></i></div>
+                            <h3 style="font-size: 1.15rem; color: var(--dark); margin-bottom: 0.5rem;">Transparent Deals <span style="font-size: 0.75rem; color: #10b981; float: right; font-weight: 600; background: #ecfdf5; padding: 0.2rem 0.5rem; border-radius: 4px;">Click ▼</span></h3>
+                        </summary>
+                        <p style="color: var(--gray-600); font-size: 0.9rem; margin-top: 1rem; border-top: 1px solid var(--gray-200); padding-top: 0.75rem; line-height: 1.6;">
+                            No hidden charges or surprise broker fees. Clear pricing breakdowns, direct dealer negotiations, and complete legal documentation assistance.
+                        </p>
+                    </details>
+
+                    <!-- Feature 3: Dedicated Support -->
+                    <details class="feature-card" style="background: var(--white); border-radius: 12px; padding: 2rem; box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1); border-top: 6px solid #f59e0b; cursor: pointer; transition: transform 0.3s ease;">
+                        <summary style="list-style: none; outline: none; font-weight: 700;">
+                            <div class="feature-icon" style="font-size: 2.2rem; color: #f59e0b; margin-bottom: 1rem;"><i class="fa-solid fa-headset"></i></div>
+                            <h3 style="font-size: 1.15rem; color: var(--dark); margin-bottom: 0.5rem;">Dedicated Support <span style="font-size: 0.75rem; color: #f59e0b; float: right; font-weight: 600; background: #fffbeb; padding: 0.2rem 0.5rem; border-radius: 4px;">Click ▼</span></h3>
+                        </summary>
+                        <p style="color: var(--gray-600); font-size: 0.9rem; margin-top: 1rem; border-top: 1px solid var(--gray-200); padding-top: 0.75rem; line-height: 1.6;">
+                            Our expert agents guide you from initial property shortlisting and site visits all the way to bank home loans and final property registration.
+                        </p>
+                    </details>
+
+                    <!-- Feature 4: Flexible Visits -->
+                    <details class="feature-card" style="background: var(--white); border-radius: 12px; padding: 2rem; box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1); border-top: 6px solid #8b5cf6; cursor: pointer; transition: transform 0.3s ease;">
+                        <summary style="list-style: none; outline: none; font-weight: 700;">
+                            <div class="feature-icon" style="font-size: 2.2rem; color: #8b5cf6; margin-bottom: 1rem;"><i class="fa-solid fa-calendar-check"></i></div>
+                            <h3 style="font-size: 1.15rem; color: var(--dark); margin-bottom: 0.5rem;">Flexible Visits <span style="font-size: 0.75rem; color: #8b5cf6; float: right; font-weight: 600; background: #f3e8ff; padding: 0.2rem 0.5rem; border-radius: 4px;">Click ▼</span></h3>
+                        </summary>
+                        <p style="color: var(--gray-600); font-size: 0.9rem; margin-top: 1rem; border-top: 1px solid var(--gray-200); padding-top: 0.75rem; line-height: 1.6;">
+                            Schedule property site visits according to your utmost convenience with instant confirmation, weekend availability, and vehicle pickup options.
+                        </p>
+                    </details>
+
                 </div>
             </div>
         </section>
@@ -374,7 +397,7 @@
                     <span class="sub-title">About The Dealer</span>
                     <h2 class="section-title">Rajesh Sharma - Principal Broker & Founder</h2>
                     <p class="lead">With over a decade of hands-on experience in the prime real estate market, Apex Realty is committed to delivering unmatched residential property deals.</p>
-                    <p>We specialize in luxury apartments, gated community villas, and high-ROI investment properties across prime metropolitan locations. Our core philosophy rests on honesty, integrity, and client satisfaction.</p>
+                    <p>We specialize in luxury apartments, gated community villas, and high-ROI investment properties across prime metropolitan locations.</p>
                     <div class="dealer-stats-row">
                         <div>
                             <h4>500+</h4>
@@ -408,7 +431,7 @@
                             <i class="fa-solid fa-chevron-down"></i>
                         </div>
                         <div class="faq-answer">
-                            <p>You can easily schedule a property visit by clicking the "Schedule Visit" button on any property card or detail page, selecting your preferred date and time, and submitting the form. Our executive will call to confirm.</p>
+                            <p>You can easily schedule a property visit by clicking the "Schedule Visit" button on any property card or detail page, selecting your preferred date and time, and submitting the form.</p>
                         </div>
                     </div>
                     <div class="faq-item">
@@ -427,24 +450,6 @@
                         </div>
                         <div class="faq-answer">
                             <p>Many of our listed properties carry a "PRICE NEGOTIABLE" tag. You can directly discuss the best price with our dealer during the site visit or via phone/WhatsApp.</p>
-                        </div>
-                    </div>
-                    <div class="faq-item">
-                        <div class="faq-question">
-                            <h4>Do you assist with home loans?</h4>
-                            <i class="fa-solid fa-chevron-down"></i>
-                        </div>
-                        <div class="faq-answer">
-                            <p>Yes, we partner with top banks like SBI, HDFC, ICICI, and Axis Bank to help our buyers secure fast-track home loans with lowest interest rates.</p>
-                        </div>
-                    </div>
-                    <div class="faq-item">
-                        <div class="faq-question">
-                            <h4>Can I contact the dealer instantly via WhatsApp?</h4>
-                            <i class="fa-solid fa-chevron-down"></i>
-                        </div>
-                        <div class="faq-answer">
-                            <p>Absolutely! Click any WhatsApp button on property cards or use the floating WhatsApp widget to chat directly with Rajesh Sharma with pre-filled property queries.</p>
                         </div>
                     </div>
                 </div>
@@ -495,13 +500,6 @@
                                 <p>Suite 402, EcoSpace Business Park, Action Area II, New Town, Kolkata - 700156</p>
                             </div>
                         </li>
-                        <li>
-                            <i class="fa-solid fa-clock"></i>
-                            <div>
-                                <strong>Business Hours</strong>
-                                <p>Monday - Saturday: 9:30 AM - 7:00 PM</p>
-                            </div>
-                        </li>
                     </ul>
 
                     <div class="contact-social-buttons">
@@ -533,11 +531,6 @@
                     </form>
                 </div>
             </div>
-            
-            <!-- Map Embed -->
-            <div class="map-container container">
-                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3684.154245648574!2d88.4712!3d22.5726!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMjLCsDM0nMjEuNCJOIDg4wrA4OCcyNi4zIkU!5e0!3m2!1sen!2sin!4v1620000000000!5m2!1sen!2sin" width="100%" height="350" style="border:0; border-radius: 12px; margin-top: 3rem;" allowfullscreen="" loading="lazy"></iframe>
-            </div>
         </section>
     </main>
 
@@ -549,12 +542,6 @@
                     <i class="fa-solid fa-city"></i> Apex<span>Realty</span>
                 </a>
                 <p>Your trusted partner for premium residential flats, apartments, and villas for sale in prime locations.</p>
-                <div class="footer-social">
-                    <a href="#" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
-                    <a href="#" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
-                    <a href="#" aria-label="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
-                    <a href="#" aria-label="YouTube"><i class="fa-brands fa-youtube"></i></a>
-                </div>
             </div>
             <div class="footer-col">
                 <h3>Quick Links</h3>
@@ -567,22 +554,11 @@
                 </ul>
             </div>
             <div class="footer-col">
-                <h3>Property Categories</h3>
-                <ul class="footer-links">
-                    <li><a href="#properties">Luxury Apartments</a></li>
-                    <li><a href="#properties">3 & 4 BHK Flats</a></li>
-                    <li><a href="#properties">Gated Villas</a></li>
-                    <li><a href="#properties">Ready to Move</a></li>
-                    <li><a href="#properties">Under Construction</a></li>
-                </ul>
-            </div>
-            <div class="footer-col">
                 <h3>Legal & Admin</h3>
                 <ul class="footer-links">
                     <li><a href="#" id="footer-admin-link">Admin Dashboard</a></li>
                     <li><a href="#">Privacy Policy</a></li>
                     <li><a href="#">Terms & Conditions</a></li>
-                    <li><a href="#">Disclaimer</a></li>
                 </ul>
             </div>
         </div>
@@ -600,9 +576,7 @@
     <div id="property-modal" class="modal">
         <div class="modal-content modal-large">
             <span class="modal-close" id="modal-close"><i class="fa-solid fa-xmark"></i></span>
-            <div id="modal-body-content">
-                <!-- Dynamically injected property details -->
-            </div>
+            <div id="modal-body-content"></div>
         </div>
     </div>
 
@@ -611,7 +585,7 @@
         <div class="modal-content">
             <span class="modal-close" id="inquiry-modal-close"><i class="fa-solid fa-xmark"></i></span>
             <h2>Inquire About Property</h2>
-            <p id="inquiry-prop-subtitle" class="sub-text">Property ID: PROP001</p>
+            <p id="inquiry-prop-subtitle" class="sub-text"></p>
             <form id="modal-inquiry-form" class="inquiry-form">
                 <input type="hidden" id="inq-prop-id">
                 <input type="hidden" id="inq-prop-name">
@@ -624,34 +598,8 @@
                     <input type="tel" id="inq-phone" required placeholder="10-digit mobile number">
                 </div>
                 <div class="form-group">
-                    <label>Email Address</label>
-                    <input type="email" id="inq-email" placeholder="Your Email">
-                </div>
-                <div class="form-group">
                     <label>Message</label>
                     <textarea id="inq-msg" rows="3">I am interested in this property. Please contact me with more details.</textarea>
-                </div>
-                <div class="form-group">
-                    <label>Preferred Contact Method</label>
-                    <select id="inq-method">
-                        <option value="Phone Call">Phone Call</option>
-                        <option value="WhatsApp">WhatsApp</option>
-                        <option value="Email">Email</option>
-                    </select>
-                </div>
-                <div class="form-row">
-                    <div class="form-group">
-                        <label>Preferred Visit Date</label>
-                        <input type="date" id="inq-date">
-                    </div>
-                    <div class="form-group">
-                        <label>Preferred Visit Time</label>
-                        <select id="inq-time">
-                            <option value="Morning (10 AM - 12 PM)">Morning (10 AM - 12 PM)</option>
-                            <option value="Afternoon (1 PM - 4 PM)">Afternoon (1 PM - 4 PM)</option>
-                            <option value="Evening (4 PM - 7 PM)">Evening (4 PM - 7 PM)</option>
-                        </select>
-                    </div>
                 </div>
                 <button type="submit" class="btn btn-primary btn-block">Send Inquiry</button>
             </form>
@@ -683,21 +631,10 @@
                         <label>Visit Time *</label>
                         <select id="visit-time">
                             <option value="10:00 AM">10:00 AM</option>
-                            <option value="11:30 AM">11:30 AM</option>
                             <option value="02:00 PM">02:00 PM</option>
-                            <option value="04:00 PM">04:00 PM</option>
                             <option value="05:30 PM">05:30 PM</option>
                         </select>
                     </div>
-                </div>
-                <div class="form-group">
-                    <label>Number of Visitors</label>
-                    <select id="visit-count">
-                        <option value="1 Person">1 Person</option>
-                        <option value="2 People">2 People</option>
-                        <option value="Family (3-4 People)">Family (3-4 People)</option>
-                        <option value="Group (5+ People)">Group (5+ People)</option>
-                    </select>
                 </div>
                 <button type="submit" class="btn btn-primary btn-block">Confirm Visit Schedule</button>
             </form>
@@ -709,7 +646,6 @@
         <div class="modal-content modal-sm">
             <span class="modal-close" id="admin-login-close"><i class="fa-solid fa-xmark"></i></span>
             <h2><i class="fa-solid fa-lock"></i> Admin Login</h2>
-            <p class="sub-text">Enter credentials to manage properties.</p>
             <form id="admin-login-form" class="inquiry-form">
                 <div class="form-group">
                     <label>Username</label>
@@ -719,191 +655,37 @@
                     <label>Password</label>
                     <input type="password" id="admin-pass" required placeholder="password">
                 </div>
-                <button type="submit" class="btn btn-primary btn-block">Login to Dashboard</button>
-                <p class="demo-cred-hint">Demo Credentials: username <strong>admin</strong>, password <strong>password123</strong></p>
+                <button type="submit" class="btn btn-primary btn-block">Login</button>
+                <p class="demo-cred-hint">Demo: admin / password123</p>
             </form>
         </div>
     </div>
 
-    <!-- MODAL: Admin Dashboard / Property Management -->
+    <!-- MODAL: Admin Dashboard -->
     <div id="admin-dashboard-modal" class="modal">
         <div class="modal-content modal-xl">
             <div class="admin-header-bar">
-                <h2><i class="fa-solid fa-gauge-high"></i> Dealer Admin Dashboard</h2>
+                <h2><i class="fa-solid fa-gauge-high"></i> Admin Dashboard</h2>
                 <div>
-                    <button id="add-new-prop-btn" class="btn btn-primary"><i class="fa-solid fa-plus"></i> Add New Property</button>
+                    <button id="add-new-prop-btn" class="btn btn-primary"><i class="fa-solid fa-plus"></i> Add Property</button>
                     <button class="modal-close-btn" id="admin-dashboard-close"><i class="fa-solid fa-xmark"></i></button>
                 </div>
             </div>
-            
-            <div class="admin-stats-row">
-                <div class="admin-stat-box">
-                    <h3 id="adm-total">0</h3>
-                    <p>Total Properties</p>
-                </div>
-                <div class="admin-stat-box">
-                    <h3 id="adm-avail">0</h3>
-                    <p>Available</p>
-                </div>
-                <div class="admin-stat-box">
-                    <h3 id="adm-sold">0</h3>
-                    <p>Sold</p>
-                </div>
-                <div class="admin-stat-box">
-                    <h3 id="adm-featured">0</h3>
-                    <p>Featured</p>
-                </div>
-            </div>
-
             <div class="admin-table-wrapper">
                 <table class="admin-table">
                     <thead>
                         <tr>
                             <th>ID</th>
                             <th>Image</th>
-                            <th>Title & Location</th>
+                            <th>Title</th>
                             <th>Price</th>
-                            <th>BHK / Type</th>
                             <th>Status</th>
                             <th>Actions</th>
                         </tr>
                     </thead>
-                    <tbody id="admin-table-body">
-                        <!-- Dynamically injected -->
-                    </tbody>
+                    <tbody id="admin-table-body"></tbody>
                 </table>
             </div>
-        </div>
-    </div>
-
-    <!-- MODAL: Add / Edit Property Form -->
-    <div id="property-form-modal" class="modal">
-        <div class="modal-content modal-lg">
-            <span class="modal-close" id="prop-form-close"><i class="fa-solid fa-xmark"></i></span>
-            <h2 id="prop-form-title">Add New Property</h2>
-            <form id="save-property-form" class="inquiry-form">
-                <input type="hidden" id="form-edit-id">
-                <div class="form-row">
-                    <div class="form-group">
-                        <label>Property ID *</label>
-                        <input type="text" id="p-id" required placeholder="e.g. PROP009">
-                    </div>
-                    <div class="form-group">
-                        <label>Property Title *</label>
-                        <input type="text" id="p-title" required placeholder="e.g. Luxury 3 BHK Flat">
-                    </div>
-                </div>
-                <div class="form-row">
-                    <div class="form-group">
-                        <label>Location *</label>
-                        <select id="p-location" required>
-                            <option value="New Town, Kolkata">New Town, Kolkata</option>
-                            <option value="Ballygunge, Kolkata">Ballygunge, Kolkata</option>
-                            <option value="Salt Lake, Kolkata">Salt Lake, Kolkata</option>
-                            <option value="EM Bypass, Kolkata">EM Bypass, Kolkata</option>
-                            <option value="Alipore, Kolkata">Alipore, Kolkata</option>
-                            <option value="Rajarhat, Kolkata">Rajarhat, Kolkata</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label>Price (in INR) *</label>
-                        <input type="number" id="p-price" required placeholder="e.g. 8500000">
-                    </div>
-                </div>
-                <div class="form-row">
-                    <div class="form-group">
-                        <label>BHK *</label>
-                        <select id="p-bhk">
-                            <option value="1">1 BHK</option>
-                            <option value="2">2 BHK</option>
-                            <option value="3" selected>3 BHK</option>
-                            <option value="4">4+ BHK</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label>Carpet Area (sq.ft) *</label>
-                        <input type="number" id="p-area" required placeholder="e.g. 1450">
-                    </div>
-                    <div class="form-group">
-                        <label>Super Built-up Area (sq.ft)</label>
-                        <input type="number" id="p-super-area" placeholder="e.g. 1800">
-                    </div>
-                </div>
-                <div class="form-row">
-                    <div class="form-group">
-                        <label>Floor *</label>
-                        <input type="text" id="p-floor" required placeholder="e.g. 8th Floor">
-                    </div>
-                    <div class="form-group">
-                        <label>Total Floors *</label>
-                        <input type="number" id="p-total-floors" required placeholder="15">
-                    </div>
-                    <div class="form-group">
-                        <label>Property Type *</label>
-                        <select id="p-type">
-                            <option value="Apartment">Apartment</option>
-                            <option value="Flat">Flat</option>
-                            <option value="Villa">Villa</option>
-                            <option value="Independent House">Independent House</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="form-row">
-                    <div class="form-group">
-                        <label>Furnishing Status *</label>
-                        <select id="p-furnishing">
-                            <option value="Furnished">Furnished</option>
-                            <option value="Semi-Furnished">Semi-Furnished</option>
-                            <option value="Unfurnished">Unfurnished</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label>Property Status *</label>
-                        <select id="p-status">
-                            <option value="Available">Available</option>
-                            <option value="Under Negotiation">Under Negotiation</option>
-                            <option value="Sold">Sold</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label>Property Age</label>
-                        <input type="text" id="p-age" placeholder="e.g. Brand New / 2 Years">
-                    </div>
-                </div>
-                <div class="form-row">
-                    <div class="form-group">
-                        <label><input type="checkbox" id="p-parking"> Parking Available</label>
-                    </div>
-                    <div class="form-group">
-                        <label><input type="checkbox" id="p-featured"> Mark as Featured</label>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label>Main Image URL *</label>
-                    <input type="url" id="p-image" required placeholder="https://images.unsplash.com/...">
-                </div>
-                <div class="form-group">
-                    <label>Additional Gallery Image URLs (comma separated)</label>
-                    <textarea id="p-gallery" rows="2" placeholder="https://image1.jpg, https://image2.jpg"></textarea>
-                </div>
-                <div class="form-group">
-                    <label>Virtual Tour Video URL (YouTube / MP4)</label>
-                    <input type="url" id="p-video" placeholder="https://www.youtube.com/embed/...">
-                </div>
-                <div class="form-group">
-                    <label>Short Description *</label>
-                    <textarea id="p-desc" rows="3" required placeholder="Describe property highlights..."></textarea>
-                </div>
-                <div class="form-group">
-                    <label>Amenities (comma separated)</label>
-                    <input type="text" id="p-amenities" value="Parking, Lift, Security, CCTV, Power Backup, Swimming Pool, Gym, Garden">
-                </div>
-                <div class="form-group">
-                    <label>Nearby Places (comma separated)</label>
-                    <input type="text" id="p-nearby" value="DPS School (1.2 km), AMRI Hospital (2.5 km), Axis Mall (1.5 km), Metro Station (0.8 km)">
-                </div>
-                <button type="submit" class="btn btn-primary btn-block">Save Property</button>
-            </form>
         </div>
     </div>
 
