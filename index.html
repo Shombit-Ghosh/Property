@@ -3,18 +3,700 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Apex Realty | Find Your Perfect Home</title>
-    <meta name="description" content="Explore verified flats and properties available for sale. Find apartments, villas, and independent houses that match your lifestyle and budget.">
-    <!-- Google Fonts -->
+    <title>Find Your Perfect Home | Apex Realty</title>
+    <meta name="description" content="Explore verified flats and apartments for sale and connect directly with your trusted property dealer.">
+    <!-- Open Graph Meta Tags -->
+    <meta property="og:title" content="Find Your Perfect Home | Apex Realty">
+    <meta property="og:description" content="Explore verified flats and apartments for sale and connect directly with your trusted property dealer.">
+    <meta property="og:type" content="website">
+    
+    <!-- Google Fonts & Font Awesome -->
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    <!-- Font Awesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- Stylesheet -->
-    <link rel="stylesheet" href="style.css">
+
+    <style>
+        /* ==========================================
+           CSS STYLESHEET
+           ========================================== */
+        :root {
+            --primary: #2563eb;
+            --primary-dark: #1d4ed8;
+            --primary-light: #eff6ff;
+            --accent: #f59e0b;
+            --success: #10b981;
+            --danger: #ef4444;
+            --dark: #0f172a;
+            --light: #f8fafc;
+            --gray-100: #f1f5f9;
+            --gray-200: #e2e8f0;
+            --gray-300: #cbd5e1;
+            --gray-600: #475569;
+            --white: #ffffff;
+            --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+            --shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+            --transition: all 0.3s ease;
+            --radius: 12px;
+        }
+
+        [data-theme="dark"] {
+            --primary: #3b82f6;
+            --primary-dark: #2563eb;
+            --primary-light: #1e293b;
+            --dark: #f8fafc;
+            --light: #0b0f19;
+            --gray-100: #131c2e;
+            --gray-200: #1e293b;
+            --gray-300: #334155;
+            --gray-600: #94a3b8;
+            --white: #0f172a;
+            --shadow: 0 4px 6px -1px rgb(0 0 0 / 0.5);
+            --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.6);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+
+        body {
+            background-color: var(--light);
+            color: var(--dark);
+            line-height: 1.6;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        a { text-decoration: none; color: inherit; }
+        ul { list-style: none; }
+        button, input, select, textarea { font-family: inherit; }
+
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+        }
+
+        /* Buttons */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1.5rem;
+            font-weight: 600;
+            border-radius: var(--radius);
+            cursor: pointer;
+            transition: var(--transition);
+            border: none;
+            font-size: 0.95rem;
+        }
+
+        .btn-primary { background-color: var(--primary); color: var(--white); }
+        .btn-primary:hover { background-color: var(--primary-dark); transform: translateY(-2px); box-shadow: var(--shadow); }
+        .btn-outline { background-color: transparent; border: 2px solid var(--gray-300); color: var(--dark); }
+        .btn-outline:hover { border-color: var(--primary); color: var(--primary); }
+        .btn-outline-light { background-color: transparent; border: 2px solid var(--white); color: var(--white); }
+        .btn-outline-light:hover { background-color: var(--white); color: var(--dark); }
+        .btn-whatsapp { background-color: #25d366; color: #fff; }
+        .btn-whatsapp:hover { background-color: #20ba5a; }
+        .btn-block { width: 100%; }
+        .btn-link { background: none; border: none; color: var(--primary); font-weight: 600; cursor: pointer; }
+
+        /* Loading Screen */
+        #loading-screen {
+            position: fixed;
+            inset: 0;
+            background-color: var(--dark);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            color: white;
+            transition: opacity 0.5s ease;
+        }
+        .spinner {
+            width: 50px;
+            height: 50px;
+            border: 4px solid rgba(255,255,255,0.1);
+            border-top-color: var(--primary);
+            border-radius: 50%;
+            animation: spin 1s infinite linear;
+            margin-bottom: 1rem;
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
+
+        /* Navigation */
+        .header {
+            position: sticky;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background-color: var(--white);
+            box-shadow: var(--shadow-sm);
+            z-index: 1000;
+            transition: var(--transition);
+        }
+
+        .nav {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 80px;
+        }
+
+        .nav-logo {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .nav-logo span { color: var(--dark); }
+
+        .nav-list {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .nav-link {
+            font-weight: 500;
+            color: var(--gray-600);
+            transition: var(--transition);
+        }
+        .nav-link:hover, .nav-link.active { color: var(--primary); }
+
+        .nav-actions {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .theme-toggle, .nav-toggle, .nav-close, .badge-btn {
+            background: none;
+            border: none;
+            font-size: 1.25rem;
+            cursor: pointer;
+            color: var(--dark);
+            position: relative;
+        }
+        .badge-btn .count-badge {
+            position: absolute;
+            top: -8px;
+            right: -10px;
+            background-color: var(--danger);
+            color: white;
+            font-size: 0.65rem;
+            padding: 2px 6px;
+            border-radius: 50px;
+            font-weight: 700;
+        }
+        .nav-toggle, .nav-close { display: none; }
+
+        /* Hero Section */
+        .hero {
+            position: relative;
+            background: url('https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=1920&q=80') center/cover no-repeat;
+            padding: 8rem 0 6rem;
+            color: var(--white);
+        }
+        .hero-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, rgba(15, 23, 42, 0.9) 0%, rgba(15, 23, 42, 0.7) 100%);
+        }
+        .hero-container {
+            position: relative;
+            z-index: 2;
+            display: grid;
+            gap: 3rem;
+        }
+        .hero-content { max-width: 700px; }
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background-color: rgba(37, 99, 235, 0.2);
+            border: 1px solid var(--primary);
+            padding: 0.5rem 1rem;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 0.85rem;
+            margin-bottom: 1.5rem;
+            color: #93c5fd;
+        }
+        .hero-title { font-size: 3.5rem; font-weight: 800; line-height: 1.1; margin-bottom: 1.5rem; }
+        .hero-description { font-size: 1.15rem; color: var(--gray-300); margin-bottom: 2rem; }
+        .hero-buttons { display: flex; gap: 1rem; flex-wrap: wrap; }
+
+        .hero-search-box {
+            background-color: var(--white);
+            color: var(--dark);
+            padding: 2rem;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow-lg);
+        }
+        .hero-search-box h3 { margin-bottom: 1.5rem; font-size: 1.25rem; display: flex; align-items: center; gap: 0.5rem; }
+        .search-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 1rem;
+            align-items: end;
+        }
+        .form-group { display: flex; flex-direction: column; gap: 0.5rem; }
+        .form-group label { font-size: 0.85rem; font-weight: 600; color: var(--gray-600); display: flex; align-items: center; gap: 0.4rem; }
+        .form-group select, .form-group input, .form-group textarea {
+            padding: 0.75rem;
+            border: 1px solid var(--gray-300);
+            border-radius: 8px;
+            background-color: var(--white);
+            color: var(--dark);
+            font-size: 0.95rem;
+        }
+        .form-group select:focus, .form-group input:focus, .form-group textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+        }
+
+        /* Stats Section */
+        .stats-section {
+            background-color: var(--white);
+            padding: 3rem 0;
+            box-shadow: var(--shadow-sm);
+        }
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 2rem;
+            text-align: center;
+        }
+        .stat-card { padding: 1.5rem; }
+        .stat-icon { font-size: 2.5rem; color: var(--primary); margin-bottom: 1rem; }
+        .stat-number { font-size: 2.5rem; font-weight: 800; color: var(--dark); margin-bottom: 0.25rem; }
+        .stat-label { color: var(--gray-600); font-weight: 500; }
+
+        /* Sections General */
+        .section { padding: 5rem 0; }
+        .section-header { text-align: center; max-width: 600px; margin: 0 auto 3rem; }
+        .sub-title { color: var(--primary); font-weight: 700; text-transform: uppercase; font-size: 0.85rem; letter-spacing: 1px; display: block; margin-bottom: 0.5rem; }
+        .section-title { font-size: 2.5rem; font-weight: 800; margin-bottom: 1rem; }
+        .section-desc { color: var(--gray-600); }
+
+        /* Property Grid & Cards */
+        .property-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 2rem;
+        }
+        .property-card {
+            background-color: var(--white);
+            border-radius: var(--radius);
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            position: relative;
+            border: 1px solid var(--gray-200);
+        }
+        .property-card:hover { transform: translateY(-5px); box-shadow: var(--shadow-lg); }
+        .property-img-wrapper { position: relative; height: 240px; overflow: hidden; }
+        .property-img-wrapper img { width: 100%; height: 100%; object-fit: cover; transition: var(--transition); }
+        .property-card:hover .property-img-wrapper img { transform: scale(1.05); }
+        
+        .property-badges {
+            position: absolute;
+            top: 1rem;
+            left: 1rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.4rem;
+        }
+        .badge {
+            padding: 0.25rem 0.75rem;
+            font-size: 0.75rem;
+            font-weight: 700;
+            border-radius: 4px;
+            text-transform: uppercase;
+        }
+        .badge-featured { background-color: var(--accent); color: #000; }
+        .badge-verified { background-color: var(--success); color: #fff; }
+        .badge-nego { background-color: #8b5cf6; color: #fff; }
+        .badge-sold { background-color: var(--danger); color: #fff; font-size: 1rem; padding: 0.5rem 1rem; }
+        .badge-nego-status { background-color: var(--accent); color: #000; font-size: 1rem; padding: 0.5rem 1rem; }
+
+        .property-actions-top {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            display: flex;
+            gap: 0.5rem;
+        }
+        .fav-btn {
+            width: 38px;
+            height: 38px;
+            background-color: var(--white);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: none;
+            cursor: pointer;
+            color: var(--gray-600);
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+        .fav-btn.active, .fav-btn:hover { color: var(--danger); background-color: #fef2f2; }
+
+        .property-body { padding: 1.5rem; }
+        .property-price { font-size: 1.5rem; font-weight: 800; color: var(--primary); margin-bottom: 0.5rem; }
+        .property-title { font-size: 1.15rem; font-weight: 700; margin-bottom: 0.5rem; }
+        .property-location { color: var(--gray-600); font-size: 0.9rem; display: flex; align-items: center; gap: 0.4rem; margin-bottom: 1rem; }
+        
+        .property-specs {
+            display: flex;
+            justify-content: space-between;
+            border-top: 1px solid var(--gray-200);
+            border-bottom: 1px solid var(--gray-200);
+            padding: 0.75rem 0;
+            margin-bottom: 1rem;
+            font-size: 0.85rem;
+            color: var(--gray-600);
+        }
+        .property-specs span { display: flex; align-items: center; gap: 0.3rem; }
+        .property-footer { display: flex; gap: 0.75rem; }
+
+        /* Catalog & Filters Layout */
+        .catalog-layout {
+            display: grid;
+            grid-template-columns: 280px 1fr;
+            gap: 2rem;
+            align-items: start;
+        }
+        .filters-sidebar {
+            background-color: var(--white);
+            padding: 1.5rem;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            border: 1px solid var(--gray-200);
+        }
+        .filter-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.75rem;
+            border-bottom: 1px solid var(--gray-200);
+        }
+        .filter-group { margin-bottom: 1.5rem; }
+        .filter-group label { display: block; font-weight: 600; font-size: 0.9rem; margin-bottom: 0.5rem; }
+        .filter-group input[type="text"], .filter-group select {
+            width: 100%;
+            padding: 0.65rem;
+            border: 1px solid var(--gray-300);
+            border-radius: 8px;
+            background-color: var(--white);
+            color: var(--dark);
+        }
+        .checkbox-group { display: flex; flex-direction: column; gap: 0.5rem; }
+        .checkbox-group label { font-weight: 400; font-size: 0.9rem; display: flex; align-items: center; gap: 0.5rem; cursor: pointer; }
+
+        .catalog-toolbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: var(--white);
+            padding: 1rem 1.5rem;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow-sm);
+            margin-bottom: 2rem;
+            border: 1px solid var(--gray-200);
+        }
+        .sort-wrapper { display: flex; align-items: center; gap: 0.75rem; font-size: 0.9rem; }
+        .sort-wrapper select { padding: 0.5rem; border-radius: 6px; border: 1px solid var(--gray-300); background-color: var(--white); color: var(--dark); }
+        .mobile-filter-btn { display: none; }
+
+        .no-results {
+            text-align: center;
+            padding: 4rem 2rem;
+            background-color: var(--white);
+            border-radius: var(--radius);
+            border: 1px solid var(--gray-200);
+        }
+        .no-results i { font-size: 3rem; color: var(--gray-300); margin-bottom: 1rem; }
+        .hidden { display: none !important; }
+
+        /* Why Choose Us & Features */
+        .why-us { background-color: var(--white); }
+        .features-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 2rem; }
+        .feature-card {
+            padding: 2rem;
+            border-radius: var(--radius);
+            background-color: var(--gray-100);
+            border: 1px solid var(--gray-200);
+            transition: var(--transition);
+        }
+        .feature-card:hover { transform: translateY(-5px); border-color: var(--primary); }
+        .feature-icon { font-size: 2rem; color: var(--primary); margin-bottom: 1rem; }
+
+        /* Testimonials */
+        .testimonials-section { background-color: var(--gray-100); }
+        .testimonial-slider { max-width: 800px; margin: 0 auto; position: relative; min-height: 220px; }
+        .testimonial-card {
+            background-color: var(--white);
+            padding: 2.5rem;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+        .testimonial-card.active { display: block; }
+        .testimonial-rating { color: var(--accent); margin-bottom: 1rem; }
+        .testimonial-text { font-size: 1.1rem; font-style: italic; margin-bottom: 1.5rem; color: var(--dark); }
+        .testimonial-author { display: flex; align-items: center; gap: 1rem; }
+        .testimonial-author img { width: 50px; height: 50px; border-radius: 50%; object-fit: cover; }
+        .testimonial-dots { display: flex; justify-content: center; gap: 0.5rem; margin-top: 2rem; }
+        .dot { width: 12px; height: 12px; border-radius: 50%; background-color: var(--gray-300); cursor: pointer; transition: var(--transition); }
+        .dot.active { background-color: var(--primary); width: 28px; border-radius: 6px; }
+
+        /* About Us */
+        .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; }
+        .about-img-wrapper { position: relative; }
+        .about-img { width: 100%; border-radius: var(--radius); box-shadow: var(--shadow-lg); }
+        .experience-badge {
+            position: absolute;
+            bottom: -2rem;
+            right: -2rem;
+            background-color: var(--primary);
+            color: var(--white);
+            padding: 2rem;
+            border-radius: var(--radius);
+            text-align: center;
+            box-shadow: var(--shadow-lg);
+        }
+        .experience-badge h3 { font-size: 2.5rem; font-weight: 800; }
+        .dealer-stats-row {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+            margin: 2rem 0;
+            padding: 1.5rem 0;
+            border-top: 1px solid var(--gray-200);
+            border-bottom: 1px solid var(--gray-200);
+        }
+        .dealer-stats-row h4 { font-size: 1.75rem; color: var(--primary); font-weight: 800; }
+
+        /* FAQ Accordion */
+        .faq-section { background-color: var(--white); }
+        .faq-accordion { max-width: 800px; margin: 0 auto; display: flex; flex-direction: column; gap: 1rem; }
+        .faq-item { border: 1px solid var(--gray-200); border-radius: 8px; overflow: hidden; background-color: var(--gray-100); }
+        .faq-question { padding: 1.25rem; display: flex; justify-content: space-between; align-items: center; cursor: pointer; font-weight: 600; }
+        .faq-answer { padding: 0 1.25rem 1.25rem; color: var(--gray-600); display: none; font-size: 0.95rem; }
+        .faq-item.active .faq-answer { display: block; }
+        .faq-item.active .faq-question i { transform: rotate(180deg); }
+
+        /* Contact Section */
+        .contact-section { background-color: var(--gray-100); }
+        .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; }
+        .contact-details-list { display: flex; flex-direction: column; gap: 1.5rem; margin: 2rem 0; }
+        .contact-details-list li { display: flex; gap: 1rem; align-items: flex-start; }
+        .contact-details-list i { font-size: 1.25rem; color: var(--primary); margin-top: 0.2rem; }
+        .contact-form-wrapper {
+            background-color: var(--white);
+            padding: 2.5rem;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            border: 1px solid var(--gray-200);
+        }
+
+        /* Footer */
+        .footer { background-color: var(--dark); color: var(--gray-300); padding: 5rem 0 2rem; }
+        .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 3rem; margin-bottom: 4rem; }
+        .footer-social { display: flex; gap: 1rem; }
+        .footer-social a {
+            width: 36px; height: 36px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            color: var(--white); transition: var(--transition);
+        }
+        .footer-social a:hover { background-color: var(--primary); }
+        .footer-links { display: flex; flex-direction: column; gap: 0.75rem; }
+        .footer-links a:hover { color: var(--primary); padding-left: 5px; }
+        .footer-bottom { text-align: center; padding-top: 2rem; border-top: 1px solid rgba(255, 255, 255, 0.1); font-size: 0.85rem; color: var(--gray-600); }
+
+        /* Floating WhatsApp */
+        .floating-whatsapp {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            width: 60px;
+            height: 60px;
+            background-color: #25d366;
+            color: #fff;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            box-shadow: var(--shadow-lg);
+            z-index: 999;
+            transition: var(--transition);
+        }
+        .floating-whatsapp:hover { transform: scale(1.1); }
+
+        /* Modals */
+        .modal {
+            position: fixed;
+            inset: 0;
+            background-color: rgba(0, 0, 0, 0.7);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 2000;
+            padding: 1rem;
+            overflow-y: auto;
+        }
+        .modal.active { display: flex; }
+        .modal-content {
+            background-color: var(--white);
+            border-radius: var(--radius);
+            padding: 2rem;
+            width: 100%;
+            max-width: 550px;
+            position: relative;
+            max-height: 90vh;
+            overflow-y: auto;
+            box-shadow: var(--shadow-lg);
+            animation: modalSlideUp 0.3s ease;
+        }
+        .modal-large { max-width: 900px; }
+        .modal-xl { max-width: 1100px; }
+        .modal-sm { max-width: 400px; }
+        .modal-close {
+            position: absolute;
+            top: 1.25rem;
+            right: 1.25rem;
+            font-size: 1.25rem;
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: var(--gray-600);
+            z-index: 10;
+        }
+        .modal-close:hover { color: var(--danger); }
+
+        /* Gallery in Modal */
+        .main-preview-img { width: 100%; height: 380px; object-fit: cover; border-radius: 8px; margin-bottom: 0.75rem; }
+        .thumbnail-strip { display: flex; gap: 0.5rem; overflow-x: auto; padding-bottom: 0.5rem; }
+        .thumb-img { width: 80px; height: 60px; object-fit: cover; border-radius: 6px; cursor: pointer; opacity: 0.6; border: 2px solid transparent; transition: var(--transition); }
+        .thumb-img.active, .thumb-img:hover { opacity: 1; border-color: var(--primary); }
+        
+        .specs-grid-modal {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+            background-color: var(--gray-100);
+            padding: 1.5rem;
+            border-radius: var(--radius);
+            margin-bottom: 1.5rem;
+        }
+        .spec-box span:first-child { font-size: 0.8rem; color: var(--gray-600); }
+        .spec-box span:last-child { font-weight: 700; font-size: 1rem; }
+
+        .amenities-tag-list { display: flex; flex-wrap: wrap; gap: 0.5rem; margin: 1rem 0 1.5rem; }
+        .amenity-tag {
+            background-color: var(--primary-light);
+            color: var(--primary);
+            padding: 0.4rem 0.8rem;
+            border-radius: 50px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            display: flex; align-items: center; gap: 0.4rem;
+        }
+
+        /* Comparison Table */
+        .compare-table { width: 100%; border-collapse: collapse; background-color: var(--white); border-radius: var(--radius); overflow: hidden; box-shadow: var(--shadow); }
+        .compare-table th, .compare-table td { padding: 1rem; border: 1px solid var(--gray-200); text-align: center; font-size: 0.9rem; }
+        .compare-table th { background-color: var(--primary-light); color: var(--primary); font-weight: 700; }
+
+        /* Toast Notifications */
+        .toast-container {
+            position: fixed;
+            bottom: 2rem;
+            left: 2rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+            z-index: 3000;
+        }
+        .toast {
+            background-color: var(--dark);
+            color: var(--white);
+            padding: 1rem 1.5rem;
+            border-radius: 8px;
+            box-shadow: var(--shadow-lg);
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-weight: 500;
+            animation: slideInLeft 0.3s ease, fadeOut 0.3s ease 2.7s forwards;
+        }
+
+        /* Admin Table */
+        .admin-header-bar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; }
+        .admin-table-wrapper { overflow-x: auto; }
+        .admin-table { width: 100%; border-collapse: collapse; background-color: var(--white); }
+        .admin-table th, .admin-table td { padding: 0.85rem; border-bottom: 1px solid var(--gray-200); text-align: left; font-size: 0.9rem; }
+        .admin-table th { background-color: var(--gray-100); font-weight: 700; }
+        .admin-table img { width: 50px; height: 40px; object-fit: cover; border-radius: 4px; }
+        .action-btns-group { display: flex; gap: 0.5rem; }
+        .action-btn { padding: 0.4rem 0.6rem; border-radius: 4px; border: none; cursor: pointer; font-size: 0.8rem; }
+        .btn-edit { background-color: var(--primary); color: #fff; }
+        .btn-del { background-color: var(--danger); color: #fff; }
+        .form-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; }
+
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes slideInLeft { from { transform: translateX(-100%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
+        @keyframes modalSlideUp { from { transform: translateY(30px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+        @keyframes fadeOut { to { opacity: 0; visibility: hidden; } }
+
+        @media (max-width: 992px) {
+            .catalog-layout { grid-template-columns: 1fr; }
+            .filters-sidebar { display: none; }
+            .filters-sidebar.mobile-active { display: block; position: fixed; inset: 80px 0 0 0; z-index: 1000; overflow-y: auto; }
+            .mobile-filter-btn { display: inline-flex; }
+            .about-grid, .contact-grid, .footer-grid { grid-template-columns: 1fr; gap: 2rem; }
+            .nav-list {
+                position: fixed; top: 80px; right: -100%; width: 100%; max-width: 350px;
+                background-color: var(--white); flex-direction: column; padding: 2rem;
+                box-shadow: var(--shadow-lg); transition: var(--transition); height: calc(100vh - 80px);
+            }
+            .nav-list.active { right: 0; }
+            .nav-toggle { display: block; }
+            .nav-close { display: block; position: absolute; top: 1.5rem; right: 1.5rem; }
+            .hero-title { font-size: 2.5rem; }
+            .specs-grid-modal { grid-template-columns: repeat(2, 1fr); }
+        }
+    </style>
 </head>
 <body>
 
-    <!-- Header / Sticky Navbar -->
+    <!-- Loading Screen -->
+    <div id="loading-screen">
+        <div class="spinner"></div>
+        <h2>Apex Realty</h2>
+        <p>Loading verified properties...</p>
+    </div>
+
+    <!-- Navigation Bar -->
     <header class="header" id="header">
         <nav class="nav container">
             <a href="#" class="nav-logo">
@@ -23,31 +705,33 @@
             
             <div class="nav-menu" id="nav-menu">
                 <ul class="nav-list">
-                    <li class="nav-item"><a href="#home" class="nav-link active">Home</a></li>
-                    <li class="nav-item"><a href="#properties" class="nav-link">Properties</a></li>
-                    <li class="nav-item"><a href="#featured" class="nav-link">Featured</a></li>
-                    <li class="nav-item"><a href="#about" class="nav-link">About Us</a></li>
-                    <li class="nav-item"><a href="#contact" class="nav-link">Contact</a></li>
+                    <li><a href="#home" class="nav-link active">Home</a></li>
+                    <li><a href="#properties" class="nav-link">Properties</a></li>
+                    <li><a href="#featured" class="nav-link">Featured</a></li>
+                    <li><a href="#about" class="nav-link">About</a></li>
+                    <li><a href="#contact" class="nav-link">Contact</a></li>
                 </ul>
-                <div class="nav-close" id="nav-close">
-                    <i class="fa-solid fa-xmark"></i>
-                </div>
+                <div class="nav-close" id="nav-close"><i class="fa-solid fa-xmark"></i></div>
             </div>
 
             <div class="nav-actions">
-                <button class="theme-toggle" id="theme-toggle" aria-label="Toggle Theme">
-                    <i class="fa-solid fa-moon"></i>
+                <button class="theme-toggle" id="theme-toggle" aria-label="Toggle Theme"><i class="fa-solid fa-moon"></i></button>
+                <button class="badge-btn" id="open-fav-modal" title="Favorites">
+                    <i class="fa-solid fa-heart"></i>
+                    <span class="count-badge" id="fav-counter-badge">0</span>
+                </button>
+                <button class="badge-btn" id="open-compare-modal" title="Compare">
+                    <i class="fa-solid fa-scale-balanced"></i>
+                    <span class="count-badge" id="compare-counter-badge">0</span>
                 </button>
                 <button class="btn btn-outline" id="open-admin-btn"><i class="fa-solid fa-lock"></i> Admin</button>
                 <button class="btn btn-primary" id="list-prop-btn">List Property</button>
-                <div class="nav-toggle" id="nav-toggle">
-                    <i class="fa-solid fa-bars"></i>
-                </div>
+                <div class="nav-toggle" id="nav-toggle"><i class="fa-solid fa-bars"></i></div>
             </div>
         </nav>
     </header>
 
-    <!-- Toast Notifications Container -->
+    <!-- Toast Notifications -->
     <div id="toast-container" class="toast-container"></div>
 
     <main>
@@ -58,14 +742,14 @@
                 <div class="hero-content">
                     <span class="hero-badge"><i class="fa-solid fa-shield-halved"></i> 100% Verified Properties</span>
                     <h1 class="hero-title">Find Your Perfect Home</h1>
-                    <p class="hero-description">Explore verified flats and properties available for sale and find a home that matches your lifestyle and budget.</p>
+                    <p class="hero-description">Discover verified properties, explore beautiful homes and connect directly with your trusted property dealer.</p>
                     <div class="hero-buttons">
                         <a href="#properties" class="btn btn-primary btn-lg">Explore Properties</a>
                         <a href="#contact" class="btn btn-outline-light btn-lg">Contact Dealer</a>
                     </div>
                 </div>
 
-                <!-- Quick Search Widget -->
+                <!-- Hero Search Panel -->
                 <div class="hero-search-box">
                     <h3><i class="fa-solid fa-magnifying-glass"></i> Quick Property Search</h3>
                     <form id="hero-search-form" class="search-grid">
@@ -73,12 +757,12 @@
                             <label><i class="fa-solid fa-location-dot"></i> Location</label>
                             <select id="search-location">
                                 <option value="">All Locations</option>
-                                <option value="New Town, Kolkata">New Town, Kolkata</option>
-                                <option value="Ballygunge, Kolkata">Ballygunge, Kolkata</option>
-                                <option value="Salt Lake, Kolkata">Salt Lake, Kolkata</option>
-                                <option value="EM Bypass, Kolkata">EM Bypass, Kolkata</option>
-                                <option value="Alipore, Kolkata">Alipore, Kolkata</option>
-                                <option value="Rajarhat, Kolkata">Rajarhat, Kolkata</option>
+                                <option value="New Town">New Town</option>
+                                <option value="Salt Lake">Salt Lake</option>
+                                <option value="EM Bypass">EM Bypass</option>
+                                <option value="Rajarhat">Rajarhat</option>
+                                <option value="Kolkata">Kolkata</option>
+                                <option value="Howrah">Howrah</option>
                             </select>
                         </div>
                         <div class="form-group">
@@ -111,8 +795,8 @@
                                 <option value="30000000">₹3+ Crores</option>
                             </select>
                         </div>
-                        <div class="form-group search-btn-wrapper">
-                            <button type="submit" class="btn btn-primary btn-block"><i class="fa-solid fa-search"></i> Search Properties</button>
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-primary btn-block"><i class="fa-solid fa-search"></i> Search</button>
                         </div>
                     </form>
                 </div>
@@ -157,13 +841,13 @@
             </div>
         </section>
 
-        <!-- Main Properties Catalog & Advanced Filter Section -->
+        <!-- Properties Catalog & Filter Section -->
         <section class="section properties-catalog" id="properties">
             <div class="container">
                 <div class="section-header">
                     <span class="sub-title">Explore Catalog</span>
-                    <h2 class="section-title">All Available Properties</h2>
-                    <p class="section-desc">Filter through our extensive database to find your exact match.</p>
+                    <h2 class="section-title">Explore Properties</h2>
+                    <p class="section-desc">Find a property that fits your lifestyle and budget.</p>
                 </div>
 
                 <div class="catalog-layout">
@@ -174,28 +858,28 @@
                             <button id="clear-filters-btn" class="btn-link">Clear All</button>
                         </div>
                         <div class="filter-group">
-                            <label>Search Keyword / ID</label>
+                            <label>Keyword / ID</label>
                             <input type="text" id="filter-keyword" placeholder="e.g. Luxury, PROP001">
                         </div>
                         <div class="filter-group">
                             <label>Location</label>
                             <select id="filter-location">
                                 <option value="">All Locations</option>
-                                <option value="New Town, Kolkata">New Town, Kolkata</option>
-                                <option value="Ballygunge, Kolkata">Ballygunge, Kolkata</option>
-                                <option value="Salt Lake, Kolkata">Salt Lake, Kolkata</option>
-                                <option value="EM Bypass, Kolkata">EM Bypass, Kolkata</option>
-                                <option value="Alipore, Kolkata">Alipore, Kolkata</option>
-                                <option value="Rajarhat, Kolkata">Rajarhat, Kolkata</option>
+                                <option value="New Town">New Town</option>
+                                <option value="Salt Lake">Salt Lake</option>
+                                <option value="EM Bypass">EM Bypass</option>
+                                <option value="Rajarhat">Rajarhat</option>
+                                <option value="Kolkata">Kolkata</option>
+                                <option value="Howrah">Howrah</option>
                             </select>
                         </div>
                         <div class="filter-group">
-                            <label>Price Range (Max)</label>
+                            <label>Max Price</label>
                             <input type="range" id="filter-price-range" min="3000000" max="35000000" step="1000000" value="35000000">
-                            <div class="range-val">Up to <span id="price-output">₹3.5 Crore</span></div>
+                            <div class="range-val" style="font-size:0.85rem; color:var(--gray-600); margin-top:0.25rem;">Up to <span id="price-output">₹3.5 Crore</span></div>
                         </div>
                         <div class="filter-group">
-                            <label>BHK Configuration</label>
+                            <label>BHK</label>
                             <div class="checkbox-group">
                                 <label><input type="checkbox" name="bhk" value="1"> 1 BHK</label>
                                 <label><input type="checkbox" name="bhk" value="2"> 2 BHK</label>
@@ -212,33 +896,16 @@
                                 <label><input type="checkbox" name="type" value="Independent House"> Independent House</label>
                             </div>
                         </div>
-                        <div class="filter-group">
-                            <label>Furnishing</label>
-                            <div class="checkbox-group">
-                                <label><input type="checkbox" name="furnishing" value="Furnished"> Furnished</label>
-                                <label><input type="checkbox" name="furnishing" value="Semi-Furnished"> Semi-Furnished</label>
-                                <label><input type="checkbox" name="furnishing" value="Unfurnished"> Unfurnished</label>
-                            </div>
-                        </div>
-                        <div class="filter-group">
-                            <label>Amenities & Features</label>
-                            <div class="checkbox-group">
-                                <label><input type="checkbox" name="amenities" value="Parking"> Parking</label>
-                                <label><input type="checkbox" name="amenities" value="Lift"> Lift</label>
-                                <label><input type="checkbox" name="amenities" value="Swimming Pool"> Swimming Pool</label>
-                                <label><input type="checkbox" name="amenities" value="Gym"> Gym</label>
-                            </div>
-                        </div>
                     </aside>
 
-                    <!-- Property List Content Area -->
+                    <!-- Catalog Content -->
                     <div class="catalog-content">
                         <div class="catalog-toolbar">
                             <p id="result-count">Showing <strong>0</strong> properties</p>
                             <div class="sort-wrapper">
                                 <label>Sort by:</label>
                                 <select id="sort-select">
-                                    <option value="newest">Newest Properties</option>
+                                    <option value="newest">Newest</option>
                                     <option value="price-low">Price: Low to High</option>
                                     <option value="price-high">Price: High to Low</option>
                                     <option value="area-high">Area: High to Low</option>
@@ -247,96 +914,47 @@
                             <button id="toggle-filter-drawer" class="btn btn-outline mobile-filter-btn"><i class="fa-solid fa-filter"></i> Filters</button>
                         </div>
 
-                        <!-- Grid of properties -->
                         <div class="property-grid" id="main-property-grid"></div>
 
-                        <!-- Empty State -->
                         <div id="no-results" class="no-results hidden">
                             <i class="fa-solid fa-house-chimney-crack"></i>
                             <h3>No properties found</h3>
-                            <p>Try adjusting your search filters or clearing them to see more results.</p>
-                            <button id="reset-search-btn" class="btn btn-primary">Reset Filters</button>
+                            <p>Try adjusting your search filters or clearing them.</p>
+                            <button id="reset-search-btn" class="btn btn-primary" style="margin-top:1rem;">Reset Filters</button>
                         </div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- Favorites & Comparison Section -->
-        <section class="section utility-section container">
-            <div class="utility-tabs">
-                <button class="tab-btn active" data-tab="favorites"><i class="fa-solid fa-heart"></i> My Favorites (<span id="fav-count">0</span>)</button>
-                <button class="tab-btn" data-tab="compare"><i class="fa-solid fa-scale-balanced"></i> Property Comparison (<span id="compare-count">0</span>/3)</button>
-            </div>
-            
-            <div class="tab-content active" id="tab-favorites">
-                <div class="property-grid" id="favorites-grid">
-                    <p class="empty-tab-msg">No favorite properties saved yet. Click the heart icon on any property to add it here.</p>
-                </div>
-            </div>
-
-            <div class="tab-content" id="tab-compare">
-                <div id="compare-container">
-                    <p class="empty-tab-msg">Select up to 3 properties using the 'Compare' option on property cards to compare specifications side-by-side.</p>
-                </div>
-            </div>
-        </section>
-
-        <!-- Why Choose Us (Colorful & Interactive with HTML details/summary) -->
-        <section class="section why-us" style="background: linear-gradient(135deg, rgba(37, 99, 235, 0.04) 0%, rgba(16, 185, 129, 0.04) 100%);">
+        <!-- Why Choose Us -->
+        <section class="section why-us">
             <div class="container">
                 <div class="section-header">
-                    <span class="sub-title" style="color: #2563eb;">Our Advantages</span>
-                    <h2 class="section-title">Why Choose Apex Realty?</h2>
-                    <p class="section-desc">Click on any card below to explore our core commitments and guarantees.</p>
+                    <span class="sub-title">Our Advantages</span>
+                    <h2 class="section-title">Why Choose Us?</h2>
                 </div>
-                
-                <div class="features-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 2rem;">
-                    
-                    <!-- Feature 1: Verified Properties -->
-                    <details class="feature-card" style="background: var(--white); border-radius: 12px; padding: 2rem; box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1); border-top: 6px solid #2563eb; cursor: pointer; transition: transform 0.3s ease;">
-                        <summary style="list-style: none; outline: none; font-weight: 700;">
-                            <div class="feature-icon" style="font-size: 2.2rem; color: #2563eb; margin-bottom: 1rem;"><i class="fa-solid fa-shield-check"></i></div>
-                            <h3 style="font-size: 1.15rem; color: var(--dark); margin-bottom: 0.5rem;">Verified Properties <span style="font-size: 0.75rem; color: #2563eb; float: right; font-weight: 600; background: #eff6ff; padding: 0.2rem 0.5rem; border-radius: 4px;">Click ▼</span></h3>
-                        </summary>
-                        <p style="color: var(--gray-600); font-size: 0.9rem; margin-top: 1rem; border-top: 1px solid var(--gray-200); padding-top: 0.75rem; line-height: 1.6;">
-                            Every single property listed on our platform undergoes rigorous legal title checks, builder background verification, and physical inspection audits before publication.
-                        </p>
-                    </details>
-
-                    <!-- Feature 2: Transparent Deals -->
-                    <details class="feature-card" style="background: var(--white); border-radius: 12px; padding: 2rem; box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1); border-top: 6px solid #10b981; cursor: pointer; transition: transform 0.3s ease;">
-                        <summary style="list-style: none; outline: none; font-weight: 700;">
-                            <div class="feature-icon" style="font-size: 2.2rem; color: #10b981; margin-bottom: 1rem;"><i class="fa-solid fa-handshake-simple"></i></div>
-                            <h3 style="font-size: 1.15rem; color: var(--dark); margin-bottom: 0.5rem;">Transparent Deals <span style="font-size: 0.75rem; color: #10b981; float: right; font-weight: 600; background: #ecfdf5; padding: 0.2rem 0.5rem; border-radius: 4px;">Click ▼</span></h3>
-                        </summary>
-                        <p style="color: var(--gray-600); font-size: 0.9rem; margin-top: 1rem; border-top: 1px solid var(--gray-200); padding-top: 0.75rem; line-height: 1.6;">
-                            No hidden charges or surprise broker fees. Clear pricing breakdowns, direct dealer negotiations, and complete legal documentation assistance.
-                        </p>
-                    </details>
-
-                    <!-- Feature 3: Dedicated Support -->
-                    <details class="feature-card" style="background: var(--white); border-radius: 12px; padding: 2rem; box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1); border-top: 6px solid #f59e0b; cursor: pointer; transition: transform 0.3s ease;">
-                        <summary style="list-style: none; outline: none; font-weight: 700;">
-                            <div class="feature-icon" style="font-size: 2.2rem; color: #f59e0b; margin-bottom: 1rem;"><i class="fa-solid fa-headset"></i></div>
-                            <h3 style="font-size: 1.15rem; color: var(--dark); margin-bottom: 0.5rem;">Dedicated Support <span style="font-size: 0.75rem; color: #f59e0b; float: right; font-weight: 600; background: #fffbeb; padding: 0.2rem 0.5rem; border-radius: 4px;">Click ▼</span></h3>
-                        </summary>
-                        <p style="color: var(--gray-600); font-size: 0.9rem; margin-top: 1rem; border-top: 1px solid var(--gray-200); padding-top: 0.75rem; line-height: 1.6;">
-                            Our expert agents guide you from initial property shortlisting and site visits all the way to bank home loans and final property registration.
-                        </p>
-                    </details>
-
-                    <!-- Feature 4: Flexible Visits -->
-                    <details class="feature-card" style="background: var(--white); border-radius: 12px; padding: 2rem; box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1); border-top: 6px solid #8b5cf6; cursor: pointer; transition: transform 0.3s ease;">
-                        <summary style="list-style: none; outline: none; font-weight: 700;">
-                            <div class="feature-icon" style="font-size: 2.2rem; color: #8b5cf6; margin-bottom: 1rem;"><i class="fa-solid fa-calendar-check"></i></div>
-                            <h3 style="font-size: 1.15rem; color: var(--dark); margin-bottom: 0.5rem;">Flexible Visits <span style="font-size: 0.75rem; color: #8b5cf6; float: right; font-weight: 600; background: #f3e8ff; padding: 0.2rem 0.5rem; border-radius: 4px;">Click ▼</span></h3>
-                        </summary>
-                        <p style="color: var(--gray-600); font-size: 0.9rem; margin-top: 1rem; border-top: 1px solid var(--gray-200); padding-top: 0.75rem; line-height: 1.6;">
-                            Schedule property site visits according to your utmost convenience with instant confirmation, weekend availability, and vehicle pickup options.
-                        </p>
-                    </details>
-
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon"><i class="fa-solid fa-shield-check"></i></div>
+                        <h3>Verified Properties</h3>
+                        <p>Only genuine properties are showcased with clear legal titles.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon"><i class="fa-solid fa-handshake-simple"></i></div>
+                        <h3>Transparent Information</h3>
+                        <p>Clear property details and straightforward pricing with zero hidden costs.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon"><i class="fa-solid fa-headset"></i></div>
+                        <h3>Direct Communication</h3>
+                        <p>Instant access to expert dealer assistance via call or WhatsApp.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon"><i class="fa-solid fa-calendar-check"></i></div>
+                        <h3>Easy Property Visits</h3>
+                        <p>Schedule a site visit at your convenience with instant scheduling.</p>
+                    </div>
                 </div>
             </div>
         </section>
@@ -350,29 +968,19 @@
                 </div>
                 <div class="testimonial-slider">
                     <div class="testimonial-card active">
-                        <div class="testimonial-rating">
-                            <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
-                        </div>
-                        <p class="testimonial-text">"Apex Realty made finding our 3 BHK in New Town an absolute breeze. Rajesh Sharma and his team handled all the negotiations professionally and transparently."</p>
+                        <div class="testimonial-rating"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
+                        <p class="testimonial-text">"Apex Realty made finding our 3 BHK in New Town an absolute breeze. Professional negotiations and transparent dealing."</p>
                         <div class="testimonial-author">
                             <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=150&q=80" alt="Client">
-                            <div>
-                                <h4>Ananya & Rohit Sen</h4>
-                                <span>Homeowners</span>
-                            </div>
+                            <div><h4>Ananya & Rohit Sen</h4><span>Homeowners</span></div>
                         </div>
                     </div>
                     <div class="testimonial-card">
-                        <div class="testimonial-rating">
-                            <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
-                        </div>
-                        <p class="testimonial-text">"Extremely professional service! Verified property documents and great advice on home loans. Highly recommend them for anyone buying in Kolkata."</p>
+                        <div class="testimonial-rating"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
+                        <p class="testimonial-text">"Extremely professional service! Verified property documents and great advice on home loans."</p>
                         <div class="testimonial-author">
                             <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=150&q=80" alt="Client">
-                            <div>
-                                <h4>Vikramaditya Roy</h4>
-                                <span>IT Executive</span>
-                            </div>
+                            <div><h4>Vikramaditya Roy</h4><span>IT Executive</span></div>
                         </div>
                     </div>
                 </div>
@@ -390,27 +998,17 @@
                     <img src="https://images.unsplash.com/photo-1560518883-ce09059eeffa?auto=format&fit=crop&w=800&q=80" alt="About Dealer" class="about-img">
                     <div class="experience-badge">
                         <h3>10+</h3>
-                        <p>Years of Excellence</p>
+                        <p>Years Experience</p>
                     </div>
                 </div>
                 <div class="about-content">
                     <span class="sub-title">About The Dealer</span>
-                    <h2 class="section-title">Rajesh Sharma - Principal Broker & Founder</h2>
+                    <h2 class="section-title">Rajesh Sharma - Principal Broker</h2>
                     <p class="lead">With over a decade of hands-on experience in the prime real estate market, Apex Realty is committed to delivering unmatched residential property deals.</p>
-                    <p>We specialize in luxury apartments, gated community villas, and high-ROI investment properties across prime metropolitan locations.</p>
                     <div class="dealer-stats-row">
-                        <div>
-                            <h4>500+</h4>
-                            <p>Properties Sold</p>
-                        </div>
-                        <div>
-                            <h4>350+</h4>
-                            <p>Happy Families</p>
-                        </div>
-                        <div>
-                            <h4>100%</h4>
-                            <p>Legal Verification</p>
-                        </div>
+                        <div><h4>500+</h4><p>Properties Sold</p></div>
+                        <div><h4>350+</h4><p>Happy Clients</p></div>
+                        <div><h4>25+</h4><p>Locations</p></div>
                     </div>
                     <a href="#contact" class="btn btn-primary">Get in Touch</a>
                 </div>
@@ -426,31 +1024,20 @@
                 </div>
                 <div class="faq-accordion">
                     <div class="faq-item">
-                        <div class="faq-question">
-                            <h4>How can I schedule a property visit?</h4>
-                            <i class="fa-solid fa-chevron-down"></i>
-                        </div>
-                        <div class="faq-answer">
-                            <p>You can easily schedule a property visit by clicking the "Schedule Visit" button on any property card or detail page, selecting your preferred date and time, and submitting the form.</p>
-                        </div>
+                        <div class="faq-question"><h4>How can I schedule a property visit?</h4><i class="fa-solid fa-chevron-down"></i></div>
+                        <div class="faq-answer"><p>Click the 'Schedule Visit' button on any property card or details view to pick your preferred date and time.</p></div>
                     </div>
                     <div class="faq-item">
-                        <div class="faq-question">
-                            <h4>Are all listed properties verified?</h4>
-                            <i class="fa-solid fa-chevron-down"></i>
-                        </div>
-                        <div class="faq-answer">
-                            <p>Yes! Every single property listed on Apex Realty goes through strict title checks, builder background verification, and clear documentation audits before going live.</p>
-                        </div>
+                        <div class="faq-question"><h4>Are the properties verified?</h4><i class="fa-solid fa-chevron-down"></i></div>
+                        <div class="faq-answer"><p>Yes, all listed properties go through strict title verification and legal background checks.</p></div>
                     </div>
                     <div class="faq-item">
-                        <div class="faq-question">
-                            <h4>Is the property price negotiable?</h4>
-                            <i class="fa-solid fa-chevron-down"></i>
-                        </div>
-                        <div class="faq-answer">
-                            <p>Many of our listed properties carry a "PRICE NEGOTIABLE" tag. You can directly discuss the best price with our dealer during the site visit or via phone/WhatsApp.</p>
-                        </div>
+                        <div class="faq-question"><h4>Is the price negotiable?</h4><i class="fa-solid fa-chevron-down"></i></div>
+                        <div class="faq-answer"><p>Many properties feature negotiable pricing. You can discuss details directly with the dealer.</p></div>
+                    </div>
+                    <div class="faq-item">
+                        <div class="faq-question"><h4>Do you help with home loans?</h4><i class="fa-solid fa-chevron-down"></i></div>
+                        <div class="faq-answer"><p>Yes, we partner with major banks to assist buyers with fast-track loan processing.</p></div>
                     </div>
                 </div>
             </div>
@@ -465,68 +1052,25 @@
                     <p>Reach out to us directly or visit our office for a personalized consultation.</p>
                     
                     <ul class="contact-details-list">
-                        <li>
-                            <i class="fa-solid fa-user-tie"></i>
-                            <div>
-                                <strong>Dealer Name</strong>
-                                <p>Rajesh Sharma (Apex Realty)</p>
-                            </div>
-                        </li>
-                        <li>
-                            <i class="fa-solid fa-phone"></i>
-                            <div>
-                                <strong>Phone Number</strong>
-                                <p><a href="tel:+919876543210">+91 98765 43210</a></p>
-                            </div>
-                        </li>
-                        <li>
-                            <i class="fa-brands fa-whatsapp"></i>
-                            <div>
-                                <strong>WhatsApp Number</strong>
-                                <p><a href="https://wa.me/919876543210" target="_blank">+91 98765 43210</a></p>
-                            </div>
-                        </li>
-                        <li>
-                            <i class="fa-solid fa-envelope"></i>
-                            <div>
-                                <strong>Email Address</strong>
-                                <p><a href="mailto:contact@apexrealty.com">contact@apexrealty.com</a></p>
-                            </div>
-                        </li>
-                        <li>
-                            <i class="fa-solid fa-location-dot"></i>
-                            <div>
-                                <strong>Office Address</strong>
-                                <p>Suite 402, EcoSpace Business Park, Action Area II, New Town, Kolkata - 700156</p>
-                            </div>
-                        </li>
+                        <li><i class="fa-solid fa-user-tie"></i><div><strong>Dealer Name</strong><p>Rajesh Sharma</p></div></li>
+                        <li><i class="fa-solid fa-phone"></i><div><strong>Phone</strong><p><a href="tel:+919876543210">+91 98765 43210</a></p></div></li>
+                        <li><i class="fa-brands fa-whatsapp"></i><div><strong>WhatsApp</strong><p><a href="https://wa.me/919876543210" target="_blank">+91 98765 43210</a></p></div></li>
+                        <li><i class="fa-solid fa-envelope"></i><div><strong>Email</strong><p><a href="mailto:contact@apexrealty.com">contact@apexrealty.com</a></p></div></li>
+                        <li><i class="fa-solid fa-location-dot"></i><div><strong>Office</strong><p>EcoSpace Business Park, New Town, Kolkata</p></div></li>
                     </ul>
 
-                    <div class="contact-social-buttons">
-                        <a href="tel:+919876543210" class="btn btn-primary"><i class="fa-solid fa-phone"></i> Call Dealer</a>
-                        <a href="https://wa.me/919876543210?text=Hello%2C%20I%20am%20interested%20in%20properties%20listed%20on%20Apex%20Realty." target="_blank" class="btn btn-whatsapp"><i class="fa-brands fa-whatsapp"></i> WhatsApp Chat</a>
+                    <div style="display:flex; gap:1rem;">
+                        <a href="tel:+919876543210" class="btn btn-primary"><i class="fa-solid fa-phone"></i> Call Now</a>
+                        <a href="https://wa.me/919876543210" target="_blank" class="btn btn-whatsapp"><i class="fa-brands fa-whatsapp"></i> WhatsApp</a>
                     </div>
                 </div>
 
                 <div class="contact-form-wrapper">
                     <h3>Send Direct Inquiry</h3>
-                    <form id="general-inquiry-form" class="inquiry-form">
-                        <div class="form-group">
-                            <label>Your Full Name *</label>
-                            <input type="text" id="gen-name" required placeholder="Enter your name">
-                        </div>
-                        <div class="form-group">
-                            <label>Phone Number *</label>
-                            <input type="tel" id="gen-phone" required placeholder="10-digit mobile number">
-                        </div>
-                        <div class="form-group">
-                            <label>Email Address</label>
-                            <input type="email" id="gen-email" placeholder="your.email@example.com">
-                        </div>
-                        <div class="form-group">
-                            <label>Message / Requirements *</label>
-                            <textarea id="gen-message" rows="4" required placeholder="Mention preferred location, BHK, budget..."></textarea>
-                        </div>
+                    <form id="general-inquiry-form" style="display:flex; flex-direction:column; gap:1rem; margin-top:1.5rem;">
+                        <div class="form-group"><label>Your Name *</label><input type="text" id="gen-name" required placeholder="Name"></div>
+                        <div class="form-group"><label>Phone Number *</label><input type="tel" id="gen-phone" required placeholder="Mobile"></div>
+                        <div class="form-group"><label>Message *</label><textarea id="gen-message" rows="4" required placeholder="Your requirements..."></textarea></div>
                         <button type="submit" class="btn btn-primary btn-block">Send Message</button>
                     </form>
                 </div>
@@ -537,24 +1081,34 @@
     <!-- Footer -->
     <footer class="footer">
         <div class="container footer-grid">
-            <div class="footer-col">
-                <a href="#" class="nav-logo">
-                    <i class="fa-solid fa-city"></i> Apex<span>Realty</span>
-                </a>
-                <p>Your trusted partner for premium residential flats, apartments, and villas for sale in prime locations.</p>
+            <div>
+                <a href="#" class="nav-logo" style="color:#fff; margin-bottom:1rem; display:inline-flex;"><i class="fa-solid fa-city"></i> Apex<span>Realty</span></a>
+                <p>Your trusted partner for premium residential flats, apartments, and villas for sale.</p>
+                <div class="footer-social" style="margin-top:1rem;">
+                    <a href="#"><i class="fa-brands fa-facebook-f"></i></a>
+                    <a href="#"><i class="fa-brands fa-instagram"></i></a>
+                    <a href="#"><i class="fa-brands fa-linkedin-in"></i></a>
+                </div>
             </div>
-            <div class="footer-col">
+            <div>
                 <h3>Quick Links</h3>
                 <ul class="footer-links">
                     <li><a href="#home">Home</a></li>
                     <li><a href="#properties">Properties</a></li>
-                    <li><a href="#featured">Featured Properties</a></li>
                     <li><a href="#about">About Us</a></li>
                     <li><a href="#contact">Contact</a></li>
                 </ul>
             </div>
-            <div class="footer-col">
-                <h3>Legal & Admin</h3>
+            <div>
+                <h3>Categories</h3>
+                <ul class="footer-links">
+                    <li><a href="#properties">Luxury Apartments</a></li>
+                    <li><a href="#properties">3 & 4 BHK Flats</a></li>
+                    <li><a href="#properties">Gated Villas</a></li>
+                </ul>
+            </div>
+            <div>
+                <h3>Legal</h3>
                 <ul class="footer-links">
                     <li><a href="#" id="footer-admin-link">Admin Dashboard</a></li>
                     <li><a href="#">Privacy Policy</a></li>
@@ -567,12 +1121,10 @@
         </div>
     </footer>
 
-    <!-- Floating WhatsApp Button -->
-    <a href="https://wa.me/919876543210?text=Hello%2C%20I%20would%20like%20to%20know%20more%20about%20properties%20for%20sale." class="floating-whatsapp" target="_blank" aria-label="Chat on WhatsApp">
-        <i class="fa-brands fa-whatsapp"></i>
-    </a>
+    <!-- Floating WhatsApp -->
+    <a href="https://wa.me/919876543210?text=Hello%2C%20I%20would%20like%20to%20know%20more%20about%20properties." class="floating-whatsapp" target="_blank"><i class="fa-brands fa-whatsapp"></i></a>
 
-    <!-- MODAL: Property Details & Gallery -->
+    <!-- MODAL: Property Details -->
     <div id="property-modal" class="modal">
         <div class="modal-content modal-large">
             <span class="modal-close" id="modal-close"><i class="fa-solid fa-xmark"></i></span>
@@ -580,64 +1132,59 @@
         </div>
     </div>
 
-    <!-- MODAL: Contact / Inquiry Form -->
+    <!-- MODAL: Inquiry -->
     <div id="inquiry-modal" class="modal">
         <div class="modal-content">
             <span class="modal-close" id="inquiry-modal-close"><i class="fa-solid fa-xmark"></i></span>
             <h2>Inquire About Property</h2>
-            <p id="inquiry-prop-subtitle" class="sub-text"></p>
-            <form id="modal-inquiry-form" class="inquiry-form">
+            <p id="inquiry-prop-subtitle" style="font-size:0.85rem; color:var(--gray-600); margin-bottom:1.5rem;"></p>
+            <form id="modal-inquiry-form" style="display:flex; flex-direction:column; gap:1rem;">
                 <input type="hidden" id="inq-prop-id">
-                <input type="hidden" id="inq-prop-name">
-                <div class="form-group">
-                    <label>Full Name *</label>
-                    <input type="text" id="inq-name" required placeholder="Your Name">
-                </div>
-                <div class="form-group">
-                    <label>Phone Number *</label>
-                    <input type="tel" id="inq-phone" required placeholder="10-digit mobile number">
-                </div>
-                <div class="form-group">
-                    <label>Message</label>
-                    <textarea id="inq-msg" rows="3">I am interested in this property. Please contact me with more details.</textarea>
-                </div>
+                <div class="form-group"><label>Full Name *</label><input type="text" id="inq-name" required placeholder="Name"></div>
+                <div class="form-group"><label>Phone *</label><input type="tel" id="inq-phone" required placeholder="Phone"></div>
+                <div class="form-group"><label>Email</label><input type="email" id="inq-email" placeholder="Email"></div>
+                <div class="form-group"><label>Message</label><textarea id="inq-msg" rows="3"></textarea></div>
                 <button type="submit" class="btn btn-primary btn-block">Send Inquiry</button>
             </form>
         </div>
     </div>
 
-    <!-- MODAL: Schedule Visit Form -->
+    <!-- MODAL: Schedule Visit -->
     <div id="visit-modal" class="modal">
         <div class="modal-content">
             <span class="modal-close" id="visit-modal-close"><i class="fa-solid fa-xmark"></i></span>
             <h2>Schedule Property Visit</h2>
-            <p id="visit-prop-subtitle" class="sub-text"></p>
-            <form id="modal-visit-form" class="inquiry-form">
+            <p id="visit-prop-subtitle" style="font-size:0.85rem; color:var(--gray-600); margin-bottom:1.5rem;"></p>
+            <form id="modal-visit-form" style="display:flex; flex-direction:column; gap:1rem;">
                 <input type="hidden" id="visit-prop-id">
-                <div class="form-group">
-                    <label>Full Name *</label>
-                    <input type="text" id="visit-name" required placeholder="Your Name">
-                </div>
-                <div class="form-group">
-                    <label>Phone Number *</label>
-                    <input type="tel" id="visit-phone" required placeholder="10-digit mobile number">
-                </div>
+                <div class="form-group"><label>Full Name *</label><input type="text" id="visit-name" required></div>
+                <div class="form-group"><label>Phone *</label><input type="tel" id="visit-phone" required></div>
                 <div class="form-row">
-                    <div class="form-group">
-                        <label>Visit Date *</label>
-                        <input type="date" id="visit-date" required>
-                    </div>
-                    <div class="form-group">
-                        <label>Visit Time *</label>
-                        <select id="visit-time">
-                            <option value="10:00 AM">10:00 AM</option>
-                            <option value="02:00 PM">02:00 PM</option>
-                            <option value="05:30 PM">05:30 PM</option>
-                        </select>
-                    </div>
+                    <div class="form-group"><label>Visit Date *</label><input type="date" id="visit-date" required></div>
+                    <div class="form-group"><label>Time *</label><select id="visit-time"><option>10:00 AM</option><option>02:00 PM</option><option>05:00 PM</option></select></div>
                 </div>
-                <button type="submit" class="btn btn-primary btn-block">Confirm Visit Schedule</button>
+                <div class="form-group"><label>Visitors</label><select id="visit-count"><option>1 Person</option><option>Family (2-4)</option></select></div>
+                <button type="submit" class="btn btn-primary btn-block">Schedule Visit</button>
             </form>
+        </div>
+    </div>
+
+    <!-- MODAL: Favorites -->
+    <div id="favorites-modal" class="modal">
+        <div class="modal-content modal-large">
+            <span class="modal-close" id="fav-modal-close"><i class="fa-solid fa-xmark"></i></span>
+            <h2><i class="fa-solid fa-heart" style="color:var(--danger);"></i> My Favorites</h2>
+            <p id="fav-modal-subtitle" style="font-size:0.85rem; color:var(--gray-600); margin-bottom:1.5rem;"></p>
+            <div class="property-grid" id="favorites-grid" style="max-height:60vh; overflow-y:auto;"></div>
+        </div>
+    </div>
+
+    <!-- MODAL: Comparison -->
+    <div id="compare-modal" class="modal">
+        <div class="modal-content modal-xl">
+            <span class="modal-close" id="compare-modal-close"><i class="fa-solid fa-xmark"></i></span>
+            <h2><i class="fa-solid fa-scale-balanced"></i> Property Comparison</h2>
+            <div id="compare-container" style="margin-top:1.5rem; overflow-x:auto;"></div>
         </div>
     </div>
 
@@ -645,18 +1192,12 @@
     <div id="admin-login-modal" class="modal">
         <div class="modal-content modal-sm">
             <span class="modal-close" id="admin-login-close"><i class="fa-solid fa-xmark"></i></span>
-            <h2><i class="fa-solid fa-lock"></i> Admin Login</h2>
-            <form id="admin-login-form" class="inquiry-form">
-                <div class="form-group">
-                    <label>Username</label>
-                    <input type="text" id="admin-user" required placeholder="admin">
-                </div>
-                <div class="form-group">
-                    <label>Password</label>
-                    <input type="password" id="admin-pass" required placeholder="password">
-                </div>
+            <h2>Admin Login</h2>
+            <form id="admin-login-form" style="display:flex; flex-direction:column; gap:1rem; margin-top:1rem;">
+                <div class="form-group"><label>Username</label><input type="text" id="admin-user" required value="admin"></div>
+                <div class="form-group"><label>Password</label><input type="password" id="admin-pass" required value="password123"></div>
                 <button type="submit" class="btn btn-primary btn-block">Login</button>
-                <p class="demo-cred-hint">Demo: admin / password123</p>
+                <p style="font-size:0.75rem; text-align:center; color:var(--gray-600);">Demo: admin / password123</p>
             </form>
         </div>
     </div>
@@ -668,28 +1209,767 @@
                 <h2><i class="fa-solid fa-gauge-high"></i> Admin Dashboard</h2>
                 <div>
                     <button id="add-new-prop-btn" class="btn btn-primary"><i class="fa-solid fa-plus"></i> Add Property</button>
-                    <button class="modal-close-btn" id="admin-dashboard-close"><i class="fa-solid fa-xmark"></i></button>
+                    <button class="modal-close" id="admin-dashboard-close" style="position:static;"><i class="fa-solid fa-xmark"></i></button>
                 </div>
             </div>
             <div class="admin-table-wrapper">
                 <table class="admin-table">
-                    <thead>
-                        <tr>
-                            <th>ID</th>
-                            <th>Image</th>
-                            <th>Title</th>
-                            <th>Price</th>
-                            <th>Status</th>
-                            <th>Actions</th>
-                        </tr>
-                    </thead>
+                    <thead><tr><th>ID</th><th>Image</th><th>Title & Location</th><th>Price</th><th>Status</th><th>Actions</th></tr></thead>
                     <tbody id="admin-table-body"></tbody>
                 </table>
             </div>
         </div>
     </div>
 
-    <!-- JavaScript File -->
-    <script src="script.js"></script>
+    <!-- MODAL: Add/Edit Property Form -->
+    <div id="property-form-modal" class="modal">
+        <div class="modal-content modal-large">
+            <span class="modal-close" id="prop-form-close"><i class="fa-solid fa-xmark"></i></span>
+            <h2 id="prop-form-title">Add Property</h2>
+            <form id="save-property-form" style="display:flex; flex-direction:column; gap:1rem; margin-top:1rem;">
+                <input type="hidden" id="form-edit-id">
+                <div class="form-row">
+                    <div class="form-group"><label>ID *</label><input type="text" id="p-id" required placeholder="PROP009"></div>
+                    <div class="form-group"><label>Title *</label><input type="text" id="p-title" required placeholder="Luxury 3 BHK"></div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group"><label>Location *</label>
+                        <select id="p-location">
+                            <option>New Town</option><option>Salt Lake</option><option>EM Bypass</option><option>Rajarhat</option><option>Kolkata</option><option>Howrah</option>
+                        </select>
+                    </div>
+                    <div class="form-group"><label>Price (₹) *</label><input type="number" id="p-price" required></div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group"><label>BHK *</label><select id="p-bhk"><option>1</option><option>2</option><option selected>3</option><option>4</option></select></div>
+                    <div class="form-group"><label>Area (sq.ft) *</label><input type="number" id="p-area" required></div>
+                    <div class="form-group"><label>Floor *</label><input type="text" id="p-floor" required placeholder="8th Floor"></div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group"><label>Type *</label><select id="p-type"><option>Apartment</option><option>Flat</option><option>Villa</option><option>Independent House</option></select></div>
+                    <div class="form-group"><label>Furnishing *</label><select id="p-furnishing"><option>Furnished</option><option>Semi-Furnished</option><option>Unfurnished</option></select></div>
+                    <div class="form-group"><label>Status *</label><select id="p-status"><option>Available</option><option>Under Negotiation</option><option>Sold</option></select></div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group"><label>Image URL *</label><input type="url" id="p-image" required placeholder="https://..."></div>
+                    <div class="form-group"><label>Gallery (comma separated URLs)</label><input type="text" id="p-gallery" placeholder="url1, url2"></div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group"><label>Video URL (YouTube embed or MP4)</label><input type="url" id="p-video" placeholder="https://www.youtube.com/embed/..."></div>
+                    <div class="form-group"><label><input type="checkbox" id="p-featured"> Mark as Featured</label></div>
+                </div>
+                <div class="form-group"><label>Description *</label><textarea id="p-desc" rows="3" required></textarea></div>
+                <div class="form-group"><label>Amenities (comma separated)</label><input type="text" id="p-amenities" value="Swimming Pool, Gym, Lift, 24/7 Security, CCTV, Power Backup"></div>
+                <button type="submit" class="btn btn-primary btn-block">Save Property</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- ==========================================
+       JAVASCRIPT APPLICATION
+       ========================================== -->
+    <script>
+        /* DEALER CONFIGURATION */
+        const dealerConfig = {
+            name: "Rajesh Sharma",
+            phone: "+919876543210",
+            whatsapp: "919876543210",
+            email: "contact@apexrealty.com",
+            address: "EcoSpace Business Park, New Town, Kolkata",
+            experience: "10+ Years"
+        };
+
+        const dealerPhone = dealerConfig.phone;
+        const dealerWhatsApp = dealerConfig.whatsapp;
+
+        /* INITIAL SAMPLE PROPERTIES (8 properties) */
+        const defaultProperties = [
+            {
+                id: "PROP001",
+                title: "Luxury 3 BHK Skyline Apartment",
+                location: "New Town",
+                price: 8500000,
+                bhk: 3,
+                area: 1450,
+                superArea: 1800,
+                floor: "8th Floor",
+                totalFloors: 15,
+                type: "Apartment",
+                furnishing: "Semi-Furnished",
+                status: "Available",
+                parking: "2 Cars",
+                age: "Brand New",
+                featured: true,
+                image: "https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?auto=format&fit=crop&w=800&q=80",
+                gallery: [
+                    "https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?auto=format&fit=crop&w=800&q=80",
+                    "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?auto=format&fit=crop&w=800&q=80",
+                    "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?auto=format&fit=crop&w=800&q=80"
+                ],
+                video: "https://www.youtube.com/embed/dQw4w9WgXcQ",
+                description: "An architectural masterpiece located in the heart of New Town. Features spacious living areas, modular kitchen, and panoramic skyline views.",
+                amenities: ["Swimming Pool", "Gym", "Lift", "24/7 Security", "CCTV", "Power Backup", "Garden", "Clubhouse"],
+                nearby: [{name: "Metro Station", dist: "0.8 km"}, {name: "Shopping Mall", dist: "1.5 km"}, {name: "Hospital", dist: "2.5 km"}]
+            },
+            {
+                id: "PROP002",
+                title: "Royal Heritage 4 BHK Penthouse",
+                location: "Salt Lake",
+                price: 27500000,
+                bhk: 4,
+                area: 3200,
+                superArea: 3800,
+                floor: "Top Floor",
+                totalFloors: 12,
+                type: "Flat",
+                furnishing: "Furnished",
+                status: "Available",
+                parking: "3 Cars",
+                age: "2 Years",
+                featured: true,
+                image: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=800&q=80",
+                gallery: [
+                    "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=800&q=80",
+                    "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=800&q=80"
+                ],
+                video: "",
+                description: "Ultra-luxury penthouse in prestigious Salt Lake with private terrace garden and Italian marble flooring.",
+                amenities: ["Swimming Pool", "Gym", "Lift", "24/7 Security", "CCTV", "Power Backup", "Balcony"],
+                nearby: [{name: "Hospital", dist: "1.0 km"}, {name: "School", dist: "0.5 km"}]
+            },
+            {
+                id: "PROP003",
+                title: "Serene Lakeside 2 BHK Apartment",
+                location: "EM Bypass",
+                price: 6500000,
+                bhk: 2,
+                area: 1100,
+                superArea: 1350,
+                floor: "4th Floor",
+                totalFloors: 8,
+                type: "Apartment",
+                furnishing: "Unfurnished",
+                status: "Under Negotiation",
+                parking: "1 Car",
+                age: "3 Years",
+                featured: false,
+                image: "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=800&q=80",
+                gallery: ["https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=800&q=80"],
+                video: "",
+                description: "Peaceful residential flat overlooking green parks and water bodies with great ventilation.",
+                amenities: ["Lift", "24/7 Security", "Garden", "Children's Play Area", "Water Supply"],
+                nearby: [{name: "Metro Station", dist: "1.2 km"}]
+            },
+            {
+                id: "PROP004",
+                title: "Grand Vista 3 BHK Luxury Flat",
+                location: "Rajarhat",
+                price: 11500000,
+                bhk: 3,
+                area: 1650,
+                superArea: 2000,
+                floor: "10th Floor",
+                totalFloors: 20,
+                type: "Flat",
+                furnishing: "Semi-Furnished",
+                status: "Available",
+                parking: "2 Cars",
+                age: "Brand New",
+                featured: true,
+                image: "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=800&q=80",
+                gallery: ["https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=800&q=80"],
+                video: "",
+                description: "Prime connectivity on Rajarhat main road with world-class clubhouse and infinity pool.",
+                amenities: ["Swimming Pool", "Gym", "Lift", "24/7 Security", "CCTV", "Clubhouse"],
+                nearby: [{name: "Airport", dist: "3.5 km"}, {name: "Mall", dist: "1.0 km"}]
+            },
+            {
+                id: "PROP005",
+                title: "Greenwood Gated Villa",
+                location: "Kolkata",
+                price: 22000000,
+                bhk: 4,
+                area: 2800,
+                superArea: 3200,
+                floor: "Ground + 2",
+                totalFloors: 2,
+                type: "Villa",
+                furnishing: "Furnished",
+                status: "Available",
+                parking: "3 Cars",
+                age: "1 Year",
+                featured: true,
+                image: "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=800&q=80",
+                gallery: ["https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=800&q=80"],
+                video: "",
+                description: "Independent luxury villa with private lawn, double-height ceiling living room, and 24/7 security.",
+                amenities: ["Swimming Pool", "Gym", "24/7 Security", "Garden", "Power Backup"],
+                nearby: [{name: "School", dist: "2.0 km"}]
+            },
+            {
+                id: "PROP006",
+                title: "Metro 1 BHK Studio Flat",
+                location: "Howrah",
+                price: 3500000,
+                bhk: 1,
+                area: 600,
+                superArea: 750,
+                floor: "2nd Floor",
+                totalFloors: 10,
+                type: "Flat",
+                furnishing: "Semi-Furnished",
+                status: "Available",
+                parking: "1 Bike",
+                age: "Brand New",
+                featured: false,
+                image: "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?auto=format&fit=crop&w=800&q=80",
+                gallery: ["https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?auto=format&fit=crop&w=800&q=80"],
+                video: "",
+                description: "Ideal for working professionals and smart investors with high rental yield.",
+                amenities: ["Lift", "24/7 Security", "CCTV", "Power Backup"],
+                nearby: [{name: "Railway Station", dist: "1.0 km"}]
+            },
+            {
+                id: "PROP007",
+                title: "Orchid Independent House",
+                location: "New Town",
+                price: 31000000,
+                bhk: 4,
+                area: 3400,
+                superArea: 4000,
+                floor: "Ground + 3",
+                totalFloors: 3,
+                type: "Independent House",
+                furnishing: "Furnished",
+                status: "Sold",
+                parking: "3 Cars",
+                age: "4 Years",
+                featured: false,
+                image: "https://images.unsplash.com/photo-1580587771525-78b9dba3b914?auto=format&fit=crop&w=800&q=80",
+                gallery: ["https://images.unsplash.com/photo-1580587771525-78b9dba3b914?auto=format&fit=crop&w=800&q=80"],
+                video: "",
+                description: "Fully independent duplex house with rooftop terrace garden and premium marble finishes.",
+                amenities: ["24/7 Security", "Garden", "Power Backup", "Water Supply"],
+                nearby: [{name: "Market", dist: "0.5 km"}]
+            },
+            {
+                id: "PROP008",
+                title: "Compact 2 BHK Modern Flat",
+                location: "Salt Lake",
+                price: 7200000,
+                bhk: 2,
+                area: 980,
+                superArea: 1200,
+                floor: "5th Floor",
+                totalFloors: 10,
+                type: "Apartment",
+                furnishing: "Semi-Furnished",
+                status: "Available",
+                parking: "1 Car",
+                age: "2 Years",
+                featured: false,
+                image: "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?auto=format&fit=crop&w=800&q=80",
+                gallery: ["https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?auto=format&fit=crop&w=800&q=80"],
+                video: "",
+                description: "Well-maintained ready to move flat with excellent neighborhood and connectivity.",
+                amenities: ["Lift", "24/7 Security", "CCTV", "Power Backup", "Gym"],
+                nearby: [{name: "Bus Stop", dist: "0.2 km"}]
+            }
+        ];
+
+        let properties = JSON.parse(localStorage.getItem('apex_properties')) || defaultProperties;
+        let favorites = JSON.parse(localStorage.getItem('apex_favorites')) || [];
+        let compareList = JSON.parse(localStorage.getItem('apex_compare')) || [];
+
+        /* APP INITIALIZATION */
+        document.addEventListener('DOMContentLoaded', () => {
+            setTimeout(() => {
+                const loader = document.getElementById('loading-screen');
+                loader.style.opacity = '0';
+                setTimeout(() => loader.remove(), 500);
+            }, 600);
+
+            initTheme();
+            initNavigation();
+            initStatsCounter();
+            renderFeaturedProperties();
+            renderCatalogProperties();
+            updateBadges();
+            initFilters();
+            initModals();
+            initAdminSystem();
+        });
+
+        /* TOAST NOTIFICATIONS */
+        function showToast(message, type = 'success') {
+            const container = document.getElementById('toast-container');
+            const toast = document.createElement('div');
+            toast.className = `toast`;
+            toast.innerHTML = `<i class="fa-solid fa-circle-check" style="color:${type==='success'?'var(--success)':'var(--danger)'}"></i> <span>${message}</span>`;
+            container.appendChild(toast);
+            setTimeout(() => toast.remove(), 3000);
+        }
+
+        /* THEME TOGGLE */
+        function initTheme() {
+            const toggleBtn = document.getElementById('theme-toggle');
+            const currentTheme = localStorage.getItem('apex_theme') || 'light';
+            document.documentElement.setAttribute('data-theme', currentTheme);
+            toggleBtn.innerHTML = currentTheme === 'dark' ? '<i class="fa-solid fa-sun"></i>' : '<i class="fa-solid fa-moon"></i>';
+
+            toggleBtn.addEventListener('click', () => {
+                let theme = document.documentElement.getAttribute('data-theme');
+                let newTheme = theme === 'light' ? 'dark' : 'light';
+                document.documentElement.setAttribute('data-theme', newTheme);
+                localStorage.setItem('apex_theme', newTheme);
+                toggleBtn.innerHTML = newTheme === 'dark' ? '<i class="fa-solid fa-sun"></i>' : '<i class="fa-solid fa-moon"></i>';
+            });
+        }
+
+        /* NAVIGATION */
+        function initNavigation() {
+            const menu = document.getElementById('nav-menu');
+            document.getElementById('nav-toggle').addEventListener('click', () => menu.classList.add('active'));
+            document.getElementById('nav-close').addEventListener('click', () => menu.classList.remove('active'));
+            document.querySelectorAll('.nav-link').forEach(link => link.addEventListener('click', () => menu.classList.remove('active')));
+        }
+
+        /* STATS COUNTER */
+        function initStatsCounter() {
+            const counters = document.querySelectorAll('.stat-number');
+            let animated = false;
+            window.addEventListener('scroll', () => {
+                if (window.scrollY + window.innerHeight > document.querySelector('.stats-section').offsetTop && !animated) {
+                    counters.forEach(counter => {
+                        const target = +counter.getAttribute('data-target');
+                        let count = 0;
+                        const update = () => {
+                            count += target / 20;
+                            if (count < target) {
+                                counter.innerText = Math.ceil(count) + "+";
+                                setTimeout(update, 40);
+                            } else { counter.innerText = target + "+"; }
+                        };
+                        update();
+                    });
+                    animated = true;
+                }
+            });
+        }
+
+        /* CURRENCY FORMATTER */
+        function formatINR(amount) {
+            if (amount >= 10000000) return `₹${(amount / 10000000).toFixed(2)} Crore`;
+            if (amount >= 100000) return `₹${(amount / 100000).toFixed(1)} Lakh`;
+            return `₹${amount.toLocaleString('en-IN')}`;
+        }
+
+        /* PROPERTY CARD GENERATOR */
+        function createPropertyCard(prop) {
+            const isFav = favorites.includes(prop.id);
+            const isSold = prop.status === "Sold";
+            const isNego = prop.status === "Under Negotiation";
+
+            let badges = '';
+            if (isSold) badges += `<span class="badge badge-sold">SOLD</span>`;
+            else if (isNego) badges += `<span class="badge badge-nego-status">NEGOTIATION</span>`;
+            else {
+                if (prop.featured) badges += `<span class="badge badge-featured">FEATURED</span>`;
+                badges += `<span class="badge badge-verified">VERIFIED</span>`;
+            }
+
+            return `
+                <div class="property-card">
+                    <div class="property-img-wrapper">
+                        <img src="${prop.image}" alt="${prop.title}" loading="lazy">
+                        <div class="property-badges">${badges}</div>
+                        <div class="property-actions-top">
+                            <button class="fav-btn ${isFav ? 'active' : ''}" onclick="toggleFavorite('${prop.id}')" title="Save Favorite"><i class="fa-${isFav ? 'solid' : 'regular'} fa-heart"></i></button>
+                        </div>
+                    </div>
+                    <div class="property-body">
+                        <div class="property-price">${formatINR(prop.price)}</div>
+                        <h3 class="property-title">${prop.title}</h3>
+                        <p class="property-location"><i class="fa-solid fa-location-dot"></i> ${prop.location}</p>
+                        <div class="property-specs">
+                            <span><i class="fa-solid fa-bed"></i> ${prop.bhk} BHK</span>
+                            <span><i class="fa-solid fa-ruler-combined"></i> ${prop.area} sq.ft</span>
+                            <span><i class="fa-solid fa-building"></i> ${prop.floor}</span>
+                        </div>
+                        <div class="property-footer">
+                            <button class="btn btn-outline btn-block" onclick="openPropertyModal('${prop.id}')">View Details</button>
+                            ${isSold ? `<button class="btn btn-outline btn-block" disabled style="opacity:0.5;">Sold Out</button>` : `<button class="btn btn-primary btn-block" onclick="openInquiryModal('${prop.id}')">Contact</button>`}
+                        </div>
+                        <div style="margin-top:0.75rem; display:flex; justify-content:space-between; align-items:center; font-size:0.85rem;">
+                            <label><input type="checkbox" ${compareList.includes(prop.id)?'checked':''} onchange="toggleCompare('${prop.id}')"> Compare</label>
+                            <a href="https://wa.me/${dealerWhatsApp}?text=Hello%2C%20I%20am%20interested%20in%20Property%20ID%20${prop.id}%20-%20${encodeURIComponent(prop.title)}." target="_blank" style="color:#25d366; font-weight:600;"><i class="fa-brands fa-whatsapp"></i> WhatsApp</a>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function renderFeaturedProperties() {
+            document.getElementById('featured-property-grid').innerHTML = properties.filter(p => p.featured && p.status !== "Sold").map(createPropertyCard).join('');
+        }
+
+        /* CATALOG & FILTERS */
+        function renderCatalogProperties() {
+            const keyword = document.getElementById('filter-keyword').value.toLowerCase();
+            const location = document.getElementById('filter-location').value;
+            const maxPrice = Number(document.getElementById('filter-price-range').value);
+            const bhks = Array.from(document.querySelectorAll('input[name="bhk"]:checked')).map(cb => Number(cb.value));
+            const types = Array.from(document.querySelectorAll('input[name="type"]:checked')).map(cb => cb.value);
+            const sortBy = document.getElementById('sort-select').value;
+
+            let filtered = properties.filter(p => {
+                if (keyword && !p.title.toLowerCase().includes(keyword) && !p.location.toLowerCase().includes(keyword) && !p.id.toLowerCase().includes(keyword)) return false;
+                if (location && p.location !== location) return false;
+                if (p.price > maxPrice) return false;
+                if (bhks.length > 0 && !bhks.includes(p.bhk)) return false;
+                if (types.length > 0 && !types.includes(p.type)) return false;
+                return true;
+            });
+
+            if (sortBy === 'price-low') filtered.sort((a,b)=>a.price-b.price);
+            else if (sortBy === 'price-high') filtered.sort((a,b)=>b.price-a.price);
+            else if (sortBy === 'area-high') filtered.sort((a,b)=>b.area-a.area);
+            else filtered.sort((a,b)=>b.id.localeCompare(a.id));
+
+            document.getElementById('result-count').innerHTML = `Showing <strong>${filtered.length}</strong> properties`;
+            const grid = document.getElementById('main-property-grid');
+            const noRes = document.getElementById('no-results');
+
+            if (filtered.length === 0) { grid.innerHTML = ''; noRes.classList.remove('hidden'); }
+            else { noRes.classList.add('hidden'); grid.innerHTML = filtered.map(createPropertyCard).join(''); }
+        }
+
+        function initFilters() {
+            document.getElementById('filter-price-range').addEventListener('input', (e) => {
+                document.getElementById('price-output').innerText = formatINR(Number(e.target.value));
+                renderCatalogProperties();
+            });
+            document.getElementById('filter-keyword').addEventListener('input', renderCatalogProperties);
+            document.getElementById('filter-location').addEventListener('change', renderCatalogProperties);
+            document.getElementById('sort-select').addEventListener('change', renderCatalogProperties);
+            document.querySelectorAll('input[name="bhk"], input[name="type"]').forEach(cb => cb.addEventListener('change', renderCatalogProperties));
+            
+            const clearFn = () => {
+                document.getElementById('filter-keyword').value = '';
+                document.getElementById('filter-location').value = '';
+                document.getElementById('filter-price-range').value = 35000000;
+                document.getElementById('price-output').innerText = '₹3.5 Crore';
+                document.querySelectorAll('input[type="checkbox"]').forEach(cb => cb.checked = false);
+                renderCatalogProperties();
+                showToast("Filters cleared.");
+            };
+            document.getElementById('clear-filters-btn').addEventListener('click', clearFn);
+            document.getElementById('reset-search-btn').addEventListener('click', clearFn);
+
+            document.getElementById('toggle-filter-drawer').addEventListener('click', () => {
+                document.getElementById('filters-sidebar').classList.toggle('mobile-active');
+            });
+
+            document.getElementById('hero-search-form').addEventListener('submit', (e) => {
+                e.preventDefault();
+                const loc = document.getElementById('search-location').value;
+                const type = document.getElementById('search-type').value;
+                const bhk = document.getElementById('search-bhk').value;
+                const maxBudget = document.getElementById('search-max-price').value;
+
+                if (loc) document.getElementById('filter-location').value = loc;
+                if (maxBudget) {
+                    document.getElementById('filter-price-range').value = maxBudget;
+                    document.getElementById('price-output').innerText = formatINR(Number(maxBudget));
+                }
+                if (bhk) {
+                    const cb = document.querySelector(`input[name="bhk"][value="${bhk}"]`);
+                    if (cb) cb.checked = true;
+                }
+                if (type) {
+                    const cb = document.querySelector(`input[name="type"][value="${type}"]`);
+                    if (cb) cb.checked = true;
+                }
+                renderCatalogProperties();
+                document.getElementById('properties').scrollIntoView({ behavior: 'smooth' });
+                showToast("Search filters applied!");
+            });
+        }
+
+        /* FAVORITES & COMPARE */
+        function toggleFavorite(id) {
+            const idx = favorites.indexOf(id);
+            if (idx > -1) { favorites.splice(idx, 1); showToast("Removed from favorites", "error"); }
+            else { favorites.push(id); showToast("Added to favorites!"); }
+            localStorage.setItem('apex_favorites', JSON.stringify(favorites));
+            renderFeaturedProperties();
+            renderCatalogProperties();
+            updateBadges();
+            renderFavoritesModal();
+        }
+
+        function toggleCompare(id) {
+            const idx = compareList.indexOf(id);
+            if (idx > -1) { compareList.splice(idx, 1); showToast("Removed from comparison"); }
+            else {
+                if (compareList.length >= 3) { showToast("You can compare up to 3 properties.", "error"); renderCatalogProperties(); return; }
+                compareList.push(id); showToast("Added to comparison!");
+            }
+            localStorage.setItem('apex_compare', JSON.stringify(compareList));
+            updateBadges();
+            renderCompareModal();
+        }
+
+        function updateBadges() {
+            document.getElementById('fav-counter-badge').innerText = favorites.length;
+            document.getElementById('compare-counter-badge').innerText = compareList.length;
+        }
+
+        function renderFavoritesModal() {
+            const grid = document.getElementById('favorites-grid');
+            document.getElementById('fav-modal-subtitle').innerText = `${favorites.length} properties saved`;
+            const favProps = properties.filter(p => favorites.includes(p.id));
+            if (favProps.length === 0) grid.innerHTML = `<p style="text-align:center; color:var(--gray-600); padding:2rem;">No favorites saved yet.</p>`;
+            else grid.innerHTML = favProps.map(createPropertyCard).join('');
+        }
+
+        function renderCompareModal() {
+            const container = document.getElementById('compare-container');
+            if (compareList.length === 0) { container.innerHTML = `<p style="text-align:center; color:var(--gray-600);">No properties selected for comparison.</p>`; return; }
+            const compProps = properties.filter(p => compareList.includes(p.id));
+            let html = `<table class="compare-table"><thead><tr><th>Feature</th>`;
+            compProps.forEach(p => html += `<th>${p.title}<br><button class="btn-link" style="color:var(--danger); font-size:0.8rem;" onclick="toggleCompare('${p.id}')">Remove</button></th>`);
+            html += `</tr></thead><tbody>`;
+            const rows = [
+                {label:"Price", fn:p=>formatINR(p.price)},
+                {label:"Location", fn:p=>p.location},
+                {label:"BHK", fn:p=>`${p.bhk} BHK`},
+                {label:"Area", fn:p=>`${p.area} sq.ft`},
+                {label:"Floor", fn:p=>p.floor},
+                {label:"Furnishing", fn:p=>p.furnishing},
+                {label:"Parking", fn:p=>p.parking},
+                {label:"Status", fn:p=>p.status}
+            ];
+            rows.forEach(r => {
+                html += `<tr><td><strong>${r.label}</strong></td>`;
+                compProps.forEach(p => html += `<td>${r.fn(p)}</td>`);
+                html += `</tr>`;
+            });
+            html += `</tbody></table>`;
+            container.innerHTML = html;
+        }
+
+        /* PROPERTY DETAILS MODAL & GALLERY */
+        function openPropertyModal(id) {
+            const p = properties.find(prop => prop.id === id);
+            if (!p) return;
+            const isSold = p.status === "Sold";
+            const gallery = p.gallery && p.gallery.length > 0 ? p.gallery : [p.image];
+            let thumbs = gallery.map((img, idx) => `<img src="${img}" class="thumb-img ${idx===0?'active':''}" onclick="changePreview(this, '${img}')">`).join('');
+            let amenities = p.amenities ? p.amenities.map(a => `<span class="amenity-tag"><i class="fa-solid fa-check"></i> ${a}</span>`).join('') : '';
+            let nearby = p.nearby ? p.nearby.map(n => `<li><i class="fa-solid fa-map-pin" style="color:var(--primary);"></i> ${n.name} — ${n.dist}</li>`).join('') : '';
+
+            document.getElementById('modal-body-content').innerHTML = `
+                <div>
+                    <img src="${gallery[0]}" id="modal-main-img" class="main-preview-img" alt="">
+                    <div class="thumbnail-strip">${thumbs}</div>
+                </div>
+                <div style="display:flex; justify-content:space-between; align-items:flex-start; margin: 1.5rem 0;">
+                    <div>
+                        <span class="badge ${isSold?'badge-sold':'badge-verified'}">${p.status}</span>
+                        <h2 style="font-size:1.75rem; margin-top:0.25rem;">${p.title}</h2>
+                        <p style="color:var(--gray-600);"><i class="fa-solid fa-location-dot"></i> ${p.location} | ID: <strong>${p.id}</strong></p>
+                    </div>
+                    <div style="font-size:2rem; font-weight:800; color:var(--primary);">${formatINR(p.price)}</div>
+                </div>
+                <div class="specs-grid-modal">
+                    <div class="spec-box"><span>BHK</span><span>${p.bhk} BHK</span></div>
+                    <div class="spec-box"><span>Carpet Area</span><span>${p.area} sq.ft</span></div>
+                    <div class="spec-box"><span>Super Area</span><span>${p.superArea||p.area} sq.ft</span></div>
+                    <div class="spec-box"><span>Floor</span><span>${p.floor} (of ${p.totalFloors||10})</span></div>
+                    <div class="spec-box"><span>Type</span><span>${p.type}</span></div>
+                    <div class="spec-box"><span>Furnishing</span><span>${p.furnishing}</span></div>
+                </div>
+                <h3 style="margin-bottom:0.5rem;">About This Property</h3>
+                <p style="color:var(--gray-600); margin-bottom:1.5rem;">${p.description}</p>
+                <h3 style="margin-bottom:0.5rem;">Amenities</h3>
+                <div class="amenities-tag-list">${amenities}</div>
+                ${nearby ? `<h3 style="margin-bottom:0.5rem;">What's Nearby?</h3><ul style="display:grid; grid-template-columns:repeat(auto-fit, minmax(200px, 1fr)); gap:0.5rem; margin-bottom:1.5rem;">${nearby}</ul>` : ''}
+                ${p.video ? `<h3 style="margin-bottom:0.5rem;">Virtual Property Tour</h3><div style="position:relative; padding-bottom:56.25%; height:0; margin-bottom:1.5rem;"><iframe src="${p.video}" style="position:absolute; top:0; left:0; width:100%; height:100%; border-radius:8px;" allowfullscreen></iframe></div>` : `<p style="margin-bottom:1.5rem; color:var(--gray-600); font-style:italic;">Video tour coming soon.</p>`}
+                <h3 style="margin-bottom:0.5rem;">Location Map</h3>
+                <div style="margin-bottom:1.5rem;">
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3684!2d88.47!3d22.57!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMjLCsDM0JzIxLjQiTiA4OGDgngyNi4zIkU!5e0!3m2!1sen!2sin!4v1" width="100%" height="250" style="border:0; border-radius:8px;" allowfullscreen="" loading="lazy"></iframe>
+                    <a href="https://maps.google.com/?q=${encodeURIComponent(p.location)}" target="_blank" class="btn btn-outline" style="margin-top:0.75rem;"><i class="fa-solid fa-map-location-dot"></i> Open in Google Maps</a>
+                </div>
+                <div style="display:flex; gap:1rem; flex-wrap:wrap;">
+                    ${isSold ? `<button class="btn btn-outline" disabled style="opacity:0.5;">Sold Out</button>` : `<button class="btn btn-primary" onclick="openInquiryModal('${p.id}')">Contact Dealer</button><button class="btn btn-outline" onclick="openVisitModal('${p.id}')">Schedule Visit</button>`}
+                    <a href="https://wa.me/${dealerWhatsApp}?text=Hello%2C%20I%20am%20interested%20in%20Property%20ID%20${p.id}%20-%20${encodeURIComponent(p.title)}" target="_blank" class="btn btn-whatsapp"><i class="fa-brands fa-whatsapp"></i> WhatsApp</a>
+                </div>
+            `;
+            document.getElementById('property-modal').classList.add('active');
+        }
+
+        function changePreview(thumb, src) {
+            document.getElementById('modal-main-img').src = src;
+            document.querySelectorAll('.thumb-img').forEach(t => t.classList.remove('active'));
+            thumb.classList.add('active');
+        }
+
+        function openInquiryModal(id) {
+            const p = properties.find(prop => prop.id === id);
+            document.getElementById('inq-prop-id').value = id;
+            document.getElementById('inquiry-prop-subtitle').innerText = `Property: ${p ? p.title : id}`;
+            document.getElementById('property-modal').classList.remove('active');
+            document.getElementById('inquiry-modal').classList.add('active');
+        }
+
+        function openVisitModal(id) {
+            const p = properties.find(prop => prop.id === id);
+            document.getElementById('visit-prop-id').value = id;
+            document.getElementById('visit-prop-subtitle').innerText = `Property: ${p ? p.title : id}`;
+            document.getElementById('property-modal').classList.remove('active');
+            document.getElementById('visit-modal').classList.add('active');
+        }
+
+        /* MODALS & FORMS */
+        function initModals() {
+            document.getElementById('modal-close').addEventListener('click', () => document.getElementById('property-modal').classList.remove('active'));
+            document.getElementById('inquiry-modal-close').addEventListener('click', () => document.getElementById('inquiry-modal').classList.remove('active'));
+            document.getElementById('visit-modal-close').addEventListener('click', () => document.getElementById('visit-modal').classList.remove('active'));
+            document.getElementById('fav-modal-close').addEventListener('click', () => document.getElementById('favorites-modal').classList.remove('active'));
+            document.getElementById('compare-modal-close').addEventListener('click', () => document.getElementById('compare-modal').classList.remove('active'));
+            document.getElementById('admin-login-close').addEventListener('click', () => document.getElementById('admin-login-modal').classList.remove('active'));
+            document.getElementById('admin-dashboard-close').addEventListener('click', () => document.getElementById('admin-dashboard-modal').classList.remove('active'));
+            document.getElementById('prop-form-close').addEventListener('click', () => document.getElementById('property-form-modal').classList.remove('active'));
+
+            document.getElementById('open-fav-modal').addEventListener('click', () => { renderFavoritesModal(); document.getElementById('favorites-modal').classList.add('active'); });
+            document.getElementById('open-compare-modal').addEventListener('click', () => { renderCompareModal(); document.getElementById('compare-modal').classList.add('active'); });
+            document.getElementById('open-admin-btn').addEventListener('click', () => document.getElementById('admin-login-modal').classList.add('active'));
+            document.getElementById('footer-admin-link').addEventListener('click', (e) => { e.preventDefault(); document.getElementById('admin-login-modal').classList.add('active'); });
+            document.getElementById('list-prop-btn').addEventListener('click', () => document.getElementById('admin-login-modal').classList.add('active'));
+
+            document.getElementById('general-inquiry-form').addEventListener('submit', (e) => { e.preventDefault(); showToast("Thank you! Your inquiry has been submitted."); e.target.reset(); });
+            document.getElementById('modal-inquiry-form').addEventListener('submit', (e) => { e.preventDefault(); showToast("Thank you! Inquiry received."); document.getElementById('inquiry-modal').classList.remove('active'); e.target.reset(); });
+            document.getElementById('modal-visit-form').addEventListener('submit', (e) => { e.preventDefault(); showToast("Your property visit request has been received."); document.getElementById('visit-modal').classList.remove('active'); e.target.reset(); });
+
+            document.getElementById('admin-login-form').addEventListener('submit', (e) => {
+                e.preventDefault();
+                if(document.getElementById('admin-user').value === 'admin' && document.getElementById('admin-pass').value === 'password123') {
+                    document.getElementById('admin-login-modal').classList.remove('active');
+                    document.getElementById('admin-dashboard-modal').classList.add('active');
+                    renderAdminDashboard();
+                    showToast("Welcome Admin!");
+                } else { showToast("Invalid credentials", "error"); }
+            });
+
+            document.querySelectorAll('.faq-question').forEach(q => {
+                q.addEventListener('click', () => q.parentElement.classList.toggle('active'));
+            });
+        }
+
+        /* ADMIN SYSTEM */
+        function initAdminSystem() {
+            document.getElementById('add-new-prop-btn').addEventListener('click', () => {
+                document.getElementById('save-property-form').reset();
+                document.getElementById('form-edit-id').value = '';
+                document.getElementById('prop-form-title').innerText = 'Add Property';
+                document.getElementById('property-form-modal').classList.add('active');
+            });
+
+            document.getElementById('save-property-form').addEventListener('submit', (e) => {
+                e.preventDefault();
+                const editId = document.getElementById('form-edit-id').value;
+                const pData = {
+                    id: document.getElementById('p-id').value,
+                    title: document.getElementById('p-title').value,
+                    location: document.getElementById('p-location').value,
+                    price: Number(document.getElementById('p-price').value),
+                    bhk: Number(document.getElementById('p-bhk').value),
+                    area: Number(document.getElementById('p-area').value),
+                    floor: document.getElementById('p-floor').value,
+                    type: document.getElementById('p-type').value,
+                    furnishing: document.getElementById('p-furnishing').value,
+                    status: document.getElementById('p-status').value,
+                    parking: "1 Car",
+                    age: "Brand New",
+                    featured: document.getElementById('p-featured').checked,
+                    image: document.getElementById('p-image').value,
+                    gallery: document.getElementById('p-gallery').value.split(',').map(s=>s.trim()).filter(Boolean),
+                    video: document.getElementById('p-video').value,
+                    description: document.getElementById('p-desc').value,
+                    amenities: document.getElementById('p-amenities').value.split(',').map(s=>s.trim())
+                };
+
+                if (editId) {
+                    const idx = properties.findIndex(p => p.id === editId);
+                    if (idx > -1) properties[idx] = pData;
+                    showToast("Property updated!");
+                } else {
+                    properties.unshift(pData);
+                    showToast("Property added successfully!");
+                }
+                localStorage.setItem('apex_properties', JSON.stringify(properties));
+                document.getElementById('property-form-modal').classList.remove('active');
+                renderFeaturedProperties();
+                renderCatalogProperties();
+                renderAdminDashboard();
+            });
+        }
+
+        function renderAdminDashboard() {
+            const tbody = document.getElementById('admin-table-body');
+            tbody.innerHTML = properties.map(p => `
+                <tr>
+                    <td><strong>${p.id}</strong></td>
+                    <td><img src="${p.image}" alt=""></td>
+                    <td>${p.title}<br><small>${p.location}</small></td>
+                    <td>${formatINR(p.price)}</td>
+                    <td><span class="badge ${p.status==='Sold'?'badge-sold':'badge-verified'}">${p.status}</span></td>
+                    <td>
+                        <div class="action-btns-group">
+                            <button class="action-btn btn-edit" onclick="editProperty('${p.id}')">Edit</button>
+                            <button class="action-btn btn-del" onclick="deleteProperty('${p.id}')">Delete</button>
+                        </div>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        function editProperty(id) {
+            const p = properties.find(prop => prop.id === id);
+            if (!p) return;
+            document.getElementById('form-edit-id').value = p.id;
+            document.getElementById('p-id').value = p.id;
+            document.getElementById('p-id').disabled = true;
+            document.getElementById('p-title').value = p.title;
+            document.getElementById('p-location').value = p.location;
+            document.getElementById('p-price').value = p.price;
+            document.getElementById('p-bhk').value = p.bhk;
+            document.getElementById('p-area').value = p.area;
+            document.getElementById('p-floor').value = p.floor;
+            document.getElementById('p-type').value = p.type;
+            document.getElementById('p-furnishing').value = p.furnishing;
+            document.getElementById('p-status').value = p.status;
+            document.getElementById('p-featured').checked = p.featured;
+            document.getElementById('p-image').value = p.image;
+            document.getElementById('p-gallery').value = p.gallery ? p.gallery.join(', ') : '';
+            document.getElementById('p-video').value = p.video || '';
+            document.getElementById('p-desc').value = p.description;
+            document.getElementById('p-amenities').value = p.amenities ? p.amenities.join(', ') : '';
+            document.getElementById('prop-form-title').innerText = `Edit: ${p.id}`;
+            document.getElementById('property-form-modal').classList.add('active');
+        }
+
+        function deleteProperty(id) {
+            if(confirm(`Delete property ${id}?`)) {
+                properties = properties.filter(p => p.id !== id);
+                localStorage.setItem('apex_properties', JSON.stringify(properties));
+                renderFeaturedProperties();
+                renderCatalogProperties();
+                renderAdminDashboard();
+                showToast("Property deleted", "error");
+            }
+        }
+    </script>
 </body>
 </html>
