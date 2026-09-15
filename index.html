@@ -4,10 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Find Your Perfect Home | Apex Realty</title>
-    <meta name="description" content="Explore verified flats and apartments for sale and connect directly with your trusted property dealer.">
+    <meta name="description" content="Explore verified flats and apartments for sale in Salt Lake, Rajarhat, New Town, and Action Area. Connect directly with your trusted property dealer.">
     <!-- Open Graph Meta Tags -->
     <meta property="og:title" content="Find Your Perfect Home | Apex Realty">
-    <meta property="og:description" content="Explore verified flats and apartments for sale and connect directly with your trusted property dealer.">
+    <meta property="og:description" content="Explore verified flats and apartments for sale in Salt Lake, Rajarhat, New Town, and Action Area.">
     <meta property="og:type" content="website">
     
     <!-- Google Fonts & Font Awesome -->
@@ -35,7 +35,7 @@
             --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
             --shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
             --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
-            --transition: all 0.3s ease;
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             --radius: 12px;
         }
 
@@ -82,7 +82,7 @@
             padding: 0 1.5rem;
         }
 
-        /* Buttons */
+        /* Buttons & Interactive Elements */
         .btn {
             display: inline-flex;
             align-items: center;
@@ -95,16 +95,28 @@
             transition: var(--transition);
             border: none;
             font-size: 0.95rem;
+            position: relative;
+            overflow: hidden;
         }
 
+        .btn::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: rgba(255,255,255,0.15);
+            opacity: 0;
+            transition: opacity 0.2s;
+        }
+        .btn:active::after { opacity: 1; }
+
         .btn-primary { background-color: var(--primary); color: var(--white); }
-        .btn-primary:hover { background-color: var(--primary-dark); transform: translateY(-2px); box-shadow: var(--shadow); }
+        .btn-primary:hover { background-color: var(--primary-dark); transform: translateY(-3px); box-shadow: var(--shadow-lg); }
         .btn-outline { background-color: transparent; border: 2px solid var(--gray-300); color: var(--dark); }
-        .btn-outline:hover { border-color: var(--primary); color: var(--primary); }
+        .btn-outline:hover { border-color: var(--primary); color: var(--primary); transform: translateY(-2px); }
         .btn-outline-light { background-color: transparent; border: 2px solid var(--white); color: var(--white); }
-        .btn-outline-light:hover { background-color: var(--white); color: var(--dark); }
+        .btn-outline-light:hover { background-color: var(--white); color: var(--dark); transform: translateY(-2px); }
         .btn-whatsapp { background-color: #25d366; color: #fff; }
-        .btn-whatsapp:hover { background-color: #20ba5a; }
+        .btn-whatsapp:hover { background-color: #20ba5a; transform: translateY(-2px); box-shadow: var(--shadow); }
         .btn-block { width: 100%; }
         .btn-link { background: none; border: none; color: var(--primary); font-weight: 600; cursor: pointer; }
 
@@ -132,7 +144,7 @@
         }
         @keyframes spin { to { transform: rotate(360deg); } }
 
-        /* Navigation */
+        /* Navigation Bar */
         .header {
             position: sticky;
             top: 0;
@@ -158,27 +170,16 @@
             display: flex;
             align-items: center;
             gap: 0.5rem;
+            transition: transform 0.3s;
         }
+        .nav-logo:hover { transform: scale(1.02); }
         .nav-logo span { color: var(--dark); }
 
-        .nav-list {
-            display: flex;
-            gap: 2rem;
-            align-items: center;
-        }
-
-        .nav-link {
-            font-weight: 500;
-            color: var(--gray-600);
-            transition: var(--transition);
-        }
+        .nav-list { display: flex; gap: 2rem; align-items: center; }
+        .nav-link { font-weight: 500; color: var(--gray-600); transition: var(--transition); }
         .nav-link:hover, .nav-link.active { color: var(--primary); }
 
-        .nav-actions {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-        }
+        .nav-actions { display: flex; align-items: center; gap: 1rem; }
 
         .theme-toggle, .nav-toggle, .nav-close, .badge-btn {
             background: none;
@@ -187,7 +188,9 @@
             cursor: pointer;
             color: var(--dark);
             position: relative;
+            transition: transform 0.2s;
         }
+        .theme-toggle:hover, .badge-btn:hover { transform: scale(1.1); }
         .badge-btn .count-badge {
             position: absolute;
             top: -8px;
@@ -198,7 +201,9 @@
             padding: 2px 6px;
             border-radius: 50px;
             font-weight: 700;
+            animation: pulseBadge 1.5s infinite;
         }
+        @keyframes pulseBadge { 0% { transform: scale(1); } 50% { transform: scale(1.2); } 100% { transform: scale(1); } }
         .nav-toggle, .nav-close { display: none; }
 
         /* Hero Section */
@@ -219,7 +224,9 @@
             display: grid;
             gap: 3rem;
         }
-        .hero-content { max-width: 700px; }
+        .hero-content { max-width: 700px; animation: fadeInUp 0.8s ease; }
+        @keyframes fadeInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
         .hero-badge {
             display: inline-flex;
             align-items: center;
@@ -243,6 +250,7 @@
             padding: 2rem;
             border-radius: var(--radius);
             box-shadow: var(--shadow-lg);
+            animation: fadeInUp 1s ease;
         }
         .hero-search-box h3 { margin-bottom: 1.5rem; font-size: 1.25rem; display: flex; align-items: center; gap: 0.5rem; }
         .search-grid {
@@ -260,6 +268,7 @@
             background-color: var(--white);
             color: var(--dark);
             font-size: 0.95rem;
+            transition: var(--transition);
         }
         .form-group select:focus, .form-group input:focus, .form-group textarea:focus {
             outline: none;
@@ -268,18 +277,10 @@
         }
 
         /* Stats Section */
-        .stats-section {
-            background-color: var(--white);
-            padding: 3rem 0;
-            box-shadow: var(--shadow-sm);
-        }
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-            gap: 2rem;
-            text-align: center;
-        }
-        .stat-card { padding: 1.5rem; }
+        .stats-section { background-color: var(--white); padding: 3rem 0; box-shadow: var(--shadow-sm); }
+        .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 2rem; text-align: center; }
+        .stat-card { padding: 1.5rem; transition: transform 0.3s; }
+        .stat-card:hover { transform: translateY(-5px); }
         .stat-icon { font-size: 2.5rem; color: var(--primary); margin-bottom: 1rem; }
         .stat-number { font-size: 2.5rem; font-weight: 800; color: var(--dark); margin-bottom: 0.25rem; }
         .stat-label { color: var(--gray-600); font-weight: 500; }
@@ -305,11 +306,13 @@
             transition: var(--transition);
             position: relative;
             border: 1px solid var(--gray-200);
+            display: flex;
+            flex-direction: column;
         }
-        .property-card:hover { transform: translateY(-5px); box-shadow: var(--shadow-lg); }
+        .property-card:hover { transform: translateY(-8px); box-shadow: var(--shadow-lg); }
         .property-img-wrapper { position: relative; height: 240px; overflow: hidden; }
-        .property-img-wrapper img { width: 100%; height: 100%; object-fit: cover; transition: var(--transition); }
-        .property-card:hover .property-img-wrapper img { transform: scale(1.05); }
+        .property-img-wrapper img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s ease; }
+        .property-card:hover .property-img-wrapper img { transform: scale(1.08); }
         
         .property-badges {
             position: absolute;
@@ -318,6 +321,7 @@
             display: flex;
             flex-direction: column;
             gap: 0.4rem;
+            z-index: 2;
         }
         .badge {
             padding: 0.25rem 0.75rem;
@@ -338,6 +342,7 @@
             right: 1rem;
             display: flex;
             gap: 0.5rem;
+            z-index: 2;
         }
         .fav-btn {
             width: 38px;
@@ -353,9 +358,9 @@
             box-shadow: var(--shadow);
             transition: var(--transition);
         }
-        .fav-btn.active, .fav-btn:hover { color: var(--danger); background-color: #fef2f2; }
+        .fav-btn.active, .fav-btn:hover { color: var(--danger); background-color: #fef2f2; transform: scale(1.1); }
 
-        .property-body { padding: 1.5rem; }
+        .property-body { padding: 1.5rem; display: flex; flex-direction: column; flex-grow: 1; }
         .property-price { font-size: 1.5rem; font-weight: 800; color: var(--primary); margin-bottom: 0.5rem; }
         .property-title { font-size: 1.15rem; font-weight: 700; margin-bottom: 0.5rem; }
         .property-location { color: var(--gray-600); font-size: 0.9rem; display: flex; align-items: center; gap: 0.4rem; margin-bottom: 1rem; }
@@ -371,7 +376,7 @@
             color: var(--gray-600);
         }
         .property-specs span { display: flex; align-items: center; gap: 0.3rem; }
-        .property-footer { display: flex; gap: 0.75rem; }
+        .property-footer { display: flex; gap: 0.75rem; margin-top: auto; }
 
         /* Catalog & Filters Layout */
         .catalog-layout {
@@ -386,6 +391,8 @@
             border-radius: var(--radius);
             box-shadow: var(--shadow);
             border: 1px solid var(--gray-200);
+            position: sticky;
+            top: 100px;
         }
         .filter-header {
             display: flex;
@@ -443,7 +450,7 @@
             border: 1px solid var(--gray-200);
             transition: var(--transition);
         }
-        .feature-card:hover { transform: translateY(-5px); border-color: var(--primary); }
+        .feature-card:hover { transform: translateY(-5px); border-color: var(--primary); box-shadow: var(--shadow); }
         .feature-icon { font-size: 2rem; color: var(--primary); margin-bottom: 1rem; }
 
         /* Testimonials */
@@ -469,7 +476,8 @@
         /* About Us */
         .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; }
         .about-img-wrapper { position: relative; }
-        .about-img { width: 100%; border-radius: var(--radius); box-shadow: var(--shadow-lg); }
+        .about-img { width: 100%; border-radius: var(--radius); box-shadow: var(--shadow-lg); transition: transform 0.5s; }
+        .about-img:hover { transform: scale(1.02); }
         .experience-badge {
             position: absolute;
             bottom: -2rem;
@@ -480,7 +488,9 @@
             border-radius: var(--radius);
             text-align: center;
             box-shadow: var(--shadow-lg);
+            animation: bounceSlow 3s infinite ease-in-out;
         }
+        @keyframes bounceSlow { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
         .experience-badge h3 { font-size: 2.5rem; font-weight: 800; }
         .dealer-stats-row {
             display: grid;
@@ -496,10 +506,12 @@
         /* FAQ Accordion */
         .faq-section { background-color: var(--white); }
         .faq-accordion { max-width: 800px; margin: 0 auto; display: flex; flex-direction: column; gap: 1rem; }
-        .faq-item { border: 1px solid var(--gray-200); border-radius: 8px; overflow: hidden; background-color: var(--gray-100); }
+        .faq-item { border: 1px solid var(--gray-200); border-radius: 8px; overflow: hidden; background-color: var(--gray-100); transition: var(--transition); }
+        .faq-item:hover { border-color: var(--primary); }
         .faq-question { padding: 1.25rem; display: flex; justify-content: space-between; align-items: center; cursor: pointer; font-weight: 600; }
+        .faq-question i { transition: transform 0.3s; }
         .faq-answer { padding: 0 1.25rem 1.25rem; color: var(--gray-600); display: none; font-size: 0.95rem; }
-        .faq-item.active .faq-answer { display: block; }
+        .faq-item.active .faq-answer { display: block; animation: fadeIn 0.3s ease; }
         .faq-item.active .faq-question i { transform: rotate(180deg); }
 
         /* Contact Section */
@@ -527,7 +539,7 @@
             display: flex; align-items: center; justify-content: center;
             color: var(--white); transition: var(--transition);
         }
-        .footer-social a:hover { background-color: var(--primary); }
+        .footer-social a:hover { background-color: var(--primary); transform: translateY(-3px); }
         .footer-links { display: flex; flex-direction: column; gap: 0.75rem; }
         .footer-links a:hover { color: var(--primary); padding-left: 5px; }
         .footer-bottom { text-align: center; padding-top: 2rem; border-top: 1px solid rgba(255, 255, 255, 0.1); font-size: 0.85rem; color: var(--gray-600); }
@@ -549,8 +561,10 @@
             box-shadow: var(--shadow-lg);
             z-index: 999;
             transition: var(--transition);
+            animation: pulseWA 2s infinite;
         }
-        .floating-whatsapp:hover { transform: scale(1.1); }
+        @keyframes pulseWA { 0% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.7); } 70% { box-shadow: 0 0 0 15px rgba(37, 211, 102, 0); } 100% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0); } }
+        .floating-whatsapp:hover { transform: scale(1.15); }
 
         /* Modals */
         .modal {
@@ -563,19 +577,20 @@
             z-index: 2000;
             padding: 1rem;
             overflow-y: auto;
+            backdrop-filter: blur(5px);
         }
-        .modal.active { display: flex; }
+        .modal.active { display: flex; animation: fadeIn 0.3s ease; }
         .modal-content {
             background-color: var(--white);
             border-radius: var(--radius);
-            padding: 2rem;
+            padding: 2.5rem 2rem 2rem 2rem;
             width: 100%;
             max-width: 550px;
             position: relative;
             max-height: 90vh;
             overflow-y: auto;
             box-shadow: var(--shadow-lg);
-            animation: modalSlideUp 0.3s ease;
+            animation: modalSlideUp 0.3s cubic-bezier(0.16, 1, 0.3, 1);
         }
         .modal-large { max-width: 900px; }
         .modal-xl { max-width: 1100px; }
@@ -590,14 +605,15 @@
             cursor: pointer;
             color: var(--gray-600);
             z-index: 10;
+            transition: transform 0.2s;
         }
-        .modal-close:hover { color: var(--danger); }
+        .modal-close:hover { color: var(--danger); transform: rotate(90deg); }
 
         /* Gallery in Modal */
-        .main-preview-img { width: 100%; height: 380px; object-fit: cover; border-radius: 8px; margin-bottom: 0.75rem; }
+        .main-preview-img { width: 100%; height: 380px; object-fit: cover; border-radius: 8px; margin-bottom: 0.75rem; transition: opacity 0.3s; }
         .thumbnail-strip { display: flex; gap: 0.5rem; overflow-x: auto; padding-bottom: 0.5rem; }
         .thumb-img { width: 80px; height: 60px; object-fit: cover; border-radius: 6px; cursor: pointer; opacity: 0.6; border: 2px solid transparent; transition: var(--transition); }
-        .thumb-img.active, .thumb-img:hover { opacity: 1; border-color: var(--primary); }
+        .thumb-img.active, .thumb-img:hover { opacity: 1; border-color: var(--primary); transform: scale(1.05); }
         
         .specs-grid-modal {
             display: grid;
@@ -620,7 +636,9 @@
             font-size: 0.85rem;
             font-weight: 600;
             display: flex; align-items: center; gap: 0.4rem;
+            transition: transform 0.2s;
         }
+        .amenity-tag:hover { transform: scale(1.05); }
 
         /* Comparison Table */
         .compare-table { width: 100%; border-collapse: collapse; background-color: var(--white); border-radius: var(--radius); overflow: hidden; box-shadow: var(--shadow); }
@@ -648,6 +666,7 @@
             gap: 0.75rem;
             font-weight: 500;
             animation: slideInLeft 0.3s ease, fadeOut 0.3s ease 2.7s forwards;
+            border-left: 4px solid var(--primary);
         }
 
         /* Admin Table */
@@ -658,7 +677,8 @@
         .admin-table th { background-color: var(--gray-100); font-weight: 700; }
         .admin-table img { width: 50px; height: 40px; object-fit: cover; border-radius: 4px; }
         .action-btns-group { display: flex; gap: 0.5rem; }
-        .action-btn { padding: 0.4rem 0.6rem; border-radius: 4px; border: none; cursor: pointer; font-size: 0.8rem; }
+        .action-btn { padding: 0.4rem 0.6rem; border-radius: 4px; border: none; cursor: pointer; font-size: 0.8rem; transition: transform 0.2s; }
+        .action-btn:hover { transform: scale(1.05); }
         .btn-edit { background-color: var(--primary); color: #fff; }
         .btn-del { background-color: var(--danger); color: #fff; }
         .form-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; }
@@ -670,8 +690,8 @@
 
         @media (max-width: 992px) {
             .catalog-layout { grid-template-columns: 1fr; }
-            .filters-sidebar { display: none; }
-            .filters-sidebar.mobile-active { display: block; position: fixed; inset: 80px 0 0 0; z-index: 1000; overflow-y: auto; }
+            .filters-sidebar { position: static; display: none; margin-bottom: 2rem; }
+            .filters-sidebar.mobile-active { display: block; }
             .mobile-filter-btn { display: inline-flex; }
             .about-grid, .contact-grid, .footer-grid { grid-template-columns: 1fr; gap: 2rem; }
             .nav-list {
@@ -693,7 +713,7 @@
     <div id="loading-screen">
         <div class="spinner"></div>
         <h2>Apex Realty</h2>
-        <p>Loading verified properties...</p>
+        <p>Loading exclusive flats & properties in Salt Lake, Rajarhat, New Town & Action Area...</p>
     </div>
 
     <!-- Navigation Bar -->
@@ -706,7 +726,7 @@
             <div class="nav-menu" id="nav-menu">
                 <ul class="nav-list">
                     <li><a href="#home" class="nav-link active">Home</a></li>
-                    <li><a href="#properties" class="nav-link">Properties</a></li>
+                    <li><a href="#properties" class="nav-link">Properties For Sale</a></li>
                     <li><a href="#featured" class="nav-link">Featured</a></li>
                     <li><a href="#about" class="nav-link">About</a></li>
                     <li><a href="#contact" class="nav-link">Contact</a></li>
@@ -724,8 +744,7 @@
                     <i class="fa-solid fa-scale-balanced"></i>
                     <span class="count-badge" id="compare-counter-badge">0</span>
                 </button>
-                <button class="btn btn-outline" id="open-admin-btn"><i class="fa-solid fa-lock"></i> Admin</button>
-                <button class="btn btn-primary" id="list-prop-btn">List Property</button>
+                <button class="btn btn-outline" id="open-admin-btn"><i class="fa-solid fa-lock"></i> Dealer Admin</button>
                 <div class="nav-toggle" id="nav-toggle"><i class="fa-solid fa-bars"></i></div>
             </div>
         </nav>
@@ -740,46 +759,43 @@
             <div class="hero-overlay"></div>
             <div class="hero-container container">
                 <div class="hero-content">
-                    <span class="hero-badge"><i class="fa-solid fa-shield-halved"></i> 100% Verified Properties</span>
-                    <h1 class="hero-title">Find Your Perfect Home</h1>
-                    <p class="hero-description">Discover verified properties, explore beautiful homes and connect directly with your trusted property dealer.</p>
+                    <span class="hero-badge"><i class="fa-solid fa-shield-halved"></i> Verified Flats & Complexes for Sale</span>
+                    <h1 class="hero-title">Find Your Perfect Home in Prime Locations</h1>
+                    <p class="hero-description">Explore premium flats in gated complexes and standalone residential buildings across Salt Lake, Rajarhat, New Town, and Action Area.</p>
                     <div class="hero-buttons">
-                        <a href="#properties" class="btn btn-primary btn-lg">Explore Properties</a>
+                        <a href="#properties" class="btn btn-primary btn-lg">Browse Properties For Sale</a>
                         <a href="#contact" class="btn btn-outline-light btn-lg">Contact Dealer</a>
                     </div>
                 </div>
 
                 <!-- Hero Search Panel -->
                 <div class="hero-search-box">
-                    <h3><i class="fa-solid fa-magnifying-glass"></i> Quick Property Search</h3>
+                    <h3><i class="fa-solid fa-magnifying-glass"></i> Quick Property Search For Sale</h3>
                     <form id="hero-search-form" class="search-grid">
                         <div class="form-group">
-                            <label><i class="fa-solid fa-location-dot"></i> Location</label>
+                            <label><i class="fa-solid fa-location-dot"></i> Location Area</label>
                             <select id="search-location">
-                                <option value="">All Locations</option>
-                                <option value="New Town">New Town</option>
+                                <option value="">All Prime Locations</option>
                                 <option value="Salt Lake">Salt Lake</option>
-                                <option value="EM Bypass">EM Bypass</option>
                                 <option value="Rajarhat">Rajarhat</option>
-                                <option value="Kolkata">Kolkata</option>
-                                <option value="Howrah">Howrah</option>
+                                <option value="New Town">New Town</option>
+                                <option value="Action Area I">Action Area I</option>
+                                <option value="Action Area II">Action Area II</option>
+                                <option value="Action Area III">Action Area III</option>
                             </select>
                         </div>
                         <div class="form-group">
-                            <label><i class="fa-solid fa-building"></i> Property Type</label>
+                            <label><i class="fa-solid fa-building"></i> Building Type</label>
                             <select id="search-type">
                                 <option value="">All Types</option>
-                                <option value="Apartment">Apartment</option>
-                                <option value="Flat">Flat</option>
-                                <option value="Villa">Villa</option>
-                                <option value="Independent House">Independent House</option>
+                                <option value="Complex Apartment">Gated Complex Flat</option>
+                                <option value="Standalone Flat">Standalone Building Flat</option>
                             </select>
                         </div>
                         <div class="form-group">
                             <label><i class="fa-solid fa-bed"></i> BHK</label>
                             <select id="search-bhk">
                                 <option value="">Any BHK</option>
-                                <option value="1">1 BHK</option>
                                 <option value="2">2 BHK</option>
                                 <option value="3">3 BHK</option>
                                 <option value="4">4+ BHK</option>
@@ -789,14 +805,14 @@
                             <label><i class="fa-solid fa-indian-rupee-sign"></i> Max Budget</label>
                             <select id="search-max-price">
                                 <option value="">Any Budget</option>
-                                <option value="6000000">₹60 Lakhs</option>
-                                <option value="9000000">₹90 Lakhs</option>
-                                <option value="15000000">₹1.5 Crores</option>
-                                <option value="30000000">₹3+ Crores</option>
+                                <option value="7000000">₹70 Lakhs</option>
+                                <option value="12000000">₹1.2 Crores</option>
+                                <option value="20000000">₹2.0 Crores</option>
+                                <option value="35000000">₹3.5+ Crores</option>
                             </select>
                         </div>
                         <div class="form-group">
-                            <button type="submit" class="btn btn-primary btn-block"><i class="fa-solid fa-search"></i> Search</button>
+                            <button type="submit" class="btn btn-primary btn-block"><i class="fa-solid fa-search"></i> Search For Sale</button>
                         </div>
                     </form>
                 </div>
@@ -809,22 +825,22 @@
                 <div class="stat-card">
                     <div class="stat-icon"><i class="fa-solid fa-award"></i></div>
                     <div class="stat-number" data-target="10">0</div>
-                    <div class="stat-label">Years Experience</div>
+                    <div class="stat-label">Years Local Expertise</div>
                 </div>
                 <div class="stat-card">
                     <div class="stat-icon"><i class="fa-solid fa-city"></i></div>
-                    <div class="stat-number" data-target="500">0</div>
-                    <div class="stat-label">Properties Sold</div>
+                    <div class="stat-number" data-target="450">0</div>
+                    <div class="stat-label">Flats Sold</div>
                 </div>
                 <div class="stat-card">
                     <div class="stat-icon"><i class="fa-solid fa-users"></i></div>
-                    <div class="stat-number" data-target="350">0</div>
-                    <div class="stat-label">Happy Clients</div>
+                    <div class="stat-number" data-target="320">0</div>
+                    <div class="stat-label">Happy Homeowners</div>
                 </div>
                 <div class="stat-card">
                     <div class="stat-icon"><i class="fa-solid fa-map-location-dot"></i></div>
-                    <div class="stat-number" data-target="25">0</div>
-                    <div class="stat-label">Prime Locations</div>
+                    <div class="stat-number" data-target="4">0</div>
+                    <div class="stat-label">Prime East Kolkata Zones</div>
                 </div>
             </div>
         </section>
@@ -834,8 +850,8 @@
             <div class="container">
                 <div class="section-header">
                     <span class="sub-title">Handpicked Choices</span>
-                    <h2 class="section-title">Featured Properties</h2>
-                    <p class="section-desc">Discover our exclusive selection of premium properties with top-tier amenities.</p>
+                    <h2 class="section-title">Featured Flats For Sale</h2>
+                    <p class="section-desc">Discover our exclusive showcase of premium flats in complexes and standalone buildings.</p>
                 </div>
                 <div class="property-grid" id="featured-property-grid"></div>
             </div>
@@ -845,9 +861,9 @@
         <section class="section properties-catalog" id="properties">
             <div class="container">
                 <div class="section-header">
-                    <span class="sub-title">Explore Catalog</span>
-                    <h2 class="section-title">Explore Properties</h2>
-                    <p class="section-desc">Find a property that fits your lifestyle and budget.</p>
+                    <span class="sub-title">Property Catalog</span>
+                    <h2 class="section-title">Flats & Apartments For Sale</h2>
+                    <p class="section-desc">Filter through verified listings across Salt Lake, Rajarhat, New Town, and Action Area.</p>
                 </div>
 
                 <div class="catalog-layout">
@@ -859,41 +875,38 @@
                         </div>
                         <div class="filter-group">
                             <label>Keyword / ID</label>
-                            <input type="text" id="filter-keyword" placeholder="e.g. Luxury, PROP001">
+                            <input type="text" id="filter-keyword" placeholder="e.g. EcoSpace, PROP001">
                         </div>
                         <div class="filter-group">
-                            <label>Location</label>
+                            <label>Location Area</label>
                             <select id="filter-location">
-                                <option value="">All Locations</option>
-                                <option value="New Town">New Town</option>
+                                <option value="">All Areas</option>
                                 <option value="Salt Lake">Salt Lake</option>
-                                <option value="EM Bypass">EM Bypass</option>
                                 <option value="Rajarhat">Rajarhat</option>
-                                <option value="Kolkata">Kolkata</option>
-                                <option value="Howrah">Howrah</option>
+                                <option value="New Town">New Town</option>
+                                <option value="Action Area I">Action Area I</option>
+                                <option value="Action Area II">Action Area II</option>
+                                <option value="Action Area III">Action Area III</option>
                             </select>
                         </div>
                         <div class="filter-group">
                             <label>Max Price</label>
-                            <input type="range" id="filter-price-range" min="3000000" max="35000000" step="1000000" value="35000000">
+                            <input type="range" id="filter-price-range" min="4500000" max="35000000" step="1000000" value="35000000">
                             <div class="range-val" style="font-size:0.85rem; color:var(--gray-600); margin-top:0.25rem;">Up to <span id="price-output">₹3.5 Crore</span></div>
                         </div>
                         <div class="filter-group">
                             <label>BHK</label>
                             <div class="checkbox-group">
-                                <label><input type="checkbox" name="bhk" value="1"> 1 BHK</label>
                                 <label><input type="checkbox" name="bhk" value="2"> 2 BHK</label>
                                 <label><input type="checkbox" name="bhk" value="3"> 3 BHK</label>
                                 <label><input type="checkbox" name="bhk" value="4"> 4+ BHK</label>
                             </div>
                         </div>
                         <div class="filter-group">
-                            <label>Property Type</label>
+                            <label>Building Style</label>
                             <div class="checkbox-group">
-                                <label><input type="checkbox" name="type" value="Apartment"> Apartment</label>
-                                <label><input type="checkbox" name="type" value="Flat"> Flat</label>
-                                <label><input type="checkbox" name="type" value="Villa"> Villa</label>
-                                <label><input type="checkbox" name="type" value="Independent House"> Independent House</label>
+                                <label><input type="checkbox" name="type" value="Complex Apartment"> Gated Complex Flat</label>
+                                <label><input type="checkbox" name="type" value="Standalone Flat"> Standalone Building Flat</label>
                             </div>
                         </div>
                     </aside>
@@ -901,11 +914,11 @@
                     <!-- Catalog Content -->
                     <div class="catalog-content">
                         <div class="catalog-toolbar">
-                            <p id="result-count">Showing <strong>0</strong> properties</p>
+                            <p id="result-count">Showing <strong>0</strong> properties for sale</p>
                             <div class="sort-wrapper">
                                 <label>Sort by:</label>
                                 <select id="sort-select">
-                                    <option value="newest">Newest</option>
+                                    <option value="newest">Newest Listings</option>
                                     <option value="price-low">Price: Low to High</option>
                                     <option value="price-high">Price: High to Low</option>
                                     <option value="area-high">Area: High to Low</option>
@@ -918,8 +931,8 @@
 
                         <div id="no-results" class="no-results hidden">
                             <i class="fa-solid fa-house-chimney-crack"></i>
-                            <h3>No properties found</h3>
-                            <p>Try adjusting your search filters or clearing them.</p>
+                            <h3>No properties found for sale</h3>
+                            <p>Try adjusting your filters for Salt Lake, Rajarhat, New Town or Action Area.</p>
                             <button id="reset-search-btn" class="btn btn-primary" style="margin-top:1rem;">Reset Filters</button>
                         </div>
                     </div>
@@ -931,29 +944,29 @@
         <section class="section why-us">
             <div class="container">
                 <div class="section-header">
-                    <span class="sub-title">Our Advantages</span>
-                    <h2 class="section-title">Why Choose Us?</h2>
+                    <span class="sub-title">Our Commitments</span>
+                    <h2 class="section-title">Why Buy Through Apex Realty?</h2>
                 </div>
                 <div class="features-grid">
                     <div class="feature-card">
                         <div class="feature-icon"><i class="fa-solid fa-shield-check"></i></div>
-                        <h3>Verified Properties</h3>
-                        <p>Only genuine properties are showcased with clear legal titles.</p>
+                        <h3>Verified Flats Only</h3>
+                        <p>Every apartment in complexes or standalone buildings is legally audited and verified for immediate sale.</p>
                     </div>
                     <div class="feature-card">
                         <div class="feature-icon"><i class="fa-solid fa-handshake-simple"></i></div>
-                        <h3>Transparent Information</h3>
-                        <p>Clear property details and straightforward pricing with zero hidden costs.</p>
+                        <h3>Transparent Dealer Pricing</h3>
+                        <p>No hidden costs. Direct dealer assistance and negotiations with apartment owners and builders.</p>
                     </div>
                     <div class="feature-card">
                         <div class="feature-icon"><i class="fa-solid fa-headset"></i></div>
-                        <h3>Direct Communication</h3>
-                        <p>Instant access to expert dealer assistance via call or WhatsApp.</p>
+                        <h3>Local East Kolkata Experts</h3>
+                        <p>Deep expertise in Salt Lake sectors, Rajarhat, New Town, and Action Area I, II, & III micro-markets.</p>
                     </div>
                     <div class="feature-card">
                         <div class="feature-icon"><i class="fa-solid fa-calendar-check"></i></div>
-                        <h3>Easy Property Visits</h3>
-                        <p>Schedule a site visit at your convenience with instant scheduling.</p>
+                        <h3>Seamless Site Visits</h3>
+                        <p>Schedule flat walkthroughs instantly at your preferred time slot with our resident relationship managers.</p>
                     </div>
                 </div>
             </div>
@@ -964,23 +977,23 @@
             <div class="container">
                 <div class="section-header">
                     <span class="sub-title">Testimonials</span>
-                    <h2 class="section-title">What Our Clients Say</h2>
+                    <h2 class="section-title">Happy Homeowners in New Town & Salt Lake</h2>
                 </div>
                 <div class="testimonial-slider">
                     <div class="testimonial-card active">
                         <div class="testimonial-rating"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
-                        <p class="testimonial-text">"Apex Realty made finding our 3 BHK in New Town an absolute breeze. Professional negotiations and transparent dealing."</p>
+                        <p class="testimonial-text">"Rajesh Sharma helped us secure a gorgeous 3 BHK flat in a gated complex at Action Area II, New Town. Transparent and fast process!"</p>
                         <div class="testimonial-author">
                             <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=150&q=80" alt="Client">
-                            <div><h4>Ananya & Rohit Sen</h4><span>Homeowners</span></div>
+                            <div><h4>Ananya & Rohit Sen</h4><span>Apartment Owners, New Town</span></div>
                         </div>
                     </div>
                     <div class="testimonial-card">
                         <div class="testimonial-rating"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
-                        <p class="testimonial-text">"Extremely professional service! Verified property documents and great advice on home loans."</p>
+                        <p class="testimonial-text">"Found a fantastic standalone building flat in Salt Lake Sector II. The documentation support and dealer guidance were exceptional."</p>
                         <div class="testimonial-author">
                             <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=150&q=80" alt="Client">
-                            <div><h4>Vikramaditya Roy</h4><span>IT Executive</span></div>
+                            <div><h4>Vikramaditya Roy</h4><span>IT Executive, Salt Lake</span></div>
                         </div>
                     </div>
                 </div>
@@ -998,19 +1011,19 @@
                     <img src="https://images.unsplash.com/photo-1560518883-ce09059eeffa?auto=format&fit=crop&w=800&q=80" alt="About Dealer" class="about-img">
                     <div class="experience-badge">
                         <h3>10+</h3>
-                        <p>Years Experience</p>
+                        <p>Years in East Kolkata</p>
                     </div>
                 </div>
                 <div class="about-content">
                     <span class="sub-title">About The Dealer</span>
-                    <h2 class="section-title">Rajesh Sharma - Principal Broker</h2>
-                    <p class="lead">With over a decade of hands-on experience in the prime real estate market, Apex Realty is committed to delivering unmatched residential property deals.</p>
+                    <h2 class="section-title">Rajesh Sharma - Property Dealer & Broker</h2>
+                    <p class="lead">Specializing exclusively in residential flats, gated complexes, and standalone buildings across Salt Lake, Rajarhat, New Town, and Action Area I, II, & III.</p>
                     <div class="dealer-stats-row">
-                        <div><h4>500+</h4><p>Properties Sold</p></div>
-                        <div><h4>350+</h4><p>Happy Clients</p></div>
-                        <div><h4>25+</h4><p>Locations</p></div>
+                        <div><h4>450+</h4><p>Flats Sold</p></div>
+                        <div><h4>320+</h4><p>Happy Clients</p></div>
+                        <div><h4>4</h4><p>Prime Zones</p></div>
                     </div>
-                    <a href="#contact" class="btn btn-primary">Get in Touch</a>
+                    <a href="#contact" class="btn btn-primary">Connect With Rajesh</a>
                 </div>
             </div>
         </section>
@@ -1024,20 +1037,20 @@
                 </div>
                 <div class="faq-accordion">
                     <div class="faq-item">
-                        <div class="faq-question"><h4>How can I schedule a property visit?</h4><i class="fa-solid fa-chevron-down"></i></div>
-                        <div class="faq-answer"><p>Click the 'Schedule Visit' button on any property card or details view to pick your preferred date and time.</p></div>
+                        <div class="faq-question"><h4>How can I schedule a flat site visit?</h4><i class="fa-solid fa-chevron-down"></i></div>
+                        <div class="faq-answer"><p>Click the 'Schedule Visit' button on any property card or detail modal to pick your preferred date and time for viewing flats in New Town, Salt Lake or Rajarhat.</p></div>
                     </div>
                     <div class="faq-item">
-                        <div class="faq-question"><h4>Are the properties verified?</h4><i class="fa-solid fa-chevron-down"></i></div>
-                        <div class="faq-answer"><p>Yes, all listed properties go through strict title verification and legal background checks.</p></div>
+                        <div class="faq-question"><h4>Do you offer flats in both complexes and standalone buildings?</h4><i class="fa-solid fa-chevron-down"></i></div>
+                        <div class="faq-answer"><p>Yes! We showcase premium apartments inside gated high-rise complexes as well as peaceful individual flats in standalone residential buildings across Action Area and Salt Lake.</p></div>
                     </div>
                     <div class="faq-item">
-                        <div class="faq-question"><h4>Is the price negotiable?</h4><i class="fa-solid fa-chevron-down"></i></div>
-                        <div class="faq-answer"><p>Many properties feature negotiable pricing. You can discuss details directly with the dealer.</p></div>
+                        <div class="faq-question"><h4>Are property prices negotiable with the owners?</h4><i class="fa-solid fa-chevron-down"></i></div>
+                        <div class="faq-answer"><p>Many properties feature negotiable pricing. Our dealer works directly with sellers to ensure you get the best deal.</p></div>
                     </div>
                     <div class="faq-item">
-                        <div class="faq-question"><h4>Do you help with home loans?</h4><i class="fa-solid fa-chevron-down"></i></div>
-                        <div class="faq-answer"><p>Yes, we partner with major banks to assist buyers with fast-track loan processing.</p></div>
+                        <div class="faq-question"><h4>Do you assist with bank home loans?</h4><i class="fa-solid fa-chevron-down"></i></div>
+                        <div class="faq-answer"><p>Yes, we partner with leading banks (SBI, HDFC, ICICI) to provide fast-track loan assistance for properties in New Town and Salt Lake.</p></div>
                     </div>
                 </div>
             </div>
@@ -1048,30 +1061,30 @@
             <div class="container contact-grid">
                 <div class="contact-info">
                     <span class="sub-title">Get In Touch</span>
-                    <h2 class="section-title">Let's Discuss Your Dream Property</h2>
-                    <p>Reach out to us directly or visit our office for a personalized consultation.</p>
+                    <h2 class="section-title">Discuss Your Next Flat in East Kolkata</h2>
+                    <p>Contact Rajesh Sharma directly for site visits or property requirements in Salt Lake, Rajarhat, New Town, or Action Area.</p>
                     
                     <ul class="contact-details-list">
-                        <li><i class="fa-solid fa-user-tie"></i><div><strong>Dealer Name</strong><p>Rajesh Sharma</p></div></li>
+                        <li><i class="fa-solid fa-user-tie"></i><div><strong>Property Dealer</strong><p>Rajesh Sharma</p></div></li>
                         <li><i class="fa-solid fa-phone"></i><div><strong>Phone</strong><p><a href="tel:+919876543210">+91 98765 43210</a></p></div></li>
                         <li><i class="fa-brands fa-whatsapp"></i><div><strong>WhatsApp</strong><p><a href="https://wa.me/919876543210" target="_blank">+91 98765 43210</a></p></div></li>
                         <li><i class="fa-solid fa-envelope"></i><div><strong>Email</strong><p><a href="mailto:contact@apexrealty.com">contact@apexrealty.com</a></p></div></li>
-                        <li><i class="fa-solid fa-location-dot"></i><div><strong>Office</strong><p>EcoSpace Business Park, New Town, Kolkata</p></div></li>
+                        <li><i class="fa-solid fa-location-dot"></i><div><strong>Office</strong><p>EcoSpace Business Park, Action Area II, New Town, Kolkata</p></div></li>
                     </ul>
 
-                    <div style="display:flex; gap:1rem;">
-                        <a href="tel:+919876543210" class="btn btn-primary"><i class="fa-solid fa-phone"></i> Call Now</a>
-                        <a href="https://wa.me/919876543210" target="_blank" class="btn btn-whatsapp"><i class="fa-brands fa-whatsapp"></i> WhatsApp</a>
+                    <div style="display:flex; gap:1rem; flex-wrap:wrap;">
+                        <a href="tel:+919876543210" class="btn btn-primary"><i class="fa-solid fa-phone"></i> Call Dealer</a>
+                        <a href="https://wa.me/919876543210?text=Hello%2C%20I%20am%20looking%20to%20buy%20a%20flat%20in%20New%20Town%2FSalt%20Lake." target="_blank" class="btn btn-whatsapp"><i class="fa-brands fa-whatsapp"></i> WhatsApp Chat</a>
                     </div>
                 </div>
 
                 <div class="contact-form-wrapper">
                     <h3>Send Direct Inquiry</h3>
-                    <form id="general-inquiry-form" style="display:flex; flex-direction:column; gap:1rem; margin-top:1.5rem;">
-                        <div class="form-group"><label>Your Name *</label><input type="text" id="gen-name" required placeholder="Name"></div>
-                        <div class="form-group"><label>Phone Number *</label><input type="tel" id="gen-phone" required placeholder="Mobile"></div>
-                        <div class="form-group"><label>Message *</label><textarea id="gen-message" rows="4" required placeholder="Your requirements..."></textarea></div>
-                        <button type="submit" class="btn btn-primary btn-block">Send Message</button>
+                    <form id="general-inquiry-form" style="display:flex; flex-direction:column; gap:1.25rem; margin-top:1.5rem;">
+                        <div class="form-group"><label>Your Full Name *</label><input type="text" id="gen-name" required placeholder="e.g. Subrata Mukherjee"></div>
+                        <div class="form-group"><label>Phone Number *</label><input type="tel" id="gen-phone" required placeholder="10-digit mobile"></div>
+                        <div class="form-group"><label>Message / Requirements *</label><textarea id="gen-message" rows="4" required placeholder="Mention preferred location (Salt Lake, New Town, Rajarhat, Action Area) and BHK..."></textarea></div>
+                        <button type="submit" class="btn btn-primary btn-block">Send Inquiry</button>
                     </form>
                 </div>
             </div>
@@ -1083,7 +1096,7 @@
         <div class="container footer-grid">
             <div>
                 <a href="#" class="nav-logo" style="color:#fff; margin-bottom:1rem; display:inline-flex;"><i class="fa-solid fa-city"></i> Apex<span>Realty</span></a>
-                <p>Your trusted partner for premium residential flats, apartments, and villas for sale.</p>
+                <p>Your trusted property dealer for verified flats and apartments for sale in Salt Lake, Rajarhat, New Town, and Action Area.</p>
                 <div class="footer-social" style="margin-top:1rem;">
                     <a href="#"><i class="fa-brands fa-facebook-f"></i></a>
                     <a href="#"><i class="fa-brands fa-instagram"></i></a>
@@ -1094,23 +1107,24 @@
                 <h3>Quick Links</h3>
                 <ul class="footer-links">
                     <li><a href="#home">Home</a></li>
-                    <li><a href="#properties">Properties</a></li>
+                    <li><a href="#properties">Properties For Sale</a></li>
                     <li><a href="#about">About Us</a></li>
                     <li><a href="#contact">Contact</a></li>
                 </ul>
             </div>
             <div>
-                <h3>Categories</h3>
+                <h3>Locations</h3>
                 <ul class="footer-links">
-                    <li><a href="#properties">Luxury Apartments</a></li>
-                    <li><a href="#properties">3 & 4 BHK Flats</a></li>
-                    <li><a href="#properties">Gated Villas</a></li>
+                    <li><a href="#properties">Salt Lake Flats</a></li>
+                    <li><a href="#properties">New Town Apartments</a></li>
+                    <li><a href="#properties">Rajarhat Gated Complexes</a></li>
+                    <li><a href="#properties">Action Area I, II & III</a></li>
                 </ul>
             </div>
             <div>
-                <h3>Legal</h3>
+                <h3>Dealer Portal</h3>
                 <ul class="footer-links">
-                    <li><a href="#" id="footer-admin-link">Admin Dashboard</a></li>
+                    <li><a href="#" id="footer-admin-link">Dealer Admin Login</a></li>
                     <li><a href="#">Privacy Policy</a></li>
                     <li><a href="#">Terms & Conditions</a></li>
                 </ul>
@@ -1122,7 +1136,7 @@
     </footer>
 
     <!-- Floating WhatsApp -->
-    <a href="https://wa.me/919876543210?text=Hello%2C%20I%20would%20like%20to%20know%20more%20about%20properties." class="floating-whatsapp" target="_blank"><i class="fa-brands fa-whatsapp"></i></a>
+    <a href="https://wa.me/919876543210?text=Hello%2C%20I%20would%20like%20to%20know%20more%20about%20flats%20for%20sale%20in%20New%20Town%2FSalt%20Lake." class="floating-whatsapp" target="_blank" title="Chat on WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
 
     <!-- MODAL: Property Details -->
     <div id="property-modal" class="modal">
@@ -1136,15 +1150,15 @@
     <div id="inquiry-modal" class="modal">
         <div class="modal-content">
             <span class="modal-close" id="inquiry-modal-close"><i class="fa-solid fa-xmark"></i></span>
-            <h2>Inquire About Property</h2>
+            <h2>Inquire About Flat For Sale</h2>
             <p id="inquiry-prop-subtitle" style="font-size:0.85rem; color:var(--gray-600); margin-bottom:1.5rem;"></p>
-            <form id="modal-inquiry-form" style="display:flex; flex-direction:column; gap:1rem;">
+            <form id="modal-inquiry-form" style="display:flex; flex-direction:column; gap:1.25rem;">
                 <input type="hidden" id="inq-prop-id">
-                <div class="form-group"><label>Full Name *</label><input type="text" id="inq-name" required placeholder="Name"></div>
-                <div class="form-group"><label>Phone *</label><input type="tel" id="inq-phone" required placeholder="Phone"></div>
-                <div class="form-group"><label>Email</label><input type="email" id="inq-email" placeholder="Email"></div>
-                <div class="form-group"><label>Message</label><textarea id="inq-msg" rows="3"></textarea></div>
-                <button type="submit" class="btn btn-primary btn-block">Send Inquiry</button>
+                <div class="form-group"><label>Full Name *</label><input type="text" id="inq-name" required placeholder="Your Name"></div>
+                <div class="form-group"><label>Phone Number *</label><input type="tel" id="inq-phone" required placeholder="Mobile Number"></div>
+                <div class="form-group"><label>Email Address</label><input type="email" id="inq-email" placeholder="Email (optional)"></div>
+                <div class="form-group"><label>Message</label><textarea id="inq-msg" rows="3">I am interested in this flat for sale. Please contact me with more details.</textarea></div>
+                <button type="submit" class="btn btn-primary btn-block">Send Inquiry To Dealer</button>
             </form>
         </div>
     </div>
@@ -1155,16 +1169,16 @@
             <span class="modal-close" id="visit-modal-close"><i class="fa-solid fa-xmark"></i></span>
             <h2>Schedule Property Visit</h2>
             <p id="visit-prop-subtitle" style="font-size:0.85rem; color:var(--gray-600); margin-bottom:1.5rem;"></p>
-            <form id="modal-visit-form" style="display:flex; flex-direction:column; gap:1rem;">
+            <form id="modal-visit-form" style="display:flex; flex-direction:column; gap:1.25rem;">
                 <input type="hidden" id="visit-prop-id">
-                <div class="form-group"><label>Full Name *</label><input type="text" id="visit-name" required></div>
-                <div class="form-group"><label>Phone *</label><input type="tel" id="visit-phone" required></div>
+                <div class="form-group"><label>Full Name *</label><input type="text" id="visit-name" required placeholder="Your Name"></div>
+                <div class="form-group"><label>Phone Number *</label><input type="tel" id="visit-phone" required placeholder="Mobile Number"></div>
                 <div class="form-row">
                     <div class="form-group"><label>Visit Date *</label><input type="date" id="visit-date" required></div>
-                    <div class="form-group"><label>Time *</label><select id="visit-time"><option>10:00 AM</option><option>02:00 PM</option><option>05:00 PM</option></select></div>
+                    <div class="form-group"><label>Time Slot *</label><select id="visit-time"><option>10:00 AM - 12:00 PM</option><option>02:00 PM - 04:00 PM</option><option>04:30 PM - 06:30 PM</option></select></div>
                 </div>
-                <div class="form-group"><label>Visitors</label><select id="visit-count"><option>1 Person</option><option>Family (2-4)</option></select></div>
-                <button type="submit" class="btn btn-primary btn-block">Schedule Visit</button>
+                <div class="form-group"><label>Number of Visitors</label><select id="visit-count"><option>1 Person</option><option>Family (2-4 People)</option><option>Group (5+ People)</option></select></div>
+                <button type="submit" class="btn btn-primary btn-block">Confirm Visit Schedule</button>
             </form>
         </div>
     </div>
@@ -1173,9 +1187,9 @@
     <div id="favorites-modal" class="modal">
         <div class="modal-content modal-large">
             <span class="modal-close" id="fav-modal-close"><i class="fa-solid fa-xmark"></i></span>
-            <h2><i class="fa-solid fa-heart" style="color:var(--danger);"></i> My Favorites</h2>
+            <h2><i class="fa-solid fa-heart" style="color:var(--danger);"></i> Saved Favorite Flats</h2>
             <p id="fav-modal-subtitle" style="font-size:0.85rem; color:var(--gray-600); margin-bottom:1.5rem;"></p>
-            <div class="property-grid" id="favorites-grid" style="max-height:60vh; overflow-y:auto;"></div>
+            <div class="property-grid" id="favorites-grid" style="max-height:60vh; overflow-y:auto; padding-right:5px;"></div>
         </div>
     </div>
 
@@ -1188,27 +1202,28 @@
         </div>
     </div>
 
-    <!-- MODAL: Admin Login -->
+    <!-- MODAL: Dealer Admin Login -->
     <div id="admin-login-modal" class="modal">
         <div class="modal-content modal-sm">
             <span class="modal-close" id="admin-login-close"><i class="fa-solid fa-xmark"></i></span>
-            <h2>Admin Login</h2>
-            <form id="admin-login-form" style="display:flex; flex-direction:column; gap:1rem; margin-top:1rem;">
+            <h2><i class="fa-solid fa-lock"></i> Dealer Admin Login</h2>
+            <p style="font-size:0.85rem; color:var(--gray-600); margin-bottom:1rem;">Manage flats & properties for sale.</p>
+            <form id="admin-login-form" style="display:flex; flex-direction:column; gap:1.25rem;">
                 <div class="form-group"><label>Username</label><input type="text" id="admin-user" required value="admin"></div>
                 <div class="form-group"><label>Password</label><input type="password" id="admin-pass" required value="password123"></div>
-                <button type="submit" class="btn btn-primary btn-block">Login</button>
-                <p style="font-size:0.75rem; text-align:center; color:var(--gray-600);">Demo: admin / password123</p>
+                <button type="submit" class="btn btn-primary btn-block">Login to Dashboard</button>
+                <p style="font-size:0.75rem; text-align:center; color:var(--gray-600);">Demo credentials: admin / password123</p>
             </form>
         </div>
     </div>
 
-    <!-- MODAL: Admin Dashboard -->
+    <!-- MODAL: Dealer Admin Dashboard -->
     <div id="admin-dashboard-modal" class="modal">
         <div class="modal-content modal-xl">
             <div class="admin-header-bar">
-                <h2><i class="fa-solid fa-gauge-high"></i> Admin Dashboard</h2>
+                <h2><i class="fa-solid fa-gauge-high"></i> Dealer Property Management</h2>
                 <div>
-                    <button id="add-new-prop-btn" class="btn btn-primary"><i class="fa-solid fa-plus"></i> Add Property</button>
+                    <button id="add-new-prop-btn" class="btn btn-primary"><i class="fa-solid fa-plus"></i> Add Property For Sale</button>
                     <button class="modal-close" id="admin-dashboard-close" style="position:static;"><i class="fa-solid fa-xmark"></i></button>
                 </div>
             </div>
@@ -1225,42 +1240,52 @@
     <div id="property-form-modal" class="modal">
         <div class="modal-content modal-large">
             <span class="modal-close" id="prop-form-close"><i class="fa-solid fa-xmark"></i></span>
-            <h2 id="prop-form-title">Add Property</h2>
-            <form id="save-property-form" style="display:flex; flex-direction:column; gap:1rem; margin-top:1rem;">
+            <h2 id="prop-form-title">Add Property For Sale</h2>
+            <form id="save-property-form" style="display:flex; flex-direction:column; gap:1.25rem; margin-top:1rem;">
                 <input type="hidden" id="form-edit-id">
                 <div class="form-row">
-                    <div class="form-group"><label>ID *</label><input type="text" id="p-id" required placeholder="PROP009"></div>
-                    <div class="form-group"><label>Title *</label><input type="text" id="p-title" required placeholder="Luxury 3 BHK"></div>
+                    <div class="form-group"><label>Property ID *</label><input type="text" id="p-id" required placeholder="PROP009"></div>
+                    <div class="form-group"><label>Property Title *</label><input type="text" id="p-title" required placeholder="Luxury 3 BHK Flat"></div>
                 </div>
                 <div class="form-row">
-                    <div class="form-group"><label>Location *</label>
+                    <div class="form-group"><label>Location Area *</label>
                         <select id="p-location">
-                            <option>New Town</option><option>Salt Lake</option><option>EM Bypass</option><option>Rajarhat</option><option>Kolkata</option><option>Howrah</option>
+                            <option value="Salt Lake">Salt Lake</option>
+                            <option value="Rajarhat">Rajarhat</option>
+                            <option value="New Town">New Town</option>
+                            <option value="Action Area I">Action Area I</option>
+                            <option value="Action Area II">Action Area II</option>
+                            <option value="Action Area III">Action Area III</option>
                         </select>
                     </div>
-                    <div class="form-group"><label>Price (₹) *</label><input type="number" id="p-price" required></div>
+                    <div class="form-group"><label>Price (₹) *</label><input type="number" id="p-price" required placeholder="8500000"></div>
                 </div>
                 <div class="form-row">
-                    <div class="form-group"><label>BHK *</label><select id="p-bhk"><option>1</option><option>2</option><option selected>3</option><option>4</option></select></div>
-                    <div class="form-group"><label>Area (sq.ft) *</label><input type="number" id="p-area" required></div>
+                    <div class="form-group"><label>BHK *</label><select id="p-bhk"><option value="2">2 BHK</option><option value="3" selected>3 BHK</option><option value="4">4+ BHK</option></select></div>
+                    <div class="form-group"><label>Area (sq.ft) *</label><input type="number" id="p-area" required placeholder="1450"></div>
                     <div class="form-group"><label>Floor *</label><input type="text" id="p-floor" required placeholder="8th Floor"></div>
                 </div>
                 <div class="form-row">
-                    <div class="form-group"><label>Type *</label><select id="p-type"><option>Apartment</option><option>Flat</option><option>Villa</option><option>Independent House</option></select></div>
-                    <div class="form-group"><label>Furnishing *</label><select id="p-furnishing"><option>Furnished</option><option>Semi-Furnished</option><option>Unfurnished</option></select></div>
-                    <div class="form-group"><label>Status *</label><select id="p-status"><option>Available</option><option>Under Negotiation</option><option>Sold</option></select></div>
+                    <div class="form-group"><label>Building Style *</label>
+                        <select id="p-type">
+                            <option value="Complex Apartment">Gated Complex Flat</option>
+                            <option value="Standalone Flat">Standalone Building Flat</option>
+                        </select>
+                    </div>
+                    <div class="form-group"><label>Furnishing *</label><select id="p-furnishing"><option value="Furnished">Furnished</option><option value="Semi-Furnished">Semi-Furnished</option><option value="Unfurnished">Unfurnished</option></select></div>
+                    <div class="form-group"><label>Sale Status *</label><select id="p-status"><option value="Available">Available</option><option value="Under Negotiation">Under Negotiation</option><option value="Sold">Sold</option></select></div>
                 </div>
                 <div class="form-row">
-                    <div class="form-group"><label>Image URL *</label><input type="url" id="p-image" required placeholder="https://..."></div>
-                    <div class="form-group"><label>Gallery (comma separated URLs)</label><input type="text" id="p-gallery" placeholder="url1, url2"></div>
+                    <div class="form-group"><label>Main Image URL *</label><input type="url" id="p-image" required placeholder="https://images.unsplash.com/..."></div>
+                    <div class="form-group"><label>Gallery URLs (comma separated)</label><input type="text" id="p-gallery" placeholder="url1, url2"></div>
                 </div>
                 <div class="form-row">
-                    <div class="form-group"><label>Video URL (YouTube embed or MP4)</label><input type="url" id="p-video" placeholder="https://www.youtube.com/embed/..."></div>
-                    <div class="form-group"><label><input type="checkbox" id="p-featured"> Mark as Featured</label></div>
+                    <div class="form-group"><label>Virtual Tour Video URL (YouTube / MP4)</label><input type="url" id="p-video" placeholder="https://www.youtube.com/embed/..."></div>
+                    <div class="form-group"><label><input type="checkbox" id="p-featured"> Mark as Featured Property</label></div>
                 </div>
-                <div class="form-group"><label>Description *</label><textarea id="p-desc" rows="3" required></textarea></div>
-                <div class="form-group"><label>Amenities (comma separated)</label><input type="text" id="p-amenities" value="Swimming Pool, Gym, Lift, 24/7 Security, CCTV, Power Backup"></div>
-                <button type="submit" class="btn btn-primary btn-block">Save Property</button>
+                <div class="form-group"><label>Short Description *</label><textarea id="p-desc" rows="3" required placeholder="Highlight key features of this flat..."></textarea></div>
+                <div class="form-group"><label>Amenities (comma separated)</label><input type="text" id="p-amenities" value="Swimming Pool, Gym, Lift, 24/7 Security, CCTV, Power Backup, Clubhouse"></div>
+                <button type="submit" class="btn btn-primary btn-block">Save Property For Sale</button>
             </form>
         </div>
     </div>
@@ -1275,14 +1300,14 @@
             phone: "+919876543210",
             whatsapp: "919876543210",
             email: "contact@apexrealty.com",
-            address: "EcoSpace Business Park, New Town, Kolkata",
+            address: "EcoSpace Business Park, Action Area II, New Town, Kolkata",
             experience: "10+ Years"
         };
 
         const dealerPhone = dealerConfig.phone;
         const dealerWhatsApp = dealerConfig.whatsapp;
 
-        /* INITIAL SAMPLE PROPERTIES (8 properties) */
+        /* INITIAL SAMPLE PROPERTIES FOR SALE (Salt Lake, Rajarhat, New Town, Action Area) */
         const defaultProperties = [
             {
                 id: "PROP001",
@@ -1294,10 +1319,10 @@
                 superArea: 1800,
                 floor: "8th Floor",
                 totalFloors: 15,
-                type: "Apartment",
+                type: "Complex Apartment",
                 furnishing: "Semi-Furnished",
                 status: "Available",
-                parking: "2 Cars",
+                parking: "2 Covered Cars",
                 age: "Brand New",
                 featured: true,
                 image: "https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?auto=format&fit=crop&w=800&q=80",
@@ -1307,12 +1332,38 @@
                     "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?auto=format&fit=crop&w=800&q=80"
                 ],
                 video: "https://www.youtube.com/embed/dQw4w9WgXcQ",
-                description: "An architectural masterpiece located in the heart of New Town. Features spacious living areas, modular kitchen, and panoramic skyline views.",
+                description: "An architectural masterpiece located in the heart of New Town. Features spacious living areas, premium vitrified tiles, modular kitchen, and breathtaking panoramic skyline views.",
                 amenities: ["Swimming Pool", "Gym", "Lift", "24/7 Security", "CCTV", "Power Backup", "Garden", "Clubhouse"],
-                nearby: [{name: "Metro Station", dist: "0.8 km"}, {name: "Shopping Mall", dist: "1.5 km"}, {name: "Hospital", dist: "2.5 km"}]
+                nearby: [{name: "Major Arterial Road Metro", dist: "0.8 km"}, {name: "Axis Mall", dist: "1.5 km"}, {name: "AMRI Hospital", dist: "2.5 km"}]
             },
             {
                 id: "PROP002",
+                title: "Elegant 3 BHK Flat in Gated Complex",
+                location: "Action Area II",
+                price: 11500000,
+                bhk: 3,
+                area: 1650,
+                superArea: 2000,
+                floor: "10th Floor",
+                totalFloors: 20,
+                type: "Complex Apartment",
+                furnishing: "Semi-Furnished",
+                status: "Available",
+                parking: "1 Car",
+                age: "Brand New",
+                featured: true,
+                image: "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=800&q=80",
+                gallery: [
+                    "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=800&q=80",
+                    "https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?auto=format&fit=crop&w=800&q=80"
+                ],
+                video: "",
+                description: "Stunning flat for sale in a prestigious gated high-rise complex at Action Area II, New Town. Equipped with high-speed lifts, rooftop lounge, and top-tier security.",
+                amenities: ["Swimming Pool", "Gym", "Lift", "24/7 Security", "CCTV", "Power Backup", "Clubhouse"],
+                nearby: [{name: "Eco Park", dist: "1.0 km"}, {name: "Tata Medical Center", dist: "2.0 km"}]
+            },
+            {
+                id: "PROP003",
                 title: "Royal Heritage 4 BHK Penthouse",
                 location: "Salt Lake",
                 price: 27500000,
@@ -1320,8 +1371,8 @@
                 area: 3200,
                 superArea: 3800,
                 floor: "Top Floor",
-                totalFloors: 12,
-                type: "Flat",
+                totalFloors: 6,
+                type: "Standalone Flat",
                 furnishing: "Furnished",
                 status: "Available",
                 parking: "3 Cars",
@@ -1333,147 +1384,124 @@
                     "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=800&q=80"
                 ],
                 video: "",
-                description: "Ultra-luxury penthouse in prestigious Salt Lake with private terrace garden and Italian marble flooring.",
-                amenities: ["Swimming Pool", "Gym", "Lift", "24/7 Security", "CCTV", "Power Backup", "Balcony"],
-                nearby: [{name: "Hospital", dist: "1.0 km"}, {name: "School", dist: "0.5 km"}]
+                description: "Spacious standalone building luxury flat in prestigious Salt Lake Sector I. Comes with private terrace garden, Italian marble flooring, and designer interiors.",
+                amenities: ["Lift", "24/7 Security", "CCTV", "Power Backup", "Balcony", "Water Supply"],
+                nearby: [{name: "Salt Lake Stadium", dist: "1.0 km"}, {name: "City Centre 1", dist: "1.2 km"}]
             },
             {
-                id: "PROP003",
-                title: "Serene Lakeside 2 BHK Apartment",
-                location: "EM Bypass",
-                price: 6500000,
+                id: "PROP004",
+                title: "Greenwood Gated Complex 2 BHK Flat",
+                location: "Rajarhat",
+                price: 5800000,
                 bhk: 2,
-                area: 1100,
-                superArea: 1350,
+                area: 1050,
+                superArea: 1300,
                 floor: "4th Floor",
-                totalFloors: 8,
-                type: "Apartment",
+                totalFloors: 10,
+                type: "Complex Apartment",
                 furnishing: "Unfurnished",
-                status: "Under Negotiation",
+                status: "Available",
                 parking: "1 Car",
                 age: "3 Years",
                 featured: false,
                 image: "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=800&q=80",
                 gallery: ["https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=800&q=80"],
                 video: "",
-                description: "Peaceful residential flat overlooking green parks and water bodies with great ventilation.",
-                amenities: ["Lift", "24/7 Security", "Garden", "Children's Play Area", "Water Supply"],
-                nearby: [{name: "Metro Station", dist: "1.2 km"}]
+                description: "Peaceful residential flat for sale in Rajarhat near Chinar Park. Excellent natural lighting, landscaped community gardens, and robust security.",
+                amenities: ["Lift", "24/7 Security", "Garden", "Children's Play Area", "Power Backup"],
+                nearby: [{name: "Airport", dist: "3.5 km"}, {name: "Chinar Park Market", dist: "0.8 km"}]
             },
             {
-                id: "PROP004",
-                title: "Grand Vista 3 BHK Luxury Flat",
-                location: "Rajarhat",
-                price: 11500000,
+                id: "PROP005",
+                title: "Action Area I Premium 3 BHK Apartment",
+                location: "Action Area I",
+                price: 9200000,
                 bhk: 3,
-                area: 1650,
-                superArea: 2000,
-                floor: "10th Floor",
-                totalFloors: 20,
-                type: "Flat",
+                area: 1550,
+                superArea: 1850,
+                floor: "6th Floor",
+                totalFloors: 14,
+                type: "Complex Apartment",
                 furnishing: "Semi-Furnished",
-                status: "Available",
-                parking: "2 Cars",
-                age: "Brand New",
+                status: "Under Negotiation",
+                parking: "1 Car",
+                age: "1 Year",
                 featured: true,
                 image: "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=800&q=80",
                 gallery: ["https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=800&q=80"],
                 video: "",
-                description: "Prime connectivity on Rajarhat main road with world-class clubhouse and infinity pool.",
-                amenities: ["Swimming Pool", "Gym", "Lift", "24/7 Security", "CCTV", "Clubhouse"],
-                nearby: [{name: "Airport", dist: "3.5 km"}, {name: "Mall", dist: "1.0 km"}]
-            },
-            {
-                id: "PROP005",
-                title: "Greenwood Gated Villa",
-                location: "Kolkata",
-                price: 22000000,
-                bhk: 4,
-                area: 2800,
-                superArea: 3200,
-                floor: "Ground + 2",
-                totalFloors: 2,
-                type: "Villa",
-                furnishing: "Furnished",
-                status: "Available",
-                parking: "3 Cars",
-                age: "1 Year",
-                featured: true,
-                image: "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=800&q=80",
-                gallery: ["https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=800&q=80"],
-                video: "",
-                description: "Independent luxury villa with private lawn, double-height ceiling living room, and 24/7 security.",
-                amenities: ["Swimming Pool", "Gym", "24/7 Security", "Garden", "Power Backup"],
-                nearby: [{name: "School", dist: "2.0 km"}]
+                description: "Modern apartment for sale in Action Area I, New Town. Close to major IT hubs and corporate parks. Features gymnasium and indoor games room.",
+                amenities: ["Swimming Pool", "Gym", "Lift", "24/7 Security", "CCTV", "Power Backup"],
+                nearby: [{name: "IT Hub / DLF 1", dist: "1.0 km"}, {name: "Narkelbagan Bus Stop", dist: "0.5 km"}]
             },
             {
                 id: "PROP006",
-                title: "Metro 1 BHK Studio Flat",
-                location: "Howrah",
-                price: 3500000,
-                bhk: 1,
-                area: 600,
-                superArea: 750,
-                floor: "2nd Floor",
-                totalFloors: 10,
-                type: "Flat",
-                furnishing: "Semi-Furnished",
-                status: "Available",
-                parking: "1 Bike",
-                age: "Brand New",
-                featured: false,
-                image: "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?auto=format&fit=crop&w=800&q=80",
-                gallery: ["https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?auto=format&fit=crop&w=800&q=80"],
-                video: "",
-                description: "Ideal for working professionals and smart investors with high rental yield.",
-                amenities: ["Lift", "24/7 Security", "CCTV", "Power Backup"],
-                nearby: [{name: "Railway Station", dist: "1.0 km"}]
-            },
-            {
-                id: "PROP007",
-                title: "Orchid Independent House",
-                location: "New Town",
-                price: 31000000,
-                bhk: 4,
-                area: 3400,
-                superArea: 4000,
-                floor: "Ground + 3",
-                totalFloors: 3,
-                type: "Independent House",
-                furnishing: "Furnished",
-                status: "Sold",
-                parking: "3 Cars",
-                age: "4 Years",
-                featured: false,
-                image: "https://images.unsplash.com/photo-1580587771525-78b9dba3b914?auto=format&fit=crop&w=800&q=80",
-                gallery: ["https://images.unsplash.com/photo-1580587771525-78b9dba3b914?auto=format&fit=crop&w=800&q=80"],
-                video: "",
-                description: "Fully independent duplex house with rooftop terrace garden and premium marble finishes.",
-                amenities: ["24/7 Security", "Garden", "Power Backup", "Water Supply"],
-                nearby: [{name: "Market", dist: "0.5 km"}]
-            },
-            {
-                id: "PROP008",
-                title: "Compact 2 BHK Modern Flat",
+                title: "Standalone Building Peaceful 2 BHK Flat",
                 location: "Salt Lake",
-                price: 7200000,
+                price: 6900000,
                 bhk: 2,
                 area: 980,
-                superArea: 1200,
-                floor: "5th Floor",
-                totalFloors: 10,
-                type: "Apartment",
+                superArea: 1150,
+                floor: "2nd Floor",
+                totalFloors: 4,
+                type: "Standalone Flat",
                 furnishing: "Semi-Furnished",
                 status: "Available",
-                parking: "1 Car",
-                age: "2 Years",
+                parking: "1 Bike / Car",
+                age: "4 Years",
                 featured: false,
                 image: "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?auto=format&fit=crop&w=800&q=80",
                 gallery: ["https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?auto=format&fit=crop&w=800&q=80"],
                 video: "",
-                description: "Well-maintained ready to move flat with excellent neighborhood and connectivity.",
+                description: "Well-ventilated flat in a quiet standalone building in Salt Lake Sector III. Low maintenance charges and friendly neighborhood.",
+                amenities: ["Lift", "24/7 Security", "Water Supply", "CCTV"],
+                nearby: [{name: "Central Park", dist: "0.6 km"}, {name: "Karunamoyee Metro", dist: "0.9 km"}]
+            },
+            {
+                id: "PROP007",
+                title: "Action Area III Luxury Villa Style Flat",
+                location: "Action Area III",
+                price: 18500000,
+                bhk: 4,
+                area: 2600,
+                superArea: 3100,
+                floor: "Ground Floor",
+                totalFloors: 4,
+                type: "Complex Apartment",
+                furnishing: "Furnished",
+                status: "Available",
+                parking: "2 Cars",
+                age: "Brand New",
+                featured: false,
+                image: "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=800&q=80",
+                gallery: ["https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=800&q=80"],
+                video: "",
+                description: "Exclusive ground-floor garden apartment in Action Area III, New Town. Experience independent villa-like living with community amenities.",
+                amenities: ["Swimming Pool", "Gym", "Lift", "24/7 Security", "Garden", "Clubhouse"],
+                nearby: [{name: "DPS New Town", dist: "1.5 km"}]
+            },
+            {
+                id: "PROP008",
+                title: "Rajarhat Main Road 3 BHK Apartment",
+                location: "Rajarhat",
+                price: 7500000,
+                bhk: 3,
+                area: 1320,
+                superArea: 1600,
+                floor: "5th Floor",
+                totalFloors: 11,
+                type: "Complex Apartment",
+                furnishing: "Semi-Furnished",
+                status: "Sold",
+                parking: "1 Car",
+                age: "2 Years",
+                featured: false,
+                image: "https://images.unsplash.com/photo-1580587771525-78b9dba3b914?auto=format&fit=crop&w=800&q=80",
+                gallery: ["https://images.unsplash.com/photo-1580587771525-78b9dba3b914?auto=format&fit=crop&w=800&q=80"],
+                video: "",
+                description: "Ready-to-move 3 BHK flat on Rajarhat Main Road. Fully sold out project unit currently available via resale through Apex Realty.",
                 amenities: ["Lift", "24/7 Security", "CCTV", "Power Backup", "Gym"],
-                nearby: [{name: "Bus Stop", dist: "0.2 km"}]
+                nearby: [{name: "Rajarhat Chowmatha", dist: "0.4 km"}]
             }
         ];
 
@@ -1590,7 +1618,7 @@
                     <div class="property-body">
                         <div class="property-price">${formatINR(prop.price)}</div>
                         <h3 class="property-title">${prop.title}</h3>
-                        <p class="property-location"><i class="fa-solid fa-location-dot"></i> ${prop.location}</p>
+                        <p class="property-location"><i class="fa-solid fa-location-dot"></i> ${prop.location}, Kolkata</p>
                         <div class="property-specs">
                             <span><i class="fa-solid fa-bed"></i> ${prop.bhk} BHK</span>
                             <span><i class="fa-solid fa-ruler-combined"></i> ${prop.area} sq.ft</span>
@@ -1598,11 +1626,11 @@
                         </div>
                         <div class="property-footer">
                             <button class="btn btn-outline btn-block" onclick="openPropertyModal('${prop.id}')">View Details</button>
-                            ${isSold ? `<button class="btn btn-outline btn-block" disabled style="opacity:0.5;">Sold Out</button>` : `<button class="btn btn-primary btn-block" onclick="openInquiryModal('${prop.id}')">Contact</button>`}
+                            ${isSold ? `<button class="btn btn-outline btn-block" disabled style="opacity:0.5;">Sold Out</button>` : `<button class="btn btn-primary btn-block" onclick="openInquiryModal('${prop.id}')">Contact Dealer</button>`}
                         </div>
                         <div style="margin-top:0.75rem; display:flex; justify-content:space-between; align-items:center; font-size:0.85rem;">
                             <label><input type="checkbox" ${compareList.includes(prop.id)?'checked':''} onchange="toggleCompare('${prop.id}')"> Compare</label>
-                            <a href="https://wa.me/${dealerWhatsApp}?text=Hello%2C%20I%20am%20interested%20in%20Property%20ID%20${prop.id}%20-%20${encodeURIComponent(prop.title)}." target="_blank" style="color:#25d366; font-weight:600;"><i class="fa-brands fa-whatsapp"></i> WhatsApp</a>
+                            <a href="https://wa.me/${dealerWhatsApp}?text=Hello%2C%20I%20am%20interested%20in%20Property%20ID%20${prop.id}%20-%20${encodeURIComponent(prop.title)}.%20Please%20provide%20more%20details." target="_blank" style="color:#25d366; font-weight:600;"><i class="fa-brands fa-whatsapp"></i> WhatsApp</a>
                         </div>
                     </div>
                 </div>
@@ -1636,7 +1664,7 @@
             else if (sortBy === 'area-high') filtered.sort((a,b)=>b.area-a.area);
             else filtered.sort((a,b)=>b.id.localeCompare(a.id));
 
-            document.getElementById('result-count').innerHTML = `Showing <strong>${filtered.length}</strong> properties`;
+            document.getElementById('result-count').innerHTML = `Showing <strong>${filtered.length}</strong> properties for sale`;
             const grid = document.getElementById('main-property-grid');
             const noRes = document.getElementById('no-results');
 
@@ -1692,7 +1720,7 @@
                 }
                 renderCatalogProperties();
                 document.getElementById('properties').scrollIntoView({ behavior: 'smooth' });
-                showToast("Search filters applied!");
+                showToast("Search filters applied successfully!");
             });
         }
 
@@ -1746,6 +1774,7 @@
                 {label:"BHK", fn:p=>`${p.bhk} BHK`},
                 {label:"Area", fn:p=>`${p.area} sq.ft`},
                 {label:"Floor", fn:p=>p.floor},
+                {label:"Building Type", fn:p=>p.type},
                 {label:"Furnishing", fn:p=>p.furnishing},
                 {label:"Parking", fn:p=>p.parking},
                 {label:"Status", fn:p=>p.status}
@@ -1778,7 +1807,7 @@
                     <div>
                         <span class="badge ${isSold?'badge-sold':'badge-verified'}">${p.status}</span>
                         <h2 style="font-size:1.75rem; margin-top:0.25rem;">${p.title}</h2>
-                        <p style="color:var(--gray-600);"><i class="fa-solid fa-location-dot"></i> ${p.location} | ID: <strong>${p.id}</strong></p>
+                        <p style="color:var(--gray-600);"><i class="fa-solid fa-location-dot"></i> ${p.location}, Kolkata | ID: <strong>${p.id}</strong></p>
                     </div>
                     <div style="font-size:2rem; font-weight:800; color:var(--primary);">${formatINR(p.price)}</div>
                 </div>
@@ -1787,19 +1816,19 @@
                     <div class="spec-box"><span>Carpet Area</span><span>${p.area} sq.ft</span></div>
                     <div class="spec-box"><span>Super Area</span><span>${p.superArea||p.area} sq.ft</span></div>
                     <div class="spec-box"><span>Floor</span><span>${p.floor} (of ${p.totalFloors||10})</span></div>
-                    <div class="spec-box"><span>Type</span><span>${p.type}</span></div>
+                    <div class="spec-box"><span>Building Type</span><span>${p.type}</span></div>
                     <div class="spec-box"><span>Furnishing</span><span>${p.furnishing}</span></div>
                 </div>
-                <h3 style="margin-bottom:0.5rem;">About This Property</h3>
+                <h3 style="margin-bottom:0.5rem;">About This Property For Sale</h3>
                 <p style="color:var(--gray-600); margin-bottom:1.5rem;">${p.description}</p>
                 <h3 style="margin-bottom:0.5rem;">Amenities</h3>
                 <div class="amenities-tag-list">${amenities}</div>
                 ${nearby ? `<h3 style="margin-bottom:0.5rem;">What's Nearby?</h3><ul style="display:grid; grid-template-columns:repeat(auto-fit, minmax(200px, 1fr)); gap:0.5rem; margin-bottom:1.5rem;">${nearby}</ul>` : ''}
                 ${p.video ? `<h3 style="margin-bottom:0.5rem;">Virtual Property Tour</h3><div style="position:relative; padding-bottom:56.25%; height:0; margin-bottom:1.5rem;"><iframe src="${p.video}" style="position:absolute; top:0; left:0; width:100%; height:100%; border-radius:8px;" allowfullscreen></iframe></div>` : `<p style="margin-bottom:1.5rem; color:var(--gray-600); font-style:italic;">Video tour coming soon.</p>`}
-                <h3 style="margin-bottom:0.5rem;">Location Map</h3>
+                <h3 style="margin-bottom:0.5rem;">Location (${p.location}, Kolkata)</h3>
                 <div style="margin-bottom:1.5rem;">
                     <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3684!2d88.47!3d22.57!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMjLCsDM0JzIxLjQiTiA4OGDgngyNi4zIkU!5e0!3m2!1sen!2sin!4v1" width="100%" height="250" style="border:0; border-radius:8px;" allowfullscreen="" loading="lazy"></iframe>
-                    <a href="https://maps.google.com/?q=${encodeURIComponent(p.location)}" target="_blank" class="btn btn-outline" style="margin-top:0.75rem;"><i class="fa-solid fa-map-location-dot"></i> Open in Google Maps</a>
+                    <a href="https://maps.google.com/?q=${encodeURIComponent(p.location + ', Kolkata')}" target="_blank" class="btn btn-outline" style="margin-top:0.75rem;"><i class="fa-solid fa-map-location-dot"></i> Open in Google Maps</a>
                 </div>
                 <div style="display:flex; gap:1rem; flex-wrap:wrap;">
                     ${isSold ? `<button class="btn btn-outline" disabled style="opacity:0.5;">Sold Out</button>` : `<button class="btn btn-primary" onclick="openInquiryModal('${p.id}')">Contact Dealer</button><button class="btn btn-outline" onclick="openVisitModal('${p.id}')">Schedule Visit</button>`}
@@ -1818,7 +1847,7 @@
         function openInquiryModal(id) {
             const p = properties.find(prop => prop.id === id);
             document.getElementById('inq-prop-id').value = id;
-            document.getElementById('inquiry-prop-subtitle').innerText = `Property: ${p ? p.title : id}`;
+            document.getElementById('inquiry-prop-subtitle').innerText = `Property For Sale: ${p ? p.title : id} (${p ? p.location : ''})`;
             document.getElementById('property-modal').classList.remove('active');
             document.getElementById('inquiry-modal').classList.add('active');
         }
@@ -1826,7 +1855,7 @@
         function openVisitModal(id) {
             const p = properties.find(prop => prop.id === id);
             document.getElementById('visit-prop-id').value = id;
-            document.getElementById('visit-prop-subtitle').innerText = `Property: ${p ? p.title : id}`;
+            document.getElementById('visit-prop-subtitle').innerText = `Property For Sale: ${p ? p.title : id} (${p ? p.location : ''})`;
             document.getElementById('property-modal').classList.remove('active');
             document.getElementById('visit-modal').classList.add('active');
         }
@@ -1846,10 +1875,9 @@
             document.getElementById('open-compare-modal').addEventListener('click', () => { renderCompareModal(); document.getElementById('compare-modal').classList.add('active'); });
             document.getElementById('open-admin-btn').addEventListener('click', () => document.getElementById('admin-login-modal').classList.add('active'));
             document.getElementById('footer-admin-link').addEventListener('click', (e) => { e.preventDefault(); document.getElementById('admin-login-modal').classList.add('active'); });
-            document.getElementById('list-prop-btn').addEventListener('click', () => document.getElementById('admin-login-modal').classList.add('active'));
 
-            document.getElementById('general-inquiry-form').addEventListener('submit', (e) => { e.preventDefault(); showToast("Thank you! Your inquiry has been submitted."); e.target.reset(); });
-            document.getElementById('modal-inquiry-form').addEventListener('submit', (e) => { e.preventDefault(); showToast("Thank you! Inquiry received."); document.getElementById('inquiry-modal').classList.remove('active'); e.target.reset(); });
+            document.getElementById('general-inquiry-form').addEventListener('submit', (e) => { e.preventDefault(); showToast("Thank you! Your inquiry has been submitted to Rajesh Sharma."); e.target.reset(); });
+            document.getElementById('modal-inquiry-form').addEventListener('submit', (e) => { e.preventDefault(); showToast("Thank you! Inquiry received by dealer."); document.getElementById('inquiry-modal').classList.remove('active'); e.target.reset(); });
             document.getElementById('modal-visit-form').addEventListener('submit', (e) => { e.preventDefault(); showToast("Your property visit request has been received."); document.getElementById('visit-modal').classList.remove('active'); e.target.reset(); });
 
             document.getElementById('admin-login-form').addEventListener('submit', (e) => {
@@ -1858,7 +1886,7 @@
                     document.getElementById('admin-login-modal').classList.remove('active');
                     document.getElementById('admin-dashboard-modal').classList.add('active');
                     renderAdminDashboard();
-                    showToast("Welcome Admin!");
+                    showToast("Welcome Dealer Admin!");
                 } else { showToast("Invalid credentials", "error"); }
             });
 
@@ -1872,7 +1900,7 @@
             document.getElementById('add-new-prop-btn').addEventListener('click', () => {
                 document.getElementById('save-property-form').reset();
                 document.getElementById('form-edit-id').value = '';
-                document.getElementById('prop-form-title').innerText = 'Add Property';
+                document.getElementById('prop-form-title').innerText = 'Add Property For Sale';
                 document.getElementById('property-form-modal').classList.add('active');
             });
 
@@ -1903,10 +1931,10 @@
                 if (editId) {
                     const idx = properties.findIndex(p => p.id === editId);
                     if (idx > -1) properties[idx] = pData;
-                    showToast("Property updated!");
+                    showToast("Property listing updated!");
                 } else {
                     properties.unshift(pData);
-                    showToast("Property added successfully!");
+                    showToast("New property for sale added!");
                 }
                 localStorage.setItem('apex_properties', JSON.stringify(properties));
                 document.getElementById('property-form-modal').classList.remove('active');
@@ -1922,7 +1950,7 @@
                 <tr>
                     <td><strong>${p.id}</strong></td>
                     <td><img src="${p.image}" alt=""></td>
-                    <td>${p.title}<br><small>${p.location}</small></td>
+                    <td>${p.title}<br><small>${p.location}, Kolkata</small></td>
                     <td>${formatINR(p.price)}</td>
                     <td><span class="badge ${p.status==='Sold'?'badge-sold':'badge-verified'}">${p.status}</span></td>
                     <td>
@@ -1956,18 +1984,18 @@
             document.getElementById('p-video').value = p.video || '';
             document.getElementById('p-desc').value = p.description;
             document.getElementById('p-amenities').value = p.amenities ? p.amenities.join(', ') : '';
-            document.getElementById('prop-form-title').innerText = `Edit: ${p.id}`;
+            document.getElementById('prop-form-title').innerText = `Edit Listing: ${p.id}`;
             document.getElementById('property-form-modal').classList.add('active');
         }
 
         function deleteProperty(id) {
-            if(confirm(`Delete property ${id}?`)) {
+            if(confirm(`Delete property ${id} from listings?`)) {
                 properties = properties.filter(p => p.id !== id);
                 localStorage.setItem('apex_properties', JSON.stringify(properties));
                 renderFeaturedProperties();
                 renderCatalogProperties();
                 renderAdminDashboard();
-                showToast("Property deleted", "error");
+                showToast("Property listing deleted", "error");
             }
         }
     </script>
