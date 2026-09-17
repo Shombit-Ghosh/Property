@@ -16,8 +16,8 @@
 
     <style>
         /* ==========================================
-           CSS STYLESHEET
-           ========================================== */
+            CSS STYLESHEET
+            ========================================== */
         :root {
             --primary: #2563eb;
             --primary-dark: #1d4ed8;
@@ -96,7 +96,7 @@
             display: flex;
             align-items: center;
             gap: 10px;
-            max-width: 220px;
+            max-width: 240px;
             overflow-x: auto;
             scrollbar-width: none; /* Firefox */
         }
@@ -754,7 +754,7 @@
             .nav-close { display: block; position: absolute; top: 1.5rem; right: 1.5rem; }
             .hero-title { font-size: 2.5rem; }
             .specs-grid-modal { grid-template-columns: repeat(2, 1fr); }
-            .top-left-marker { top: 10px; left: 10px; max-width: 180px; padding: 6px 10px; }
+            .top-left-marker { top: 10px; left: 10px; max-width: 200px; padding: 6px 10px; }
         }
     </style>
 </head>
@@ -920,22 +920,14 @@
             </div>
         </section>
 
-        <!-- Merged Properties Section (Featured + All Flats For Sale Catalog) -->
+        <!-- Merged Properties & Catalog Section -->
         <section class="section properties-catalog" id="properties">
             <div class="container">
                 <div class="section-header">
                     <span class="sub-title">Exclusive Inventory</span>
                     <h2 class="section-title">Flats & Properties For Sale</h2>
-                    <p class="section-desc">Featuring our top handpicked selections alongside our complete verified catalog across Salt Lake, Rajarhat, New Town, and Action Area.</p>
+                    <p class="section-desc">Explore our complete verified catalog of featured choices and listings across Salt Lake, Rajarhat, New Town, and Action Area.</p>
                 </div>
-
-                <!-- Featured Highlight Banner Grid -->
-                <div style="margin-bottom: 3.5rem;">
-                    <h3 style="margin-bottom: 1.5rem; font-size: 1.25rem; display: flex; align-items: center; gap: 0.5rem;"><i class="fa-solid fa-star" style="color:var(--accent);"></i> Handpicked Featured Choices</h3>
-                    <div class="property-grid" id="featured-property-grid"></div>
-                </div>
-
-                <hr style="border:0; border-top:1px solid var(--gray-200); margin: 3rem 0;">
 
                 <div class="catalog-layout">
                     <!-- Filters Sidebar -->
@@ -998,6 +990,7 @@
                             <button id="toggle-filter-drawer" class="btn btn-outline mobile-filter-btn"><i class="fa-solid fa-filter"></i> Filters</button>
                         </div>
 
+                        <!-- Combined Unified Property Grid -->
                         <div class="property-grid" id="main-property-grid"></div>
 
                         <div id="no-results" class="no-results hidden">
@@ -1362,8 +1355,8 @@
     </div>
 
     <!-- ==========================================
-       JAVASCRIPT APPLICATION
-       ========================================== -->
+        JAVASCRIPT APPLICATION
+        ========================================== -->
     <script>
         /* DEALER CONFIGURATION */
         const dealerConfig = {
@@ -1591,7 +1584,6 @@
             initTheme();
             initNavigation();
             initStatsCounter();
-            renderFeaturedProperties();
             renderCatalogProperties();
             updateBadges();
             initFilters();
@@ -1714,10 +1706,6 @@
             `;
         }
 
-        function renderFeaturedProperties() {
-            document.getElementById('featured-property-grid').innerHTML = properties.filter(p => p.featured && p.status !== "Sold").map(createPropertyCard).join('');
-        }
-
         /* CATALOG & FILTERS */
         function renderCatalogProperties() {
             const keyword = document.getElementById('filter-keyword').value.toLowerCase();
@@ -1807,7 +1795,6 @@
             if (idx > -1) { favorites.splice(idx, 1); showToast("Removed from favorites", "error"); }
             else { favorites.push(id); showToast("Added to favorites!"); }
             localStorage.setItem('apex_favorites', JSON.stringify(favorites));
-            renderFeaturedProperties();
             renderCatalogProperties();
             updateBadges();
             renderFavoritesModal();
@@ -2015,7 +2002,6 @@
                 }
                 localStorage.setItem('apex_properties', JSON.stringify(properties));
                 document.getElementById('property-form-modal').classList.remove('active');
-                renderFeaturedProperties();
                 renderCatalogProperties();
                 renderAdminDashboard();
             });
@@ -2069,7 +2055,6 @@
             if(confirm(`Delete property ${id} from listings?`)) {
                 properties = properties.filter(p => p.id !== id);
                 localStorage.setItem('apex_properties', JSON.stringify(properties));
-                renderFeaturedProperties();
                 renderCatalogProperties();
                 renderAdminDashboard();
                 showToast("Property listing deleted", "error");
